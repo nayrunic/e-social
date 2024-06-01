@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets'
+
+import angry from '@/assets/reactions/angry.png'
+import happy from '@/assets/reactions/happy.png'
+import cry from '@/assets/reactions/cry.png'
+import surprised from '@/assets/reactions/surprised.png'
+import funny from '@/assets/reactions/funny.png'
+import charming from '@/assets/reactions/charming.png'
+import scared from '@/assets/reactions/scared.png'
+---
+
+<div class="flex justify-between p-4">
+    <picture>
+        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={angry} alt="angry" >
+    </picture>
+    <picture>
+        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={cry} alt="cry" >
+    </picture>
+    <picture>
+        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={surprised} alt="surprised" >
+    </picture>
+    <picture>
+        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300 " src={funny} alt="funny" >
+    </picture>
+    <picture>
+        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={charming} alt="charming" >
+    </picture>
+    <picture>
+        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={scared} alt="scared" >
+    </picture>
+    <picture>
+        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={happy} alt="happy" >
+    </picture>
+</div>

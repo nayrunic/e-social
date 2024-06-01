@@ -1,0 +1,29 @@
+---
+interface Props {
+    title:string,
+    img: ImageMetadata,
+}
+
+import { Image } from 'astro:assets';
+
+import annonymous from '@/assets/reactions/annonymous.png'
+import ReactionBar from './ReactionBar.astro';
+import ActionBar from './ActionBar.astro';
+
+const { title, img  } = Astro.props;
+---
+
+<div class="w-1/3 bg-gray-700 rounded-md p-8 mt-8">
+    <div class="flex justify-items-start justify-start">
+        <picture class="size-24">
+            <Image src={annonymous} alt="annonymous" loading="eager"/>
+        </picture>
+    </div>
+    <picture class="flex justify-items-center justify-center pb-8">
+        <Image class="w-full h-auto rounded-lg object-cover" src={Astro.props.img} alt={title} loading="eager"/>
+    </picture>
+    <ReactionBar />
+    <ActionBar />
+
+</div>
+
