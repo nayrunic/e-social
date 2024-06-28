@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '@/components/Container.astro';
+
+import { supabase } from "../lib/supabase";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+  return redirect("/");
+}
+
+const { data, error } = await supabase.auth.setSession({
+  refresh_token: refreshToken.value,
+  access_token: accessToken.value,
+});
+
+if (error) {
+  cookies.delete("sb-access-token", {
+    path: "/",
+  });
+  cookies.delete("sb-refresh-token", {
+    path: "/",
+  });
+
+  return redirect("/");
+}
+
+---
+
+<Layout title='e-social'>
+	<main class="flex justify-center items-center h-full w-[320px] shadow-xl shadow-slate-500 rounded-lg overflow-hidden">
+		<Container />
+	</main>
+</Layout>

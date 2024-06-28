@@ -22,3 +22,41 @@ export const stimuli: Stimulus[]= [
         image: stimulus3
     }
 ]
+
+export const countries: string[] = [
+    'Argentina',
+    'Bolivia',
+    'Brasil',
+    'Chile',
+    'Colombia',
+    'Costa Rica',
+    'Cuba',
+    'Ecuador',
+    'El Salvador',
+    'España',
+    'Guatemala',
+    'Honduras',
+    'México',
+    'Nicaragua',
+    'Panamá',
+    'Paraguay',
+    'Perú',
+    'Puerto Rico',
+    'República Dominicana',
+    'Uruguay',
+    'Venezuela',
+    'Otro'
+]
+
+export const studies: string[] = [
+    'Ninguno',
+    'Educación Básica Primaria',
+    'Educación Básica Secundaria',
+    'Bachiller',
+    'Técnico',
+    'Tecnología',
+    'Pregrado',
+    'Especialización',
+    'Maestría',
+    'Doctorado'
+]

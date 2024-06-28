@@ -1,0 +1,213 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { countries, studies } from "@/lib/data";
+
+import { supabase } from "../lib/supabase";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+  return redirect("/");
+}
+
+const { error } = await supabase.auth.setSession({
+  refresh_token: refreshToken.value,
+  access_token: accessToken.value,
+});
+
+if (error) {
+  cookies.delete("sb-access-token", {
+    path: "/",
+  });
+  cookies.delete("sb-refresh-token", {
+    path: "/",
+  });
+
+  return redirect("/");
+}
+
+---
+
+<Layout title="Completa tu perfil">
+    <div class="h-screen flex justify-center items-start p-8">
+        <div class="flex flex-col justify-center items-center gap-16 pb-8">
+            <h1 class="text-4xl font-bold text-center">Completa tu perfil</h1>
+            <div class="w-[320px] bg-white rounded-xl pt-8 pb-6 px-8 border border-black">                         
+                <div id="form-outer" class="w-full overflow-hidden">
+                    <h1 class="text-xl font-bold mb-4 text-center">Información personal</h1>
+                    <form action="api/profile" method="post" class="flex w-[300%]">
+                        <div id="step1" class="w-[33.4%] flex flex-col gap-2 slide">
+                            <div>
+                                <label for="name" class="text-sm font-medium">
+                                    Nombre
+                                </label>
+                                <div class="bg-slate-200 rounded-xl p-2">
+                                    <input type="text"  name="name" placeholder="Escribe tu nombre..."/>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="age" class="text-sm font-medium">
+                                    Edad
+                                </label>
+                                <div class="bg-slate-200 rounded-xl p-2">
+                                    <input type="number" name="age" id="age" placeholder="Escribe tu edad..."/>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="genre" class="text-sm font-medium">
+                                    Género
+                                </label>
+                                <select id="genre" name="genre" class="w-full p-2 bg-slate-200 rounded-lg text-sm">
+                                    <option class="text-sm" value="">Selecciona tu género</option>
+                                    <option class="text-sm" value="woman">Mujer</option>
+                                    <option class="text-sm" value="non-binary">No binario</option>
+                                    <option class="text-sm" value="man">Hombre</option>
+                                    <option class="text-sm" value="not-specified">Prefiero no especificar</option>
+                                </select>
+                            </div>
+                            
+                            <button id="next1" type="button" 
+                                class="rounded-md bg-sky-300 duration-500 hover:bg-sky-700 p-2 text-white mt-2">
+                                Siguiente
+                            </button>
+                        </div>
+                        <div id="step2" class="w-[33.4%] flex flex-col gap-8 py-4 slide">
+                            <div>
+                                <label for="country" class="text-sm font-medium">
+                                    Nacionalidad
+                                </label>
+                                <select id="country" name="country" class="w-full p-2 bg-slate-200 rounded-lg text-sm">
+                                    <option class="text-sm" value="">Selecciona tu país</option>
+                                    {
+                                        countries.map((country) =>
+                                            <option class="text-sm" value={country}>{country}</option>
+                                        )
+                                    }
+                                </select>
+                            </div>
+                            <div>
+                                <label for="studies" class="text-sm font-medium">
+                                    Nivel de estudios (último alcanzado)
+                                </label>
+                                <select id="studies" name="studies" class="w-full p-2 bg-slate-200 rounded-lg text-sm">                                    
+                                    {
+                                        studies.map((grade) =>
+                                            <option class="text-sm" value={grade}>{grade}</option>
+                                        )
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex gap-2 w-full">
+                                <button id="previous1" type="button" 
+                                    class="rounded-md bg-sky-300 duration-500 hover:bg-sky-700 p-2 text-white w-[50%]">
+                                    Atrás
+                                </button>
+                                <button id="next2" type="button" 
+                                    class="rounded-md bg-sky-300 duration-500 hover:bg-sky-700 p-2 text-white w-[50%]">
+                                    Siguiente
+                                </button>
+                            </div>
+                            
+                        </div>
+                        <div id="step3" class="w-[33.4%] flex flex-col gap-7 slide">
+                            <div>
+                                <label for="use-social" class="text-sm font-medium">
+                                    Ha usado alguna vez alguna red social?
+                                </label>
+                                <select id="use-social" name="use_social" class="w-full p-2 bg-slate-200 rounded-lg text-sm">
+                                    <option class="text-sm" value="true">Si</option>
+                                    <option class="text-sm" value="false">No</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="social-hours" class="text-sm font-medium pb-1">
+                                    Cuantas horas dedicas al día a las redes sociales?
+                                </label>
+                                <div class="bg-slate-200 rounded-xl p-2">
+                                    <input type="number" name="social_hours" id="social-hours" placeholder="Cantidad de horas..."/>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2 w-full">
+                                <button id="previous2" type="button" 
+                                    class="rounded-md bg-sky-300 duration-500 hover:bg-sky-700 p-2 text-white w-[50%]">
+                                    Atrás
+                                </button>
+                                <button type="submit" 
+                                    class="rounded-md bg-sky-300 duration-500 hover:bg-sky-700 p-2 text-white w-[50%]">
+                                    Finalizar
+                                </button>
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</Layout>
+
+<style>
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+
+    input{
+        appearance: none;
+		outline: none;
+		background: none;
+		border: none;
+		line-height: 1.25rem;
+		font-weight: 600;
+		font-size: 0.875rem;
+		color: #7e7e7e;
+	}
+
+    input::placeholder{
+		color: #aaa;
+		font-weight: 400;
+		font-size: .85rem;
+		padding-bottom: 15px;
+	}
+
+    .slide{
+        transition: margin-left 0.150s ease-in-out;
+    }
+</style>
+
+<script>
+
+    const form1 = document.getElementById('step1');
+    
+    const buttonNext1 = document.getElementById("next1");
+    const buttonNext2 = document.getElementById("next2");
+    const buttonPrevious1 = document.getElementById("previous1");
+    const buttonPrevious2 = document.getElementById("previous2");
+
+    buttonNext1?.addEventListener('click', () => {
+        form1!.style.marginLeft = "-33.4%";
+    })
+    buttonNext2?.addEventListener('click', () => {
+        form1!.style.marginLeft = "-66.8%";
+    })
+    buttonPrevious1?.addEventListener('click', () => {
+        form1!.style.marginLeft = "0";
+    })
+    buttonPrevious2?.addEventListener('click', () => {
+        form1!.style.marginLeft = "-33.4%";
+    })
+
+
+
+</script>

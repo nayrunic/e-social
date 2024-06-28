@@ -1,0 +1,103 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Image } from 'astro:assets'
+import Logo from '@/assets/icons/esocial.svg'
+---
+
+<Layout title="Consentimiento informado">
+    <div class="w-screen">
+        <nav class="w-full flex justify-between items-center bg-white px-8 py-4 sticky">
+            <div class="flex flex-col md:flex-row md:gap-4 justify-center items-center px-2">
+                <Image src={Logo} alt="logo" class="h-16 w-16 rounded-full bg-white"/>
+                <h1 class="text-sm md:text-xl font-semibold">E-Social</h1>
+            </div>
+            <a href="/" class="text-xl font-semibold">Inicio</a>
+        </nav>
+        <header class="w-full h-screen bg-policy bg-cover flex items-center p-8">
+            <h1 class="font-extrabold lg:text-8xl md:text-7xl sm:text-6xl text-4xl">Consentimiento <br/> informado</h1>
+        </header>
+        <section class="w-full flex items-center justify-center bg-black justify-content p-16">
+            <h2 class="text-2xl text-white">Entrada en vigor: 26 de junio de 2024</h2>
+        </section>
+        <main class="bg-white flex flex-col justify-center p-8 gap-4 sm:px-[12%]">
+            <p>
+                Al registrarse usted acepta a participar en el estudio piloto del proyecto de investigación 
+                desarrollado por John Alexander Blandón Castaño, estudiante de la Maestría en Psicología, bajo 
+                la dirección de la profesora Sandra Báez. 
+            </p>
+            <h2>Objetivo</h2>
+            <p>
+                El propósito de este estudio consiste validar un 
+                instrumento que permita investigar la relación entre cognición social (habilidades que 
+                utilizamos en nuestras relaciones interpersonales) y las reacciones emocionales que emergen al 
+                visualizar contenido en redes sociales.
+            </p>
+            <h2>Procedimiento</h2>
+            <p>
+                Su participación consistirá en (1) completar un 
+                cuestionario en línea en la que brindará información sociodemográfica (sexo, edad, nivel 
+                educativo, ocupación, país de residencia), (2) realizar una tarea que consiste en visualizar y 
+                reaccionar con emojis a 120 imágenes dispuestas en una red social creada con el único fin de este 
+                estudio. Esta actividad tendrá una duración aproximada de 30 minutos.
+            </p>
+            <h2>Trato de datos personales</h2>
+            <p>
+                La información que pueda ser obtenida con su participación en el estudio será usada con fines 
+                académicos y de investigación en el ámbito universitario. Se mantendrá la confidencialidad de 
+                sus resultados en una base de datos conectada con “E-Social”. 
+                Además, al finalizar este estudio, los datos recolectados quedaran protegidos en los servidores de
+                la Universidad de los Andes y posteriormente se eliminará la base de datos creada para el proyecto "e-social.me".
+            </p>           
+            <p>
+                En dado caso que los datos recopilados sean publicados en un articulo cientifico, no se 
+                incluirá su nombre ni ningún dato que permita identificarlo. Las bases de datos estarán única y 
+                exclusivamente bajo la custodia del investigador y su supervisora. 
+                Su participación en este estudio es totalmente voluntaria. Tiene la libertad de retirar su 
+                consentimiento de participación en esta investigación en cualquier momento. 
+            </p>
+            <p>
+                Durante su participación en la investigación, puede decidir libremente no responder alguna pregunta. 
+                Participar en esta investigación no tendrá ningún costo para usted, tampoco recibirá ningún pago 
+                por participar. Sin embargo, los resultados de esta investigación permitirán conocer nuevos datos 
+                sobre la asociación entre los estados emocionales que emergen de visualizar contenido en redes 
+                sociales y la cognición social. 
+            </p>
+            <p>
+                A final de su participación, se le proveerá por este medio, 
+                el resultado final de la investigación (descripción general, estadísticos, conclusiones). 
+                Participar en este estudio no representa ningun riesgo,
+                sin embargo, dado que algunas de las imágenes presentan contenido 
+                moralmente inapropiado (imágenes con contenido de violencia, armas, lesiones leves), es posible 
+                que puedan generar en usted algún malestar emocional. Si usted se siente incómodo en algún 
+                momento, puede suspender la actividad.
+            </p>
+            <p>
+                Para más información sobre esta investigación puede comunicarse con John Alexander Blandón 
+                Castaño, al correo electrónico <i>ja.blandon@uniandes.edu.co</i>. Este proyecto fue avalado por el 
+                Comité de Ética de la Facultad de Ciencias Sociales de la Universidad de los Andes. Si tiene 
+                alguna duda o comentario puede comunicarse al correo electrónico
+                <i>etica.faciso@uniandes.edu.co</i>
+            </p>
+        </main>
+        <footer class="flex items-center justify-center p-4 bg-white border-t border-black">
+            <p class="text-md font-semibold font-mono">E-Social, 2024</p>
+        </footer>
+    </div>
+</Layout>
+
+<style>
+    p{
+        font-size: 1rem;
+        line-height: 1.5rem;
+        text-wrap: pretty;
+    }
+    h2{
+        text-wrap: balance;
+        font-size: 1.125rem;
+        line-height: 1.75rem;  
+        font-weight: 800;
+    }
+    i{
+        font-weight: 600;
+    }
+</style>
