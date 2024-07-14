@@ -60,13 +60,15 @@ if (error) {
                                 <label for="genre" class="text-sm font-medium">
                                     Género
                                 </label>
-                                <select id="genre" name="genre" class="w-full p-2 bg-slate-200 rounded-lg text-sm">
-                                    <option class="text-sm" value="">Selecciona tu género</option>
-                                    <option class="text-sm" value="woman">Mujer</option>
-                                    <option class="text-sm" value="non-binary">No binario</option>
-                                    <option class="text-sm" value="man">Hombre</option>
-                                    <option class="text-sm" value="not-specified">Prefiero no especificar</option>
-                                </select>
+                                <div class="w-full p-2 bg-slate-200 rounded-lg text-sm">
+                                    <select id="genre" name="genre" class="w-full bg-transparent">
+                                        <option class="text-sm" value="" disabled selected hidden>Selecciona tu género</option>
+                                        <option class="text-sm" value="woman">Mujer</option>
+                                        <option class="text-sm" value="non-binary">No binario</option>
+                                        <option class="text-sm" value="man">Hombre</option>
+                                        <option class="text-sm" value="not-specified">Prefiero no especificar</option>
+                                    </select>
+                                </div>
                             </div>
                             
                             <button id="next1" type="button" 
