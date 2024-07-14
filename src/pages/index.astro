@@ -8,7 +8,7 @@ import pwIcon from '@/assets/icons/pw.svg';
 ---
 
 <Layout title='e-social'>
-	<div class="w-screen h-screen bg-cover bg-home flex justify-center ">
+	<div class="w-screen h-[100dvh] bg-cover bg-home flex justify-center ">
 		<main class="grid grid-cols-1 md:grid-cols-2 w-[900px] m-8 shadow-xl rounded-md overflow-hidden"> 
 			<div class="hidden md:block ">
 				<div id="left-top" class="h-full flex flex-col justify-center items-center gap-8 ">
@@ -17,9 +17,9 @@ import pwIcon from '@/assets/icons/pw.svg';
 					<h2 class="text-center text-white text-4xl font-['Poppins']"> una red social experimental</h2> 
 				</div>
 			</div>
-			<div class="relative h-full flex justify-center items-center bg-white text-center overflow-y-auto"> 
+			<div class="relative w-full h-full flex justify-center items-center bg-white text-center overflow-y-auto"> 
 				<form id="signin-form" action="/api/auth/signin" method="post" 
-					class="absolute flex justify-center items-center flex-col gap-4 p-4 ease-in-out duration-700">
+					class="absolute w-full flex justify-center items-center flex-col gap-4 p-4 ease-in-out duration-700">
 					<h2 class="mb-2 font-bold text-4xl text-sky-800">Iniciar Sesión</h2>
 					<div class="bg-slate-200 rounded-3xl">
 						<div class="flex gap-2 justify-between items-center p-2">
