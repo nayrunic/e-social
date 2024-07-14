@@ -19,8 +19,8 @@ import pwIcon from '@/assets/icons/pw.svg';
 			</div>
 			<div class="relative w-full h-full flex justify-center items-center bg-white text-center overflow-y-auto"> 
 				<form id="signin-form" action="/api/auth/signin" method="post" 
-					class="absolute w-[310px] flex justify-center items-center flex-col gap-4 p-4 ease-in-out duration-700 top-0  bottom-0">
-					<h2 class="mb-2 font-bold text-4xl text-sky-800">Iniciar Sesión</h2>
+					class="absolute w-[270px] sm:w-full flex justify-center items-center flex-col gap-4 p-4 ease-in-out duration-700 top-0  bottom-0">
+					<h2 class="mb-2 font-bold text-3xl sm:text-4xl text-sky-800">Iniciar Sesión</h2>
 					<div class="bg-slate-200 rounded-3xl">
 						<div class="flex gap-2 justify-between items-center p-2">
 							<img class="w-6 h-6 rounded-full" src={userIcon.src}>
@@ -34,7 +34,7 @@ import pwIcon from '@/assets/icons/pw.svg';
 						</div>
 					</div>
 					<button class="w-36 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white uppercase 
-						font-semibold mb-1 duration-500 hover:bg-sky-700" type="submit" >Login</button>
+						font-semibold mb-1 mt-5 duration-500 hover:bg-sky-700" type="submit" >Login</button>
 					<div class="flex flex-col gap-2 pt-8">
 						<p>No eres miembro?</p>
 						<button id="signup-button" type="button" class="duration-200 hover:scale-125 underline italic">Registrate!</button>
@@ -47,8 +47,8 @@ import pwIcon from '@/assets/icons/pw.svg';
 					</div> -->
 				</form>
 				<form id="signup-form" action="/api/auth/register" method="post" 
-					class="absolute w-[310px] flex justify-center items-center flex-col gap-4 p-4 opacity-0 -z-10 duration-700 ease-in-out top-0 bottom-0">
-					<h2 class="mb-2 font-bold text-4xl text-sky-800 text-center">Crea tu cuenta</h2>
+					class="absolute w-[270px] sm:w-full flex justify-center items-center flex-col gap-4 p-4 opacity-0 -z-10 duration-700 ease-in-out top-0 bottom-0">
+					<h2 class="mb-2 font-bold text-3xl sm:text-4xl text-sky-800 text-center">Crea tu cuenta</h2>
 					<div class="bg-slate-200 rounded-3xl">
 						<div class="flex gap-2 justify-between items-center p-2">
 							<img class="w-6 h-6 rounded-full" src={userIcon.src}>
@@ -67,7 +67,7 @@ import pwIcon from '@/assets/icons/pw.svg';
 						<a  href="/terms" class="text-sky-800 italic underline hover:cursor-pointer">consentimiento informado</a></p>
 					</label>
 					<button class="w-36 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white uppercase 
-						font-semibold mb-1 duration-500 hover:bg-sky-700" type="submit" >Registrate</button>
+						font-semibold mb-1 mt-5 duration-500 hover:bg-sky-700" type="submit" >Registrate</button>
 					<div class="flex flex-col gap-2 pt-8">
 						<p>Ya eres miembro?</p>
 						<button id="signin-button" type="button" class="duration-200 hover:scale-125 underline italic">Inicia Sesión!</button>
