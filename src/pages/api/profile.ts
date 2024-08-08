@@ -1,11 +1,12 @@
 import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
+import { getTitles } from "@/lib/data";
+import { setStimuliLeft } from "@/lib/store";
 
 export const POST: APIRoute = async ({ request, redirect }) => { 
     
     const formData = await request.formData();
     const formDataObject = Object.fromEntries(formData.entries());
-    console.log(formDataObject)
 
     const user = await supabase.auth.getUser();
 
@@ -20,15 +21,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 genre: formDataObject.genre,
                 studies: formDataObject.studies,
                 social_hours: formDataObject.social_hours,
-                use_social: formDataObject.use_social
+                use_social: formDataObject.use_social,
+                stimuli_left: getTitles()
             })
         .eq('id', user.data.user?.id);
 
-
-    console.log(response)
     if(response.error){
         return new Response(response.error.message, { status: 500 });
     }
+
+    setStimuliLeft(getTitles());
 
     return redirect('/instructions');
 

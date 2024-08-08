@@ -1,6 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Container from '@/components/Container.astro';
+import { stimuli } from '@/lib/data';
+
+import ProgressCard from '@/components/ProgressCard.astro'
+import ReactionBar from '@/components/ReactionBar.astro';
+import Card from '@/components/Card.astro';
+import Dialog from '@/components/Dialog.astro'
+import Nav from '@/components/Nav.astro';
+
+import { shuffle } from '@/lib/utils';
+import { setUser, user, type User } from '@/lib/store';
 
 import { supabase } from "../lib/supabase";
 
@@ -29,10 +38,81 @@ if (error) {
   return redirect("/");
 }
 
----
+let dbUser: User = (await supabase.from('users').select().eq('id', `${data!.user!.id}`)).data![0];
 
+if(!dbUser) return;
+
+const loggedUser = { stimuli_left: dbUser.stimuli_left, study_answers: dbUser.study_answers }
+
+setUser(loggedUser);
+
+const actualStimuli = loggedUser.stimuli_left.map((arr1Item: any) => stimuli.filter(arr2Item => arr1Item.title === arr2Item.title)).flat();
+const shuffledStimuli  = shuffle(actualStimuli);
+
+---
 <Layout title='e-social'>
-	<main class="flex justify-center items-center h-full w-[320px] shadow-xl shadow-slate-500 rounded-lg overflow-hidden">
-		<Container />
-	</main>
+  <Dialog title="Error" message="Selecciona una reacción"/>
+  <div id="feed" class='h-screen md:px-20 md:py-2 p-2 gap-2 grid grid-cols-1 md:grid-cols-[1fr_0.7fr]' data-user={JSON.stringify(user.get())}>
+    <div class="flex flex-col items-center gap-4 w-full h-full">
+      <Nav />
+      <main id="main" class="flex flex-col items-center gap-4 w-full h-full">    
+        <div class="bg-white rounded-3xl w-full h-full flex justify-center items-start md:p-8 p-4">
+            <div id="slider" class="w-full h-full bg-gray-50 flex items-center rounded-3xl p-2">
+                <div class="rounded-3xl w-full h-full flex flex-col items-center justify-center">
+                <div class="relative w-full h-full overflow-hidden">
+                    <div class="absolute w-full h-full">
+                      <div class="bg-gray-50 h-full flex items-center justify-center w-full rounded-3xl">
+                        <p class="text-sm text-center">Has terminado de reaccionar a todos los estimulos,<br/> gracias por participar</p>
+                      </div>
+                    </div>
+                    {
+                        shuffledStimuli.map(item =>{
+                            return (
+                                <Card source={item.image} id={item.title}/>
+                            )
+                        })
+                    }
+                </div>
+                <div id="reactions" class="px-4 py-1 mb-2 bg-blur rounded-3xl">
+                    <ReactionBar />
+                </div>
+                </div>
+            </div>
+        </div>
+      </main>
+    </div>
+    <ProgressCard />
+    
+  </div>
 </Layout>
+
+<style>
+  .bg-blur{
+		background-color: transparent;
+		backdrop-filter: blur(20px);
+		background-image: linear-gradient(140deg, rgba(221, 216, 216, 0.86), rgba(255, 255, 255, 0.253));
+	}
+
+</style>
+
+<script>
+import { setAnsweredQuestions, setProgress, setStimuliLeft } from "@/lib/store";
+
+
+  function updateUserData (){
+    const feed = document.querySelector("#feed") as HTMLDivElement
+    const data = feed!.dataset.user;
+
+    if(!data) return;
+
+    const dataObj = JSON.parse(data);
+
+    setStimuliLeft(dataObj.stimuli_left);
+    setAnsweredQuestions(dataObj.study_answers);
+    setProgress((58 - dataObj.stimuli_left.length));
+
+  }
+
+  updateUserData();
+
+</script>

@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets'
-
 import angry from '@/assets/reactions/angry.png'
 import happy from '@/assets/reactions/happy.png'
 import cry from '@/assets/reactions/cry.png'
@@ -8,28 +6,74 @@ import surprised from '@/assets/reactions/surprised.png'
 import funny from '@/assets/reactions/funny.png'
 import charming from '@/assets/reactions/charming.png'
 import scared from '@/assets/reactions/scared.png'
+
+const items = [
+        {id: "happy", src: happy.src},
+        {id: "funny", src: funny.src},
+        {id: "charming", src: charming.src},
+        {id: "surprised", src: surprised.src},
+        {id: "scared", src: scared.src},
+        {id: "cry", src: cry.src},
+        {id: "angry", src: angry.src}
+    ]
+
 ---
 
-<div class="flex justify-between p-4">
-    <picture>
-        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={angry} alt="angry" >
-    </picture>
-    <picture>
-        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={cry} alt="cry" >
-    </picture>
-    <picture>
-        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={surprised} alt="surprised" >
-    </picture>
-    <picture>
-        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300 " src={funny} alt="funny" >
-    </picture>
-    <picture>
-        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={charming} alt="charming" >
-    </picture>
-    <picture>
-        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={scared} alt="scared" >
-    </picture>
-    <picture>
-        <Image class="object-cover h-12 w-12 hover:scale-150 ease-in-out duration-300" src={happy} alt="happy" >
-    </picture>
-</div>
+<reaction-bar id="emoji-picker" class="flex justify-between gap-4 duration-150 ease-in-out">
+    <div id="img-container" class="flex duration-0"> 
+            {items.map((item) => {
+                return  <picture class="rounded-full">
+                            <img class="object-cover h-10 w-10 md:hover:scale-125 ease-in-out duration-300 grayscale cursor-pointer md:hover:grayscale-0" 
+                                src={item.src} alt={item.id} data-reaction={item.id} draggable="false"/>
+                        </picture>  
+                })                                      
+            }
+        
+    </div>
+</reaction-bar>
+
+<script>
+    import { selectReaction, selectedReaction } from '@/lib/store'
+    import { isMobile } from '@/lib/utils';
+
+    class ReactionBar extends HTMLElement {
+        constructor(){
+            super();
+
+            const images = this.querySelectorAll(
+                "[data-reaction]"
+            ) as NodeListOf<HTMLImageElement>;
+
+            images.forEach((img) => {
+                img.addEventListener("click", () => {
+                    if(img.dataset.reaction) {
+                        selectReaction(img.dataset.reaction)
+                    }  
+                });
+            });
+
+            selectedReaction.subscribe(value => {
+                images.forEach(img => {
+                    const reaction = img.dataset.reaction;
+                    if(!reaction) return;
+                    
+                    if(reaction === value){
+                        img.classList.remove("grayscale");
+                        if(isMobile()){
+                            img.classList.add("scale-125");
+                        }
+                    }else{
+                        img.classList.add('grayscale')
+                        if(isMobile()){
+                            img.classList.remove("scale-125");
+                        }
+                    }
+                })
+            })
+        }
+    }
+
+    customElements.define('reaction-bar', ReactionBar);
+
+</script>
+

@@ -1,61 +1,168 @@
 ---
-interface Props {
-	title: string;
-	body: string;
-	href: string;
-}
+import { Image } from 'astro:assets';
 
-const { href, title, body } = Astro.props;
+interface Props {
+    source: ImageMetadata;
+    id: string;
+}
+const {source, id} = Astro.props;
+
 ---
 
-<li class="link-card">
-	<a href={href}>
-		<h2>
-			{title}
-			<span>&rarr;</span>
-		</h2>
-		<p>
-			{body}
-		</p>
-	</a>
-</li>
+<swipe-card class="absolute w-full h-full" data-id={id}>
+    <div class="bg-gray-50 h-full flex items-center justify-center w-full rounded-3xl">
+      <picture class="rounded-3xl overflow-hidden transition bg-transparent">
+        <Image class="w-full h-[300px] md:h-auto" src={source} alt="stimulus" draggable="false"/>
+      </picture>
+    </div>
+</swipe-card>
+
 <style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 1px;
-		background-color: #23262d;
-		background-image: none;
-		background-size: 400%;
-		border-radius: 7px;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-	}
-	.link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: calc(1.5rem - 1px);
-		border-radius: 8px;
-		color: white;
-		background-color: #23262d;
-		opacity: 0.8;
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-	}
-	.link-card:is(:hover, :focus-within) {
-		background-position: 0;
-		background-image: var(--accent-gradient);
-	}
-	.link-card:is(:hover, :focus-within) h2 {
-		color: rgb(var(--accent-light));
-	}
+    .go-left {
+        transform: translateX(-150%) rotate(-30deg) !important;
+    }
+
+    .go-right {
+    transform: translateX(150%) rotate(30deg) !important;
+    }
+
+    .go-left,
+    .go-right {
+    transition: transform .3s ease, rotate .3s ease;
+    }
+
+    .reset {
+        transition: transform .3s ease;
+        transform: translateX(0) !important;
+    }
 </style>
+
+<script>
+
+  import { 
+    addAnsweredQuestion, 
+    selectedReaction,
+    selectReaction, setDialog, 
+    addProgress, 
+    removeStimulus, stimuliLeft, 
+answeredQuestions} from '@/lib/store';
+
+  class Card extends HTMLElement {
+    constructor(){
+      super()
+    }
+  }
+
+  customElements.define('swipe-card', Card);
+
+  const DECISION_THRESHOLD = 100
+
+  let isAnimating = false
+  let pullDeltaX = 0
+
+  async function fetchData () {
+    await fetch('/api/stimuli', {
+      method: "POST",
+      body: JSON.stringify({
+        stimuli_left: stimuliLeft.get(),
+        answered_questions: answeredQuestions.get()
+      })
+    });
+  }
+
+  function startDrag(event: any) {
+      if (isAnimating) return
+
+      const actualCard = event.target.closest('img');
+      const parent = event.target.closest('swipe-card');
+      const picture = event.target.closest('picture');
+
+      if (!actualCard) return
+      if(actualCard.dataset.reaction) return;
+
+      const startX = event.pageX ?? event.touches[0].pageX
+
+      document.addEventListener('mousemove', onMove)
+      document.addEventListener('mouseup', onEnd)
+
+      document.addEventListener('touchmove', onMove, { passive: true })
+      document.addEventListener('touchend', onEnd, { passive: true })
+
+      function onMove(event: any) {
+
+        const currentX = event.pageX ?? event.touches[0].pageX
+
+        pullDeltaX = currentX - startX
+
+        if (pullDeltaX === 0) return
+
+        isAnimating = true
+        const deg = pullDeltaX / 14
+        actualCard.style.transform = `translateX(${pullDeltaX}px) rotate(${deg}deg)`
+        actualCard.style.cursor = 'grabbing'
+
+        const opacity = Math.abs(pullDeltaX) / 100
+        const isRight = pullDeltaX > 0
+
+        picture.opacity = opacity;
+        picture.style["background-color"] = isRight ? `rgba(74, 222, 128, ${opacity}` : `rgba(248, 113, 113, ${opacity}`;
+      }
+
+      async function onEnd(event: any) {
+
+        document.removeEventListener('mousemove', onMove)
+        document.removeEventListener('mouseup', onEnd)
+
+        document.removeEventListener('touchmove', onMove)
+        document.removeEventListener('touchend', onEnd)
+
+        const decisionMade = Math.abs(pullDeltaX) >= DECISION_THRESHOLD
+
+        if (decisionMade) {
+          if(selectedReaction.get() === "none") {
+            setDialog(true);
+            reset();
+            resetPosition();
+            return;
+          }
+          const goRight = pullDeltaX >= 0
+
+          actualCard.classList.add(goRight ? 'go-right' : 'go-left')
+          actualCard.addEventListener('transitionend', () => {
+            parent.remove()
+          })
+
+          addAnsweredQuestion({id: parent.dataset.id, reaction: selectedReaction.get(), like: goRight ? true : false});
+          selectReaction("none");
+          addProgress();
+          removeStimulus(parent.dataset.id);
+          await fetchData();
+          isAnimating = false
+
+        } else {
+          reset();
+        }
+
+        function reset () {
+          actualCard.classList.add('reset')
+          actualCard.classList.remove('go-right', 'go-left')
+        }
+        function resetPosition() {
+            actualCard.removeAttribute('style')
+            actualCard.classList.remove('reset')
+            picture.style['background-color'] = '';
+            pullDeltaX = 0
+            isAnimating = false
+        }
+
+        actualCard.addEventListener('transitionend', () => {
+          resetPosition();
+        })
+
+      }
+  }
+
+  document.addEventListener('mousedown', startDrag)
+  document.addEventListener('touchstart', startDrag, { passive: true })
+
+</script>

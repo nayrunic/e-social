@@ -1,0 +1,34 @@
+---
+interface Props {
+    title: string;
+    message: string;
+}
+
+const { title, message} = Astro.props;
+---
+
+<div class="absolute m-auto left-0 rounded-3xl bg-[#ffffff4d]  z-10 h-screen w-screen justify-center items-center hidden" data-is-open="false">
+    <div class="text-center absolute m-auto p-4 bg-white border rounded-3xl">
+        <h1 class="text-xl p-1">{title}</h1>
+        <p class="text-xs p-3">{message}</p>
+        <button class="px-5 rounded-3xl bg-sky-300 text-white" data-button>OK</button>
+    </div>
+</div>
+
+<script>
+    import { isDialogOpen, setDialog } from "@/lib/store";
+    const dialog = document.querySelector("[data-is-open]");
+    const button = document.querySelector("[data-button]");
+    button?.addEventListener("click", () => {
+        setDialog(false);
+    })
+    isDialogOpen.subscribe(value => {
+        if(value){
+            dialog!.classList.remove("hidden");
+            dialog!.classList.add("flex");
+        }else{
+            dialog!.classList.add("hidden");
+            dialog!.classList.remove("flex");
+        }
+    })
+</script>

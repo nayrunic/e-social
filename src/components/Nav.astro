@@ -1,0 +1,82 @@
+---
+import ESocialIcon from '@/assets/icons/esocial.svg'
+import ProgressIcon from '@/assets/icons/progress.svg'
+import LogoutIcon from '@/assets/icons/logout.svg'
+---
+
+<nav class="bg-white rounded-3xl w-full block">
+    <ul class="w-full flex flex-row items-center justify-around gap-4 p-2">
+    <li class="flex flex-col justify-center items-center">
+        <picture>
+        <img class="h-8 w-8" src={ESocialIcon.src} alt="esocialicon" />
+        </picture>
+        <p class="text-xs text-gray-400 font-[Poppins]">
+        E-Social
+        </p>
+    </li>
+    <li id="progress-nav" class="flex flex-col justify-center items-center md:hidden cursor-pointer ">
+        <picture>
+        <img class="h-8 w-8" src={ProgressIcon.src} alt="progress" />
+        </picture>
+        <p class="text-xs text-gray-400 font-[Poppins]">
+            Progreso
+        </p>
+    </li>
+    <li id="feed-nav" class="justify-center items-center hidden cursor-pointer ">
+        <picture>
+        <img class="h-8 w-8" src={ProgressIcon.src} alt="feed" />
+        </picture>
+        <p class="text-xs text-gray-400 font-[Poppins]">
+            Estimulos
+        </p>
+    </li>
+    <li id="logout" class="flex flex-col justify-center items-center cursor-pointer">
+        <picture>
+        <img class="h-8 w-8" src={LogoutIcon.src} alt="log-out" />
+        </picture>
+        <p class="text-xs text-gray-400 font-[Poppins]">
+            Log out
+        </p>
+    </li>
+    </ul>
+</nav>
+
+<script>
+    const logoutButton = document.querySelector("#logout");
+    const progressButton = document.querySelector("#progress-nav");
+    const feedButton = document.querySelector("#feed-nav");
+    const main = document.querySelector("#main");
+    const progress = document.querySelector("#progress");
+
+    const setListeners = () => {
+        if(!logoutButton) return;
+        logoutButton.addEventListener("click", async () => {
+            const res = await fetch('/api/auth/signout', {
+                method: "GET"
+            });
+
+            window.location.href = res.url;
+        });
+
+        if(!progressButton || !feedButton) return;
+        progressButton.addEventListener("click", ()=>{
+            main?.classList.toggle("hidden")
+            progress?.classList.toggle("hidden")
+            progressButton?.classList.toggle("hidden")
+            feedButton?.classList.toggle("hidden")
+            feedButton?.classList.toggle("flex")
+            feedButton?.classList.toggle("flex-col")
+        })
+
+        feedButton.addEventListener("click", ()=>{
+            main?.classList.toggle("hidden")
+            progress?.classList.toggle("hidden")
+            progressButton?.classList.toggle("hidden")
+            feedButton?.classList.toggle("hidden")
+            feedButton?.classList.toggle("flex")
+            feedButton?.classList.toggle("flex-col")
+        })
+    };
+
+    setListeners();
+</script>
