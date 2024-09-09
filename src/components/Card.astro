@@ -1,5 +1,7 @@
 ---
 import { Image } from 'astro:assets';
+//import like from '@/assets/misc/like.png'
+//import dislike from '@/assets/misc/dislike.png'
 
 interface Props {
     source: ImageMetadata;
@@ -11,9 +13,13 @@ const {source, id} = Astro.props;
 
 <swipe-card class="absolute w-full h-full" data-id={id}>
     <div class="bg-gray-50 h-full flex items-center justify-center w-full rounded-3xl">
-      <picture class="rounded-3xl overflow-hidden transition bg-transparent">
-        <Image class="w-full h-[300px] md:h-auto" src={source} alt="stimulus" draggable="false"/>
-      </picture>
+      <image-container class="w-[550px] flex items-center justify-center rounded-3xl overflow-hidden transition bg-transparent relative">
+        <Image class="w-auto h-[300px] rounded-3xl" src={source} alt="stimulus" draggable="false" id="actual-stimuli"/>
+        <!-- <img id="like" src={like.src} alt="like" draggable="false" 
+          class="h-32 w-32 absolute bottom-0 left-2 opacity-0 "/>
+        <img id="dislike" src={dislike.src} alt="dislike" draggable="false" 
+          class="h-32 w-32 absolute bottom-0 right-2 opacity-0"/> -->
+      </image-container>
     </div>
 </swipe-card>
 
@@ -45,7 +51,10 @@ const {source, id} = Astro.props;
     selectReaction, setDialog, 
     addProgress, 
     removeStimulus, stimuliLeft, 
-answeredQuestions} from '@/lib/store';
+    answeredQuestions} from '@/lib/store';
+
+  import { usernames, profile_images } from '@/lib/data';
+  import { randomIntFromInterval } from '@/lib/utils';
 
   class Card extends HTMLElement {
     constructor(){
@@ -73,9 +82,14 @@ answeredQuestions} from '@/lib/store';
   function startDrag(event: any) {
       if (isAnimating) return
 
-      const actualCard = event.target.closest('img');
+      const actualCard = event.target.closest('#actual-stimuli');
       const parent = event.target.closest('swipe-card');
-      const picture = event.target.closest('picture');
+      const picture = event.target.closest('image-container');
+      const username_text = document.getElementById("username_text");
+      const hour_number = document.getElementById("hour_number");
+      const profile_image = document.getElementById("profile_image") as HTMLImageElement;
+      //const dislike = document.getElementById("dislike");
+      //const like = document.getElementById("like");
 
       if (!actualCard) return
       if(actualCard.dataset.reaction) return;
@@ -104,7 +118,8 @@ answeredQuestions} from '@/lib/store';
         const opacity = Math.abs(pullDeltaX) / 100
         const isRight = pullDeltaX > 0
 
-        picture.opacity = opacity;
+        //isRight ? like!.classList.remove("opacity-0") : dislike!.classList.remove("opacity-0");
+        
         picture.style["background-color"] = isRight ? `rgba(74, 222, 128, ${opacity}` : `rgba(248, 113, 113, ${opacity}`;
       }
 
@@ -138,6 +153,10 @@ answeredQuestions} from '@/lib/store';
           removeStimulus(parent.dataset.id);
           await fetchData();
           isAnimating = false
+          username_text!.textContent = usernames[randomIntFromInterval(0, usernames.length)];
+          profile_image!.src = profile_images[randomIntFromInterval(0, profile_images.length)];
+          hour_number!.textContent = randomIntFromInterval(0, 23).toString();
+
 
         } else {
           reset();

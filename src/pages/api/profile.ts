@@ -22,7 +22,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 studies: formDataObject.studies,
                 social_hours: formDataObject.social_hours,
                 use_social: formDataObject.use_social,
-                stimuli_left: getTitles()
+                stimuli_left: getTitles(),
+                biological_sex: formDataObject.biological_sex
             })
         .eq('id', user.data.user?.id);
 

@@ -10,3 +10,7 @@ export const shuffle = <T>(array: T[]) => {
     }
     return array; 
   }; 
+
+export const randomIntFromInterval = (min: number, max:number ):number => {  
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}

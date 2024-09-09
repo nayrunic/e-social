@@ -7,7 +7,7 @@ import userIcon from '@/assets/icons/user.svg';
 import pwIcon from '@/assets/icons/pw.svg';
 ---
 
-<Layout title='e-social'>
+<Layout title='E-Social'>
 	<div class="w-screen h-[100dvh] bg-cover bg-home flex justify-center ">
 		<main class="grid grid-cols-1 md:grid-cols-2 w-[900px] m-8 shadow-xl rounded-md overflow-hidden"> 
 			<div class="hidden md:block ">
@@ -156,6 +156,8 @@ import pwIcon from '@/assets/icons/pw.svg';
 			method: form.method,
 			body: new FormData(form)
 		});
+
+		console.log(res)
 
 		if(!res.ok){
 			if(errorP){

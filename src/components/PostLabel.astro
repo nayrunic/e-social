@@ -1,0 +1,26 @@
+---
+interface Props {
+	imageSrc: string;
+}
+
+const { imageSrc } = Astro.props;
+
+import { usernames, profile_images } from '@/lib/data';
+import { randomIntFromInterval } from '@/lib/utils';
+
+
+---
+
+<div class="flex gap-4 w-full items-center pl-4 pt-4">  
+    <picture>
+      <img id="profile_image" class="h-16 w-16 rounded-full" src={profile_images[randomIntFromInterval(0,20)]} alt="profile_image"/>
+    </picture>
+    <div>
+      <h2 id="username_text" class="text-sm font-bold mb-1">{usernames[randomIntFromInterval(0, usernames.length)]}</h2>
+      <div class="flex gap-1">
+        <p class="text-xs">Hace </p>
+        <p id="hour_number" class="text-xs">{randomIntFromInterval(0, 23).toString()}</p> 
+        <p class="text-xs">horas</p>
+      </div>
+    </div>
+  </div>

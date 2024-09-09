@@ -2,11 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import { stimuli } from '@/lib/data';
 
+import stimulus28 from '@/assets/stimuli/low_ingroup_1.jpg'
 import ProgressCard from '@/components/ProgressCard.astro'
 import ReactionBar from '@/components/ReactionBar.astro';
 import Card from '@/components/Card.astro';
 import Dialog from '@/components/Dialog.astro'
 import Nav from '@/components/Nav.astro';
+import PostLabel from '@/components/PostLabel.astro'
 
 import { shuffle } from '@/lib/utils';
 import { setUser, user, type User } from '@/lib/store';
@@ -50,14 +52,15 @@ const actualStimuli = loggedUser.stimuli_left.map((arr1Item: any) => stimuli.fil
 const shuffledStimuli  = shuffle(actualStimuli);
 
 ---
-<Layout title='e-social'>
+<Layout title='E-Social'>
   <Dialog title="Error" message="Selecciona una reacción"/>
   <div id="feed" class='h-screen md:px-20 md:py-2 p-2 gap-2 grid grid-cols-1 md:grid-cols-[1fr_0.7fr]' data-user={JSON.stringify(user.get())}>
     <div class="flex flex-col items-center gap-4 w-full h-full">
       <Nav />
-      <main id="main" class="flex flex-col items-center gap-4 w-full h-full">    
+      <main id="main" class="flex flex-col items-center gap-4 w-full h-full">   
         <div class="bg-white rounded-3xl w-full h-full flex justify-center items-start md:p-8 p-4">
-            <div id="slider" class="w-full h-full bg-gray-50 flex items-center rounded-3xl p-2">
+            <div id="slider" class="w-full h-full bg-gray-50 flex flex-col items-center rounded-3xl p-2">
+                <PostLabel imageSrc={stimulus28.src} />
                 <div class="rounded-3xl w-full h-full flex flex-col items-center justify-center">
                 <div class="relative w-full h-full overflow-hidden">
                     <div class="absolute w-full h-full">
@@ -73,7 +76,7 @@ const shuffledStimuli  = shuffle(actualStimuli);
                         })
                     }
                 </div>
-                <div id="reactions" class="px-4 py-1 mb-2 bg-blur rounded-3xl">
+                <div id="reactions" class="px-4 py-1 mb-2 mt-2 bg-blur rounded-3xl">
                     <ReactionBar />
                 </div>
                 </div>
@@ -109,7 +112,7 @@ import { setAnsweredQuestions, setProgress, setStimuliLeft } from "@/lib/store";
 
     setStimuliLeft(dataObj.stimuli_left);
     setAnsweredQuestions(dataObj.study_answers);
-    setProgress((58 - dataObj.stimuli_left.length));
+    setProgress((52 - dataObj.stimuli_left.length));
 
   }
 
