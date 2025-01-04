@@ -64,6 +64,10 @@ const {source, id} = Astro.props;
 
   customElements.define('swipe-card', Card);
 
+  
+  const likeButton = document.querySelector("#like_button") as HTMLButtonElement;
+  const dislikeButton = document.querySelector("#dislike_button") as HTMLButtonElement;
+
   const DECISION_THRESHOLD = 100
 
   let isAnimating = false
@@ -88,8 +92,6 @@ const {source, id} = Astro.props;
       const username_text = document.getElementById("username_text");
       const hour_number = document.getElementById("hour_number");
       const profile_image = document.getElementById("profile_image") as HTMLImageElement;
-      //const dislike = document.getElementById("dislike");
-      //const like = document.getElementById("like");
 
       if (!actualCard) return
       if(actualCard.dataset.reaction) return;
@@ -155,7 +157,7 @@ const {source, id} = Astro.props;
           isAnimating = false
           username_text!.textContent = usernames[randomIntFromInterval(0, usernames.length)];
           profile_image!.src = profile_images[randomIntFromInterval(0, profile_images.length)];
-          hour_number!.textContent = randomIntFromInterval(0, 23).toString();
+          hour_number!.textContent = randomIntFromInterval(1, 23).toString();
 
 
         } else {
@@ -183,5 +185,31 @@ const {source, id} = Astro.props;
 
   document.addEventListener('mousedown', startDrag)
   document.addEventListener('touchstart', startDrag, { passive: true })
+
+  async function sendQuestion(like: boolean){
+
+    const card_container = document.getElementById("card-container");
+
+    const children = card_container!.children;
+
+    const currentCard: any = children[children.length-1];
+
+    if(selectedReaction.get() === "none") {
+      setDialog(true);
+      return;
+    }
+
+    addAnsweredQuestion({id: currentCard.dataset.id, reaction: selectedReaction.get(), like});
+    selectReaction("none");
+    addProgress();
+    removeStimulus(currentCard.dataset.id);
+    await fetchData();
+    currentCard.remove();
+
+  }
+
+  dislikeButton.addEventListener('click', () => {sendQuestion(false)})
+  likeButton.addEventListener('click', () => {sendQuestion(true)})
+
 
 </script>
