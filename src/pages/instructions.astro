@@ -1,6 +1,7 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro"
 import { Image } from 'astro:assets'
+import Arrow from '@/assets/icons/Arrow.svg'
 import Logo from '@/assets/icons/esocial.svg'
 ---
 
@@ -48,6 +49,12 @@ import Logo from '@/assets/icons/esocial.svg'
             <picture class="mt-4 mb-4">
                 <img src="swipe.gif" alt="swipe" />
             </picture>
+            <p>
+                En dado caso que encuentre confusa la acción de deslizar, también podrá hacer clic en los respectivos botones de me gusta y no me gusta
+            </p>
+            <picture class="mt-4 mb-4">
+                <img src="liking.png" alt="liking" />
+            </picture>
             <p>Recuerde que debe seleccionar primero una emoción de la barra de reacciones antes de realizar la acción de deslizar o no
                 podra avanzar a la siguiente imagen. En caso de que lo olvide, aparecerá un mensaje al intentar deslizar para recordarle
                 la acción faltante.
@@ -70,6 +77,10 @@ import Logo from '@/assets/icons/esocial.svg'
         <footer class="flex items-center justify-center p-4 bg-white border-t border-black">
             <p class="text-md font-semibold font-mono">E-Social, 2024</p>
         </footer>
+        
+        <button class=" cursor-default rounded-full bg-white shadow-md shadow-black text-gray-800 h-12 w-12 fixed bottom-0 right-5 m-5 text-center animate-bounce flex items-center justify-center hover:scale-110">
+            <img id="img-arrow" class="rotate-180" src={Arrow.src}/>
+        </button>
     </div>
 </Layout>
 
@@ -96,3 +107,28 @@ import Logo from '@/assets/icons/esocial.svg'
         font-weight: 600;
     }
 </style>
+
+<script>
+
+    const obj = window;
+    const arrow = document.getElementById("img-arrow");
+    const button = arrow!.parentElement as HTMLButtonElement;
+    
+    button?.addEventListener("click", () => {
+        window.scrollTo(0,0);
+    })
+
+    obj!.onscroll = (e) => {
+        if(!arrow) return;
+        if(obj.innerHeight + obj.scrollY > document.body.offsetHeight - 2) {
+            arrow.classList.remove("rotate-180");
+            arrow.parentElement!.classList.remove("animate-bounce");
+            arrow.parentElement!.classList.remove("cursor-default");
+            button.disabled = false;
+        }else{
+            button.disabled = true;
+            arrow.classList.add("rotate-180");
+            arrow.parentElement!.classList.add("animate-bounce");
+            arrow.parentElement!.classList.add("cursor-default");        }
+    }
+</script>

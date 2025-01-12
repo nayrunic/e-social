@@ -1,0 +1,56 @@
+---
+
+interface Props {
+    title: string;
+}
+
+const { title} = Astro.props;
+---
+
+<div class="absolute m-auto left-0 rounded-3xl bg-[#ffffff4d]  z-10 h-screen w-screen justify-center items-center hidden" data-is-open="false">
+    <div class="text-center absolute m-auto p-4 bg-white border rounded-3xl">
+        <h1 class="text-xl p-1">{title}</h1>
+        <p class="text-xs p-3">El usuario que ingresaste ya existe,<br/>si este es tu usuario y deseas continuar da clic en OK,<br/> de no ser así, da clic en Volver e intenta con <br/> un nombre de usuario diferente</p>
+        <button class="px-5 rounded-3xl bg-sky-300 text-white" data-button>OK</button>
+        <button class="px-5 rounded-3xl bg-sky-300 text-white" back-button>Volver</button>
+    </div>
+</div>
+
+<script>
+    import { isDialogOpen, setDialog } from "@/lib/store";
+    
+	const errorP = document.querySelector("[data-wrong]") as HTMLParagraphElement;
+    const dialog = document.querySelector("[data-is-open]");
+    const button = document.querySelector("[back-button]");
+    const button_data = document.querySelector("[data-button]");
+    const form = document.getElementById("signin-form") as HTMLFormElement;
+    button?.addEventListener("click", () => {
+        setDialog(false);
+    })
+    button_data?.addEventListener("click", async () => {
+        setDialog(false);
+        const res = await fetch("/api/auth/signin", {
+			method: form.method,
+			body: new FormData(form)
+		});
+
+        if(!res.ok){
+			if(errorP){
+				errorP.classList.remove("hidden");
+				errorP.innerHTML = (await res.json()).message;
+			}
+			return
+		}
+
+		window.location.href = res.url;
+    })
+    isDialogOpen.subscribe(value => {
+        if(value){
+            dialog!.classList.remove("hidden");
+            dialog!.classList.add("flex");
+        }else{
+            dialog!.classList.add("hidden");
+            dialog!.classList.remove("flex");
+        }
+    })
+</script>

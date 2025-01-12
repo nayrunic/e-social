@@ -42,10 +42,10 @@
     if(!progressBar || !percentage) return;
 
     progress.subscribe(value  => { 
-      const actualPercentage = Math.trunc(value*100/52);
+      const actualPercentage = Math.trunc(value*100/38);
       percentage.textContent = actualPercentage.toString()+"%";
       progressBar.style.background = `conic-gradient(#69bdea ${actualPercentage}%, #e6e6e6 ${actualPercentage}%`
-      text.textContent = `Estimulos ${value}/52`
+      text.textContent = `Estimulos ${value}/38`
 
     })
 

@@ -5,42 +5,50 @@ import twitterIcon from '@/assets/icons/twitter.svg';
 import gmailIcon from '@/assets/icons/gmail.svg';
 import userIcon from '@/assets/icons/user.svg';
 import pwIcon from '@/assets/icons/pw.svg';
+import Dialog from '@/components/Dialog_2.astro';
 ---
 
 <Layout title='E-Social'>
+	<Dialog title="Error"/>
 	<div class="w-screen h-[100dvh] bg-cover bg-home flex justify-center ">
 		<main class="grid grid-cols-1 md:grid-cols-2 w-[900px] m-8 shadow-xl rounded-md overflow-hidden"> 
 			<div class="hidden md:block ">
 				<div id="left-top" class="h-full flex flex-col justify-center items-center gap-8 ">
-					<img src="/esocial-white.svg" alt="logo" class="w-64 h-64"/>
+					<img src="/esocial-white.svg" alt="logo" class="w-64 h-64 animate-breathe"/>
 					<h2 class="text-center text-white text-4xl font-['Poppins']">Bienvenido a</h2>
-					<h1 class="text-white font-extrabold text-4xl px-8 py-4 border border-white rounded-xl">E-Social</h1>
-					<h2 class="text-center text-white text-4xl font-['Poppins']"> una red social experimental</h2> 
+					<div class="text-white font-extrabold text-4xl px-8 py-4 border border-white rounded-xl">
+						<h1 > E-Social </h1>
+					</div>
+					<h2 class="text-center text-white text-4xl font-['Poppins']"> una red social innovadora</h2> 
 				</div>
 			</div>
 			<div class="relative w-full h-full flex justify-center items-center bg-white text-center overflow-y-auto"> 
-				<form id="signin-form" action="/api/auth/signin" method="post" 
+				<form id="signin-form" action="/api/auth/register" method="post" 
 					class="absolute w-full flex justify-center items-center flex-col gap-4 ease-in-out duration-700">
 					<h2 class="mb-2 font-bold text-3xl sm:text-4xl text-sky-800">Iniciar Sesión</h2>
+					<p class="mb-2 font-bold text-xl sm:text-xl text-sky-400">Crea tu usuario</p>
 					<div class="bg-slate-200 rounded-3xl">
 						<div class="flex gap-2 justify-between items-center p-2">
 							<img class="w-6 h-6 rounded-full" src={userIcon.src}>
-							<input id="email-in" type="email" name="email" placeholder="Escribe tu correo">
+							<input id="email-in" type="text" name="email" placeholder="Usuario">
 						</div>
 					</div>
-					<div class="bg-slate-200 rounded-3xl">
+					<p class="mb-2 font-bold text-xl sm:text-sm text-gray-400">
+						Si ya tienes un usuario, <br/> puedes usarlo para iniciar sesion
+					</p>
+					<!-- <div class="bg-slate-200 rounded-3xl">
 						<div class="flex gap-2 justify-between items-center p-2">
 							<img class="w-6 h-6 rounded-full" src={pwIcon.src}>
 							<input id="password-in" type="password" name="password" placeholder="Escribe tu contraseña">
 						</div>
-					</div>
+					</div> -->
 					<p class="text-xs text-red-400 hidden" data-wrong></p>
 					<button class="w-36 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white uppercase 
-						font-semibold mb-1 mt-5 duration-500 hover:bg-sky-700" type="submit" >Login</button>
-					<div class="flex flex-col gap-2 pt-8">
+						font-semibold mb-1 mt-5 duration-500 hover:bg-sky-700" type="submit" >entrar</button>
+<!-- 					<div class="flex flex-col gap-2 pt-8">
 						<p>No eres miembro?</p>
 						<button id="signup-button" type="button" class="duration-200 hover:scale-125 underline italic">Registrate!</button>
-					</div>
+					</div> -->
 			<!-- 		<p class="px-2 pt-16 text-lg text-center">Registarte con tus redes sociales</p>
 					<div class="flex gap-4">
 						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125" href="#"><img src={fbIcon.src}></a>
@@ -48,7 +56,7 @@ import pwIcon from '@/assets/icons/pw.svg';
 						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125"href="#"><img src={gmailIcon.src}></a>
 					</div> -->
 				</form>
-				<form id="signup-form" action="/api/auth/register" method="post" 
+				<!-- <form id="signup-form" action="/api/auth/register" method="post" 
 					class="absolute w-full flex justify-center items-center flex-col gap-4 opacity-0 -z-10 duration-700 ease-in-out">
 					<h2 class="mb-2 font-bold text-3xl sm:text-4xl text-sky-800 text-center">Crea tu cuenta</h2>
 					<div class="bg-slate-200 rounded-3xl">
@@ -74,13 +82,7 @@ import pwIcon from '@/assets/icons/pw.svg';
 						<p>Ya eres miembro?</p>
 						<button id="signin-button" type="button" class="duration-200 hover:scale-125 underline italic">Inicia Sesión!</button>
 					</div>
-	<!-- 				<p class="px-2 pt-16 text-lg text-center">Registarte con tus redes sociales</p>
-					<div class="flex gap-4">
-						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125" href="#"><img src={fbIcon.src}></a>
-						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125"href="#"><img src={twitterIcon.src}></a>
-						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125"href="#"><img src={gmailIcon.src}></a>
-					</div> -->
-				</form>
+				</form> -->
 			</div>
 		</main>
 	</div>
@@ -120,31 +122,32 @@ import pwIcon from '@/assets/icons/pw.svg';
 
 <script>
 
+	import { setDialog } from "@/lib/store";
 	import { isMobile } from "@/lib/utils";
 
-	const signupButton = document.getElementById("signup-button");
+	/* const signupButton = document.getElementById("signup-button"); */
 	const signinButton = document.getElementById("signin-button");
-	const signupForm = document.getElementById("signup-form");
+	/* const signupForm = document.getElementById("signup-form"); */
 	const signinForm = document.getElementById("signin-form");
 	const errorP = document.querySelector("[data-wrong]") as HTMLParagraphElement;
 
-	signupButton?.addEventListener("click", () => {
+	/* signupButton?.addEventListener("click", () => {
 		signupForm?.classList.remove('opacity-0');
 		signupForm?.classList.remove('-z-10');
 		signinForm?.classList.add('opacity-0');
 		signinForm?.classList.add('-z-10');
-	});
+	}); */
 
 	signinButton?.addEventListener("click", () => {
-		signupForm?.classList.add('opacity-0');
-		signupForm?.classList.add('-z-10');
+/* 		signupForm?.classList.add('opacity-0');
+		signupForm?.classList.add('-z-10'); */
 		signinForm?.classList.remove('opacity-0');
 		signinForm?.classList.remove('-z-10');
 	});
 
 	if(isMobile()){
-		signinForm?.classList.toggle('landscape:top-0');
-		signupForm?.classList.toggle('landscape:top-0');
+		signinForm?.classList.toggle('landscape:top-0');/* 
+		signupForm?.classList.toggle('landscape:top-0'); */
 	}
 
 	signinForm?.addEventListener("submit", async (e) => {
@@ -157,17 +160,27 @@ import pwIcon from '@/assets/icons/pw.svg';
 			body: new FormData(form)
 		});
 
-		console.log(res)
+		const json = await res.json();
 
-		if(!res.ok){
+		if(json.status === 500){
+			setDialog(true);
+			return
+		}
+
+		const resSignIn = await fetch("/api/auth/signin", {
+			method: form.method,
+			body: new FormData(form)
+		});
+
+        if(!resSignIn.ok){
 			if(errorP){
 				errorP.classList.remove("hidden");
-				errorP.innerHTML = (await res.json()).message;
+				errorP.innerHTML = (await resSignIn.json()).message;
 			}
 			return
 		}
 
-		window.location.href = res.url;
+		window.location.href = resSignIn.url;
 
 	})
 

@@ -194,6 +194,10 @@ const {source, id} = Astro.props;
 
     const currentCard: any = children[children.length-1];
 
+    if(children.length < 2){
+      return;
+    }
+
     if(selectedReaction.get() === "none") {
       setDialog(true);
       return;

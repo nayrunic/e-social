@@ -2,6 +2,7 @@
 import ESocialIcon from '@/assets/icons/esocial.svg'
 import ProgressIcon from '@/assets/icons/progress.svg'
 import LogoutIcon from '@/assets/icons/logout.svg'
+import HelpIcon from '@/assets/icons/help.svg'
 ---
 
 <nav class="bg-white rounded-3xl w-full block">
@@ -30,12 +31,22 @@ import LogoutIcon from '@/assets/icons/logout.svg'
             Estimulos
         </p>
     </li>
+    <li id="help">
+        <a class="flex flex-col justify-center items-center cursor-pointer" href="/instructions">
+            <picture>
+                <img class="h-8 w-8" src={HelpIcon.src} alt="log-out" />
+            </picture>
+            <p class="text-xs text-gray-400 font-[Poppins]">
+                Instrucciones
+            </p>
+        </a>
+    </li>
     <li id="logout" class="flex flex-col justify-center items-center cursor-pointer">
         <picture>
         <img class="h-8 w-8" src={LogoutIcon.src} alt="log-out" />
         </picture>
         <p class="text-xs text-gray-400 font-[Poppins]">
-            Log out
+            Cerrar sesión
         </p>
     </li>
     </ul>
@@ -76,6 +87,7 @@ import LogoutIcon from '@/assets/icons/logout.svg'
             feedButton?.classList.toggle("flex")
             feedButton?.classList.toggle("flex-col")
         })
+
     };
 
     setListeners();

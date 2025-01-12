@@ -4,20 +4,20 @@ import { supabase } from "@/lib/supabase";
 export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
-  const password = formData.get("password")?.toString();
 
-  if (!email || !password) {
+  if (!email) {
     return new Response("Correo electrónico y contraseña obligatorios", { status: 400 });
   }
 
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
+  const { error, data } = await supabase.auth.signUp({
+    email: `${email}@e-social.me`,
+    password: 'password',
   });
 
   if (error) {
-    return new Response(error.message, { status: 500 });
+    return new Response(JSON.stringify({message: error.message, status: 500}), { status: 500 });
   }
 
-  return redirect("/");
+  return new Response("Usuario creado exitosamente", { status: 201 });
+  
 };

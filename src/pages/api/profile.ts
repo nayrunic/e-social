@@ -23,7 +23,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 social_hours: formDataObject.social_hours,
                 use_social: formDataObject.use_social,
                 stimuli_left: getTitles(),
-                biological_sex: formDataObject.biological_sex
+                biological_sex: formDataObject.biological_sex,
+                social_since: formDataObject.social_since
             })
         .eq('id', user.data.user?.id);
 
