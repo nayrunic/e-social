@@ -18,6 +18,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response(JSON.stringify({message: error.message, status: 500}), { status: 500 });
   }
 
-  return new Response("Usuario creado exitosamente", { status: 201 });
+  return new Response(JSON.stringify({message: "Usuario creado exitosamente", status: 201}), { status: 201 });
   
 };
