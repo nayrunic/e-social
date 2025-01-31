@@ -19,27 +19,17 @@ const { title} = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="m-0 p-0 min-h-[100dvh] min-w-80">
+	<body class="m-0 p-0 min-w-80 min-h-dvh">
 		<slot />
 	</body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
 	html {
 		font-family: 'Poppins', monospace, sans-serif;
 		background: #e2e4eb;
 		background-size: 224px;
 	}
+
 	*{
 		box-sizing: border-box;
 	}

@@ -1,88 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import fbIcon from '@/assets/icons/fb.svg';
-import twitterIcon from '@/assets/icons/twitter.svg';
-import gmailIcon from '@/assets/icons/gmail.svg';
 import userIcon from '@/assets/icons/user.svg';
-import pwIcon from '@/assets/icons/pw.svg';
 import Dialog from '@/components/Dialog_2.astro';
 ---
 
 <Layout title='E-Social'>
 	<Dialog title="Error"/>
-	<div class="w-screen h-[100dvh] bg-cover bg-home flex justify-center ">
-		<main class="grid grid-cols-1 md:grid-cols-2 w-[900px] m-8 shadow-xl rounded-md overflow-hidden"> 
-			<div class="hidden md:block ">
-				<div id="left-top" class="h-full flex flex-col justify-center items-center gap-8 ">
-					<img src="/esocial-white.svg" alt="logo" class="w-64 h-64 animate-breathe"/>
+	<div class="min-h-screen bg-cover bg-home flex justify-center sm:p-10">
+		<main class="grid grid-cols-1 lg:grid-cols-2 lg:w-auto w-[420px] max-h-[720px] md:max-h-[900px] m-8 shadow-xl rounded-md overflow-hidden"> 
+			<div class="hidden lg:block ">
+				<div id="left-top" class="h-full flex flex-col justify-center items-center gap-8 px-10">
+					<img src="/esocial-white.svg" alt="logo" class="w-16 h-16 md:w-64 md:h-64 animate-breathe"/>
 					<h2 class="text-center text-white text-4xl font-['Poppins']">Bienvenido a</h2>
 					<div class="text-white font-extrabold text-4xl px-8 py-4 border border-white rounded-xl">
 						<h1 > E-Social </h1>
 					</div>
-					<h2 class="text-center text-white text-4xl font-['Poppins']"> una red social innovadora</h2> 
+					<h2 class="text-center text-white text-xl md:text-4xl font-['Poppins'] "> una red social innovadora</h2> 
 				</div>
 			</div>
-			<div class="relative w-full h-full flex justify-center items-center bg-white text-center overflow-y-auto"> 
+			<div class="relative w-full flex justify-center items-center bg-white text-center"> 
 				<form id="signin-form" action="/api/auth/register" method="post" 
-					class="absolute w-full flex justify-center items-center flex-col gap-4 ease-in-out duration-700">
-					<h2 class="mb-2 font-bold text-3xl sm:text-4xl text-sky-800">Iniciar Sesión</h2>
-					<p class="mb-2 font-bold text-xl sm:text-xl text-sky-400">Crea tu usuario</p>
-					<div class="bg-slate-200 rounded-3xl">
+					class=" w-full flex flex-col items-center p-5 ease-in-out duration-700">
+					<h2 class="mb-10 font-bold text-4xl text-sky-800 landscape:pt-10">Iniciar Sesión</h2>
+					<p class="mb-2 font-bold text-xl text-sky-400">Crea tu usuario</p>
+					<div class="bg-slate-200 rounded-3xl mb-5">
 						<div class="flex gap-2 justify-between items-center p-2">
 							<img class="w-6 h-6 rounded-full" src={userIcon.src}>
 							<input id="email-in" type="text" name="email" placeholder="Usuario">
 						</div>
 					</div>
-					<p class="mb-2 font-bold text-xl sm:text-sm text-gray-400">
+					<p class="landscape:mb-10 mb-20 font-bold text-sm text-gray-400">
 						Si ya tienes un usuario, <br/> puedes usarlo para iniciar sesion
 					</p>
-					<!-- <div class="bg-slate-200 rounded-3xl">
-						<div class="flex gap-2 justify-between items-center p-2">
-							<img class="w-6 h-6 rounded-full" src={pwIcon.src}>
-							<input id="password-in" type="password" name="password" placeholder="Escribe tu contraseña">
-						</div>
-					</div> -->
 					<p class="text-xs text-red-400 hidden" data-wrong></p>
 					<button class="w-36 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white uppercase 
-						font-semibold mb-1 mt-5 duration-500 hover:bg-sky-700" type="submit" >entrar</button>
-<!-- 					<div class="flex flex-col gap-2 pt-8">
-						<p>No eres miembro?</p>
-						<button id="signup-button" type="button" class="duration-200 hover:scale-125 underline italic">Registrate!</button>
-					</div> -->
-			<!-- 		<p class="px-2 pt-16 text-lg text-center">Registarte con tus redes sociales</p>
-					<div class="flex gap-4">
-						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125" href="#"><img src={fbIcon.src}></a>
-						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125"href="#"><img src={twitterIcon.src}></a>
-						<a class="w-8 h-8 rounded-full bg-white duration-200 hover:scale-125"href="#"><img src={gmailIcon.src}></a>
-					</div> -->
-				</form>
-				<!-- <form id="signup-form" action="/api/auth/register" method="post" 
-					class="absolute w-full flex justify-center items-center flex-col gap-4 opacity-0 -z-10 duration-700 ease-in-out">
-					<h2 class="mb-2 font-bold text-3xl sm:text-4xl text-sky-800 text-center">Crea tu cuenta</h2>
-					<div class="bg-slate-200 rounded-3xl">
-						<div class="flex gap-2 justify-between items-center p-2">
-							<img class="w-6 h-6 rounded-full" src={userIcon.src}>
-							<input id="email" type="email" name="email" required placeholder="Escribe tu correo">
-						</div>
-					</div>
-					<div class="bg-slate-200 rounded-3xl">
-						<div class="flex gap-2 justify-between items-center p-2">
-							<img class="w-6 h-6 rounded-full" src={pwIcon.src}>
-							<input id="password-up" type="password" name="password" required placeholder="Escribe tu contraseña" minlength="6">
-						</div>
-					</div>
+						font-semibold mt-5 mb-5 duration-500 hover:bg-sky-700" type="submit" >
+						entrar
+					</button>
 					<label class="flex gap-2 px-5 text-xs max-w-72" for="terminos">
-						<input class="w-4 h-4 px-2" id="terminos" type="checkbox" required/>
-						<p>He leido y estoy de acuerdo con el 
+						<p>Al entrar a la plataforma acepto que he leído y estoy de acuerdo con el 
 						<a  href="/terms" class="text-sky-800 italic underline hover:cursor-pointer">consentimiento informado</a></p>
 					</label>
-					<button class="w-36 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white uppercase 
-						font-semibold mb-1 mt-5 duration-500 hover:bg-sky-700" type="submit" >Registrate</button>
-					<div class="flex flex-col gap-2 pt-8">
-						<p>Ya eres miembro?</p>
-						<button id="signin-button" type="button" class="duration-200 hover:scale-125 underline italic">Inicia Sesión!</button>
-					</div>
-				</form> -->
+				</form>
 			</div>
 		</main>
 	</div>
@@ -123,32 +82,15 @@ import Dialog from '@/components/Dialog_2.astro';
 <script>
 
 	import { setDialog } from "@/lib/store";
-	import { isMobile } from "@/lib/utils";
 
-	/* const signupButton = document.getElementById("signup-button"); */
 	const signinButton = document.getElementById("signin-button");
-	/* const signupForm = document.getElementById("signup-form"); */
 	const signinForm = document.getElementById("signin-form");
 	const errorP = document.querySelector("[data-wrong]") as HTMLParagraphElement;
 
-	/* signupButton?.addEventListener("click", () => {
-		signupForm?.classList.remove('opacity-0');
-		signupForm?.classList.remove('-z-10');
-		signinForm?.classList.add('opacity-0');
-		signinForm?.classList.add('-z-10');
-	}); */
-
 	signinButton?.addEventListener("click", () => {
-/* 		signupForm?.classList.add('opacity-0');
-		signupForm?.classList.add('-z-10'); */
 		signinForm?.classList.remove('opacity-0');
 		signinForm?.classList.remove('-z-10');
 	});
-
-	if(isMobile()){
-		signinForm?.classList.toggle('landscape:top-0');/* 
-		signupForm?.classList.toggle('landscape:top-0'); */
-	}
 
 	signinForm?.addEventListener("submit", async (e) => {
 		e.preventDefault();
