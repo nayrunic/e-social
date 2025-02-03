@@ -11,14 +11,10 @@ const {source, id} = Astro.props;
 
 ---
 
-<swipe-card class="absolute w-full h-full" data-id={id}>
-    <div class="bg-gray-50 h-full flex items-center justify-center w-full rounded-3xl">
-      <image-container class="w-[550px] flex items-center justify-center rounded-3xl overflow-hidden transition bg-transparent relative">
-        <Image class="w-auto h-[300px] rounded-3xl" src={source} alt="stimulus" draggable="false" id="actual-stimuli"/>
-        <!-- <img id="like" src={like.src} alt="like" draggable="false" 
-          class="h-32 w-32 absolute bottom-0 left-2 opacity-0 "/>
-        <img id="dislike" src={dislike.src} alt="dislike" draggable="false" 
-          class="h-32 w-32 absolute bottom-0 right-2 opacity-0"/> -->
+<swipe-card class="absolute w-full" data-id={id}>
+    <div class="bg-gray-50 w-full justify-items-center rounded-3xl mt-5">
+      <image-container class="max-w-[300px] sm:max-w-[450px] lg:max-w-[600px] flex items-center justify-center rounded-3xl overflow-hidden transition bg-transparent ">
+        <Image class="w-[240px] h-[240px] sm:w-[450px] sm:h-[300px] lg:w-[600px] lg:h-[400px] rounded-3xl" src={source} alt="stimulus" draggable="false" id="actual-stimuli"/>
       </image-container>
     </div>
 </swipe-card>

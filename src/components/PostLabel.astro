@@ -6,9 +6,9 @@ import { randomIntFromInterval } from '@/lib/utils';
 
 ---
 
-<div class="flex gap-4 w-full items-center pl-4 pt-4">  
+<div class="flex gap-4 w-full items-center pl-4">  
     <picture>
-      <img id="profile_image" class="h-16 w-16 rounded-full" src={profile_images[randomIntFromInterval(0,20)]} alt="profile_image"/>
+      <img id="profile_image" class="h-12 w-12 sm:h-16 sm:w-16 rounded-full" src={profile_images[randomIntFromInterval(0,20)]} alt="profile_image"/>
     </picture>
     <div>
       <h2 id="username_text" class="text-sm font-bold mb-1">{usernames[randomIntFromInterval(0, usernames.length)]}</h2>

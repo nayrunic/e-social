@@ -1,78 +1,67 @@
 ---
 import Layout from "@/layouts/Layout.astro"
-import { Image } from 'astro:assets'
 import Arrow from '@/assets/icons/arrow.svg'
-import Logo from '@/assets/icons/esocial.svg'
+import MainNav from '@/components/MainNav.astro'
 ---
 
 <Layout title="Instrucciones">
     <div class="w-full">
-        <nav class="w-full flex justify-between items-center bg-white px-8 py-4 sticky">
-            <div class="flex flex-col md:flex-row md:gap-4 justify-center items-center px-2">
-                <Image src={Logo} alt="logo" class="h-16 w-16 rounded-full bg-white"/>
-                <h1 class="text-sm md:text-xl font-semibold">E-Social</h1>
-            </div>
-            <button class="text-xl font-semibold hover:scale-125 transition-transform">Cerrar Sesión</button>
-        </nav>
-        <header class="w-full h-screen bg-policy bg-cover flex items-center">
-            <div class="w-full h-full bg-blur flex items-center justify-center p-8">
-                <div>
-                    <h1 class="font-extrabold lg:text-8xl md:text-7xl sm:text-4xl text-3xl text-white">Instrucciones</h1>
-                    <div class="p-4 bg-sky-700 mt-4">
-                        <h1 class="font-extrabold lg:text-2xl md:text-xl sm:text-xl text-lg text-white text-center">E-Social 2024</h1>
-                    </div>
-                </div>
-            </div>
-        </header>
         
-        <main class="bg-white flex flex-col justify-center p-8 gap-4 sm:px-[20%]">
-            <h2>Objetivo general</h2>
-            <p>
-                El objetivo general del estudio es reaccionar a una serie de estimulos visuales mediante la herramienta desarrollada. 
-                Para esto, deberá realizar las 2 siguientes acciones principales: <em><b>Reaccionar</b></em> y <em><b>Deslizar</b></em>. 
-
-                A continuación verá una breve explicación de como utlizar la herramienta interactiva.
-            </p>
-            <h2>Reaccionar</h2>  
-            <p>
-                Una de las 2 acciones principales de la herramienta es la barra de reacciones, de acuerdo al estimulo visual, deberá
-                seleccionar la opción que mas se acerque a la emoción que le transmita la imagen.
-            </p>
-            <picture class="mt-4 mb-4">
-                <img src="reaction-bar.gif" alt="reaction-bar" />
-            </picture>
-            <h2>Deslizar</h2>
-            <p>
-                La siguiente acción es la de deslizar. Después de haber seleccionado una emoción de la barra de reacciones deberá hacer clic
-                encima de la imagen y arrastrarla (mover el mouse) hacia la izquierda si no le gustó o la derecha si le gustó el estimulo visual presente.
-            </p>
-            <picture class="mt-4 mb-4">
-                <img src="swipe.gif" alt="swipe" />
-            </picture>
-            <p>
-                En dado caso que encuentre confusa la acción de deslizar, también podrá hacer clic en los respectivos botones de me gusta y no me gusta
-            </p>
-            <picture class="mt-4 mb-4">
-                <img src="liking.png" alt="liking" />
-            </picture>
-            <p>Recuerde que debe seleccionar primero una emoción de la barra de reacciones antes de realizar la acción de deslizar o no
-                podra avanzar a la siguiente imagen. En caso de que lo olvide, aparecerá un mensaje al intentar deslizar para recordarle
-                la acción faltante.
-            </p>
-            <picture class="mt-4 mb-4 w-64 h-64">
-                <img src="error.png" alt="error" />
-            </picture>
-            <h2>Progreso</h2>
-            <p>
-                En la sección derecha de la página podrá ver su progreso y los estimulos visuales restantes.
-                Cada vez que complete uno de los estimulos podrá ver su avance reflejado en la sección de progreso.
-            </p>
-            <picture>
-                <img class="mt-4 mb-4 w-64 h-80" src="progress.png" alt="progress" />
-            </picture>
-            Ya estas listo para empezar a utilizar la herramienta interactiva, da clic en el siguiente botón.
-            <a class="w-52 p-4 rounded-3xl cursor-pointer bg-sky-300 text-white text-center uppercase 
-						font-semibold duration-500 hover:bg-sky-700" href="/feed">Ir a la herramienta</a>
+        <MainNav />
+        <header class="text-2xl sm:text-3xl font-bold text-center bg-sky-700 text-white p-4">Instrucciones - Parte 01</header>
+        
+        <main class="bg-white flex flex-col justify-center items-center p-8 sm:px-[20%]">
+            <div class="container sm:max-w-[900px] h-full p-5 flex flex-col gap-4">
+                <h2>Objetivo general</h2>
+                <p>
+                    El objetivo general del estudio es reaccionar a una serie de estimulos visuales mediante la herramienta desarrollada. 
+                    Para esto, deberá realizar las 2 siguientes acciones principales:
+                </p>
+                <p>
+                    <em><b>Reaccionar</b></em> y <em><b>Deslizar</b></em>. 
+                    A continuación verá una breve explicación de como utlizar la herramienta interactiva.
+                </p>
+                <h2>Reaccionar</h2>  
+                <p>
+                    Una de las 2 acciones principales de la herramienta es la barra de reacciones, de acuerdo al estimulo visual, deberá
+                    seleccionar la opción que mas se acerque a la emoción que le transmita la imagen.
+                </p>
+                <picture class="my-4 mx-auto">
+                    <img src="reaction-bar.gif" alt="reaction-bar" />
+                </picture>
+                <h2>Deslizar</h2>
+                <p>
+                    La siguiente acción es la de deslizar. Después de haber seleccionado una emoción de la barra de reacciones deberá hacer clic
+                    encima de la imagen y arrastrarla (mover el mouse) hacia la izquierda si no le gustó o la derecha si le gustó el estimulo visual presente.
+                </p>
+                <picture class="my-4 mx-auto">
+                    <img src="swipe.gif" alt="swipe" />
+                </picture>
+                <p>
+                    En dado caso que encuentre confusa la acción de deslizar, también podrá hacer clic en los respectivos botones de me gusta y no me gusta
+                </p>
+                <picture class="my-4 mx-auto">
+                    <img src="liking.png" alt="liking" />
+                </picture>
+                <p>Recuerde que debe seleccionar primero una emoción de la barra de reacciones antes de realizar la acción de deslizar o no
+                    podra avanzar a la siguiente imagen. En caso de que lo olvide, aparecerá un mensaje al intentar deslizar para recordarle
+                    la acción faltante.
+                </p>
+                <picture class="my-4 mx-auto w-64 h-64">
+                    <img src="error.png" alt="error" />
+                </picture>
+                <h2>Progreso</h2>
+                <p>
+                    En la sección derecha de la página podrá ver su progreso y los estimulos visuales restantes.
+                    Cada vez que complete uno de los estimulos podrá ver su avance reflejado en la sección de progreso.
+                </p>
+                <picture>
+                    <img class="my-4 mx-auto w-64 h-80" src="progress.png" alt="progress" />
+                </picture>
+                Ya estas listo para empezar a utilizar la herramienta interactiva, da clic en el siguiente botón.
+                <a class="w-52 p-4 rounded-3xl cursor-pointer block bg-sky-300 text-white text-center uppercase 
+                            font-semibold duration-500 hover:bg-sky-700" href="/feed">Ir a la herramienta</a>
+            </div>
         </main>
         <footer class="flex items-center justify-center p-4 bg-white border-t border-black">
             <p class="text-md font-semibold font-mono">E-Social, 2024</p>
@@ -113,14 +102,16 @@ import Logo from '@/assets/icons/esocial.svg'
     const obj = window;
     const arrow = document.getElementById("img-arrow");
     const button = arrow!.parentElement as HTMLButtonElement;
+
     
     button?.addEventListener("click", () => {
         window.scrollTo(0,0);
     })
 
     obj!.onscroll = (e) => {
+        console.log(document.body.offsetHeight)
         if(!arrow) return;
-        if(obj.innerHeight + obj.scrollY > document.body.offsetHeight - 2) {
+        if(obj.innerHeight + obj.scrollY < document.body.offsetHeight) {
             arrow.classList.remove("rotate-180");
             arrow.parentElement!.classList.remove("animate-bounce");
             arrow.parentElement!.classList.remove("cursor-default");

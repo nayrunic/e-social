@@ -5,50 +5,50 @@ import LogoutIcon from '@/assets/icons/logout.svg'
 import HelpIcon from '@/assets/icons/help.svg'
 ---
 
-<nav class="bg-white rounded-3xl w-full block">
-    <ul class="w-full flex flex-row items-center justify-around gap-4 p-2">
-    <li class="flex flex-col justify-center items-center">
-        <picture>
-        <img class="h-8 w-8" src={ESocialIcon.src} alt="esocialicon" />
-        </picture>
-        <p class="text-xs text-gray-400 font-[Poppins]">
-        E-Social
-        </p>
-    </li>
-    <li id="progress-nav" class="flex flex-col justify-center items-center md:hidden cursor-pointer ">
-        <picture>
-        <img class="h-8 w-8" src={ProgressIcon.src} alt="progress" />
-        </picture>
-        <p class="text-xs text-gray-400 font-[Poppins]">
-            Progreso
-        </p>
-    </li>
-    <li id="feed-nav" class="justify-center items-center hidden cursor-pointer ">
-        <picture>
-        <img class="h-8 w-8" src={ProgressIcon.src} alt="feed" />
-        </picture>
-        <p class="text-xs text-gray-400 font-[Poppins]">
-            Estimulos
-        </p>
-    </li>
-    <li id="help">
-        <a class="flex flex-col justify-center items-center cursor-pointer" href="/instructions">
+<nav class="bg-white rounded-3xl w-full">
+    <ul class="w-full flex justify-around gap-4 p-2">
+        <li class="flex flex-col justify-center items-center">
             <picture>
-                <img class="h-8 w-8" src={HelpIcon.src} alt="log-out" />
+                <img class="h-8 w-8" src={ESocialIcon.src} alt="esocialicon" />
             </picture>
-            <p class="text-xs text-gray-400 font-[Poppins]">
-                Instrucciones
+            <p class="text-[10px] sm:text-xs text-gray-400 font-[Poppins]">
+                E-Social
             </p>
-        </a>
-    </li>
-    <li id="logout" class="flex flex-col justify-center items-center cursor-pointer">
-        <picture>
-        <img class="h-8 w-8" src={LogoutIcon.src} alt="log-out" />
-        </picture>
-        <p class="text-xs text-gray-400 font-[Poppins]">
-            Cerrar sesión
-        </p>
-    </li>
+        </li>
+        <li id="progress-nav" class="flex flex-col justify-center items-center lg:hidden cursor-pointer ">
+            <picture>
+                <img class="h-8 w-8" src={ProgressIcon.src} alt="progress" />
+            </picture>
+            <p class="text-[10px] sm:text-xs text-gray-400 font-[Poppins]">
+                Progreso
+            </p>
+        </li>
+        <li id="feed-nav" class="justify-center items-center hidden cursor-pointer ">
+            <picture>
+                <img class="h-8 w-8" src={ProgressIcon.src} alt="feed" />
+            </picture>
+            <p class="text-[10px] sm:text-xs text-gray-400 font-[Poppins]">
+                Estimulos
+            </p>
+        </li>
+        <li id="help">
+            <a class="flex flex-col justify-center items-center cursor-pointer" href="/instructions">
+                <picture>
+                    <img class="h-8 w-8" src={HelpIcon.src} alt="log-out" />
+                </picture>
+                <p class="text-[10px] sm:text-xs text-gray-400 font-[Poppins]">
+                    Instrucciones
+                </p>
+            </a>
+        </li>
+        <li id="logout" class="flex flex-col justify-center items-center cursor-pointer">
+            <picture>
+                <img class="h-8 w-8" src={LogoutIcon.src} alt="log-out" />
+            </picture>
+            <p class="text-[10px] sm:text-xs text-gray-400 font-[Poppins]">
+                Cerrar sesión
+            </p>
+        </li>
     </ul>
 </nav>
 

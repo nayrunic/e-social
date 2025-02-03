@@ -1,0 +1,66 @@
+---
+import { Eyes } from "@/components/Eyes";
+import Layout from "../layouts/Layout.astro"
+import MainNav from "@/components/MainNav.astro"
+import { supabase } from "@/lib/supabase"
+import { RMIT_DATA } from "@/lib/data";
+import Dialog from "@/components/Dialog.astro";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+  return redirect("/");
+}
+
+const { data, error } = await supabase.auth.setSession({
+  refresh_token: refreshToken.value,
+  access_token: accessToken.value,
+});
+
+if (error) {
+  cookies.delete("sb-access-token", {
+    path: "/",
+  });
+  cookies.delete("sb-refresh-token", {
+    path: "/",
+  });
+
+  return redirect("/");
+}
+
+
+---
+
+<Layout title="Parte uno">
+  <Dialog title="Error" message="Lo sentimos, hubo un error, por favor intenta otra vez."/>
+  <div class="h-full flex flex-col">
+    <MainNav />
+    <main class="flex flex-col justify-center items-center py-10 flex-1 border-t border-slate-300">
+      <Eyes rmit={RMIT_DATA} client:load/>
+    </main>
+    <footer class="flex items-center justify-center p-4 bg-white border-t border-slate-300">
+      <p class="text-md font-semibold font-mono">E-Social, 2024</p>
+    </footer>
+  </div>
+</Layout>
+
+<script>
+  const toggleButton = document.getElementById('instructions-toggle') as HTMLButtonElement; 
+  toggleButton.addEventListener("click", toggleInstructions)
+
+  function toggleInstructions() {
+    const content = document.getElementById('instructions-content') as HTMLDivElement;
+    const toggleButton = document.getElementById('instructions-toggle') as HTMLButtonElement;
+
+    content.classList.toggle('hidden'); 
+
+    if (content.classList.contains('hidden')) {
+      toggleButton.innerHTML = `<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg>`;
+    } else {
+       toggleButton.innerHTML = `<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>`;
+    }
+  }
+</script>

@@ -1,70 +1,142 @@
-import type { Question } from "@/types/types";
-import { useState } from "react";
+import type { Answer, Question } from "@/types/types";
+import { useState, type FormEvent } from "react";
+import { paginate, isMobile } from "@/lib/utils";
+import { useMultiPageSurvey } from "./hooks/useMultiPageSurvey";
+import { SurveyPage } from "./PageSurvey";
+import { setDialog } from "@/lib/store";
+import { QUESTION_SIZES, REDIRECTS } from "@/lib/data";
 
 type Props = {
     questions: Question[];
+    type: string;
 }
 
-export const FormSurvey = ({ questions }: Props) => { 
 
-    const [currentQuestion, setCurrentQuestion] = useState(0);
+export const FormSurvey = ({ questions, type }: Props) => { 
+    const isMobileDevice = isMobile();
+    const size = isMobileDevice ? QUESTION_SIZES[type][0] : QUESTION_SIZES[type][1];
 
-    const handleNext = () => { 
-        if(currentQuestion < questions.length - 1) {
-            setCurrentQuestion(currentQuestion + 1);
+    const paginatedQuestions = paginate(questions, size);
+
+    const [answers, setAnswers] = useState<Answer>({});	
+
+    const handleAnswerChange = (questionId: number, value: string) => {  
+        setAnswers((prevAnswers) => ({
+          ...prevAnswers,
+          [`${type}_${questionId}`]: value,
+        }));
+      };
+
+    const { steps, currentPage, handleNext, handleBack, isLastStep, isFirstStep } = useMultiPageSurvey(
+        paginatedQuestions.map((page, index) => 
+                <SurveyPage page={page} 
+                            key={index} 
+                            onAnswerChange={handleAnswerChange} 
+                            savedAnswers={answers}
+                            type={type}
+                />
+        ));
+
+    const handleSubmit = (event: FormEvent) => {
+        event.preventDefault(); 
+        if (!isLastStep) return handleNext()
+        
+        const allAnswered = questions.every((question) => answers[`${type}_${question.id}`]!== undefined && answers[`${type}_${question.id}`]!== null);
+
+        if (!allAnswered) {
+            setDialog(true);
+            return; 
+        }  
+
+        push();
+    };
+
+      const push = async () => {
+        const res = await fetch('/api/surveys', {
+            method: "POST",
+            body: JSON.stringify({
+              table: type,
+              answers: { answers },
+            })
+          });
+    
+        const json = await res.json();
+    
+        const {message, table, error} = json;
+    
+        if(error){
+            console.log(error)
+            return;
         }
-    }
+    
+        console.log(message)
+        window.location.href = REDIRECTS[`${table}`];
+      }
 
     return (
-        <div className="container mx-auto p-4 flex justify-center"> 
-            <div className="bg-white rounded-lg shadow-md p-6 ">
-                <h2 className="text-xl font-bold mb-4">IRI</h2> 
-                <div className=" flex flex-col"> 
-                    {
-                        questions.map((pregunta, index) => (
-                            <div className="flex flex-col md:flex-row rounded-md p-4 pb-0 md:justify-items-center border md:border-0 mb-3 md:mb-0" key={index}>
-                                <p className="text-xs font-semibold pt-5 md:border-r md:border-t md:w-2/3 pb-2 md:pb-0">{pregunta.text}</p>
-                                <div className="">
-                                    <div className="flex items-center justify-between md:space-x-4 border-t pt-2 pl-2"> 
-                                        <div className="flex items-center space-x-2 ">
-                                            <input type="radio" name="q1" id="q1-1" className="mr-1"/>
-                                            <label>1</label>
-                                        </div>
-                                        <div className="flex items-center space-x-2 ">
-                                            <input type="radio" name="q1" id="q1-2" className="mr-1"/>
-                                            <label>2</label>
-                                        </div>
-                                        <div className="flex items-center space-x-2 ">
-                                            <input type="radio" name="q1" id="q1-3" className="mr-1"/>
-                                            <label>3</label>
-                                        </div>
-                                        <div className="flex items-center space-x-2 ">
-                                            <input type="radio" name="q1" id="q1-4" className="mr-1"/>
-                                            <label>4</label>
-                                        </div>
-                                        <div className="flex items-center space-x-2 ">
-                                            <input type="radio" name="q1" id="q1-5" className="mr-1"/>
-                                            <label>5</label>
-                                        </div>
-                                    </div>
-                                </div> 
+        <div className="container mx-auto p-4 flex justify-center mt-5"> 
+            <div className="bg-white rounded-lg shadow-md p-6 xl:w-[1100px]">
+                {
+                    type==="IRI" && (
+                        <div className="flex w-full justify-around mb-4 p-4">
+                            <div className="w-1/3 hidden lg:block"></div>
+                            <div className="flex justify-between flex-1 gap-4 text-center">
+                                <p className="pl-2">1 - No me describe <br/> muy bien</p>
+                                <p>5 -Me describe <br/> bien</p>
                             </div>
-                        ))
+                        </div>
+                    )
+                }
+
+                {   
+                    type==="MFQ_1" && (
+                        <div className="flex justify-evenly w-full mb-4 p-4">
+                            <div className="w-1/3 hidden lg:block"></div>
+                            <div className="flex md:flex-row flex-col md:flex-1 items-center md:gap-6 gap-2 text-center text-xs">
+                                <p>0 - Para nada relevante</p>
+                                <p>1 - No muy relevante </p>
+                                <p>2 - Ligeramente relevante</p>
+                                <p>3 - Algo relevante</p>
+                                <p>4 - Muy relevante</p>
+                                <p>5 - Extremadamente relevante</p>
+                            </div>
+                        </div>
+                    )
+                }
+
+                {
+                    type==="MFQ_2" && (
+                        <div className="flex justify-evenly w-full mb-4 p-4">
+                            <div className="w-1/3 hidden lg:block"></div>
+                            <div className="flex md:flex-row flex-col md:flex-1 md:gap-6 gap-2 items-center text-center text-xs">
+                                <p>0 - <b className="hidden md:block"/> Muy en desacuerdo</p>
+                                <p>1 - <br className="hidden md:block"/> Moderadamente en desacuerdo</p>
+                                <p>2 - <br className="hidden md:block"/> Ligeramente en desacuerdo</p>
+                                <p>3 - <br className="hidden md:block"/> Ligeramente de acuerdo</p>
+                                <p>4 - <br className="hidden md:block"/> Moderadamente de acuerdo</p>
+                                <p>5 - <br className="hidden md:block"/> Muy de acuerdo</p>
+                            </div>
+                        </div>
+                    )
+                }
+
+                <form onSubmit={handleSubmit}>
+                    {
+                        steps[currentPage]
                     }
-                    <div className="flex justify-evenly">
-                        <button onClick={handleNext} 
-                                className="w-28 mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded self-center">
-                                    Siguiente
+                    <div className="flex justify-center gap-4 pt-6">
+                        <button onClick={handleBack} 
+                                type="button"
+                                disabled={isFirstStep}
+                                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed">
+                                    Anterior
                         </button>
-                        {
-                            currentQuestion > 0 && 
-                            <button onClick={() => setCurrentQuestion(currentQuestion - 1)} 
-                                    className="w-28 mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded self-center">
-                                        Anterior
-                            </button>
-                        }
+                        <button type="submit"
+                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300">
+                                    {isLastStep ? "Finalizar" : "Siguiente"}
+                        </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )

@@ -12,7 +12,17 @@ type Question = {
 
 export type User = {
         study_answers: Question[];
-        stimuli_left: Stimulus[]
+        stimuli_left: Stimulus[];    
+        id: string;
+        email: string;
+        profile_completed: boolean;
+        name: string;
+        age: number;
+        country: string;
+        genre: string;
+        studies: string;
+        social_hours: number;
+        use_social: boolean;
 }|null;
 
 export const selectedReaction = atom<string>("none");

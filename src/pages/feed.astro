@@ -10,7 +10,7 @@ import ProgressCard from '@/components/ProgressCard.astro'
 import ReactionBar from '@/components/ReactionBar.astro';
 import Card from '@/components/Card.astro';
 import Dialog from '@/components/Dialog.astro'
-import Nav from '@/components/FeedNav.astro';
+import FeedNav from '@/components/FeedNav.astro';
 import PostLabel from '@/components/PostLabel.astro'
 
 import { shuffle } from '@/lib/utils';
@@ -47,28 +47,31 @@ let dbUser: User = (await supabase.from('users').select().eq('id', `${data!.user
 
 if(!dbUser) return;
 
-const loggedUser = { stimuli_left: dbUser.stimuli_left, study_answers: dbUser.study_answers }
 
-setUser(loggedUser);
+setUser(dbUser);
 
-const actualStimuli = loggedUser.stimuli_left.map((arr1Item: any) => stimuli.filter(arr2Item => arr1Item.title === arr2Item.title)).flat();
+const actualStimuli = dbUser.stimuli_left.map((arr1Item: any) => stimuli.filter(arr2Item => arr1Item.title === arr2Item.title)).flat();
 const shuffledStimuli  = shuffle(actualStimuli);
 
 ---
 <Layout title='E-Social'>
   <Dialog title="Error" message="Selecciona una reacción"/>
-  <div id="feed" class='h-screen md:px-20 md:py-2 p-2 gap-2 grid grid-cols-1 md:grid-cols-[1fr_0.7fr]' data-user={JSON.stringify(user.get())}>
-    <div class="flex flex-col items-center gap-4 w-full h-full">
-      <Nav />
-      <main id="main" class="flex flex-col items-center gap-4 w-full h-full">   
-        <div class="bg-white rounded-3xl w-full h-full flex justify-center items-start md:p-8 p-4">
+  <div id="feed" class=' max-w-[1280px] lg:mx-auto mx-2 sm:pt-10 lg:pt-20 mb-4 h-full min-h-[660px] max-h-[1280px] sm:px-20 sm:py-2 p-2 gap-2 grid grid-cols-1 lg:grid-cols-[1fr_0.7fr] grid-rows-[0.1fr_1fr]' data-user={JSON.stringify(user.get())}>
+    <div class="w-full space-y-2">
+      <FeedNav />
+      <main id="main" class="flex flex-col items-center w-full max-h-[600px] sm:max-h-[720px] lg:max-h-[900px]">   
+        <div class="bg-white rounded-3xl w-full h-full flex justify-center items-start md:p-8 p-4 ">
             <div id="slider" class="w-full h-full bg-gray-50 flex flex-col items-center rounded-3xl p-2">
                 <PostLabel />
-                <div class="rounded-3xl w-full h-full flex flex-col items-center justify-center">
-                <div id="card-container" class="relative w-full h-full overflow-hidden">
-                    <div class="absolute w-full h-full">
-                      <div class="bg-gray-50 h-full flex items-center justify-center w-full rounded-3xl">
-                        <p class="text-sm text-center">Has terminado de reaccionar a todos los estimulos,<br/> gracias por participar</p>
+                <div class="rounded-3xl w-full h-full flex flex-col justify-center items-center lg:gap-8">
+                <div id="card-container" class="relative w-full h-[280px] sm:h-[320px] lg:h-[420px] overflow-hidden">
+                    <div class="absolute w-full h-[280px] sm:h-[320px] lg:h-[420px]">
+                      <div class="bg-gray-50 flex flex-col justify-center items-center w-full h-full">
+                        <p class="text-sm text-center">Has terminado de reaccionar <br/> a todos los estimulos.</p>
+                        <a href="/instructions-02" class="w-32 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white text-center 
+                          font-semibold mt-5 mb-5 duration-500 flex justify-center items-center hover:bg-sky-700" type="button" >
+                          Continuar
+                      </a> 
                       </div>
                     </div>
                     {
@@ -79,26 +82,26 @@ const shuffledStimuli  = shuffle(actualStimuli);
                         })
                     }
                 </div>
-                <div class="flex justify-center items-center w-auto mb-4 md:mb-0">
-                  <button id="dislike_button">
-                    <img class="md:max-h-8 md:max-w-8 md:h-10 md:w-10 max-w-6 max-h-6 hover:scale-125 transition-transform" src={dislike.src} alt="dislike" />
+                <div class="flex justify-center items-center w-full max-w-[250px] sm:max-w-[400px] mb-4 mt-2 md:mb-0">
+                  <button id="dislike_button" class="border border-red-600 rounded-full p-3 justify-items-center">
+                    <img class="md:max-h-8 md:max-w-8 md:h-10 md:w-10 max-w-6 max-h-6 hover:scale-125 transition-transform " src={dislike.src} alt="dislike" />
                   </button>
-                  <img class="xl:w-auto xl:max-w-48 ml-5 mr-2 max-w-24 w-auto" src={arrow_left.src} alt="arrow-red" />
-                  <img class="xl:w-auto xl:max-w-48 mr-5 ml-2 max-w-24 w-auto" src={arrow_right.src} alt="arrow-green" />
-                  <button id="like_button">
+                  <img class="sm:max-w-16 lg:max-w-24 ml-5 mr-2 max-w-12 w-auto" src={arrow_left.src} alt="arrow-red" />
+                  <img class="sm:max-w-16 lg:max-w-24 mr-5 ml-2 max-w-12 w-auto" src={arrow_right.src} alt="arrow-green" />
+                  <button id="like_button" class="border border-green-600 rounded-full p-3 justify-items-center">
                     <img class="md:max-h-8 md:max-w-8 md:h-10 md:w-10 max-w-6 max-h-6 hover:scale-125 transition-transform" src={like.src} alt="like" />
                   </button>
                 </div>
                 <div id="reactions" class="px-4 py-1 mb-2 mt-2 bg-blur rounded-3xl">
                     <ReactionBar />
                 </div>
+                <p class="max-w-[400px] text-center mt-2 text-xs">Desliza o da clic en los pulgares para indicar si te agrada o no el estimulo</p>
                 </div>
             </div>
         </div>
       </main>
     </div>
     <ProgressCard />
-    
   </div>
 </Layout>
 
