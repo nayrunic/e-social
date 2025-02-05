@@ -13,7 +13,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             {   
                  [table]: {
                     answers,
-                }
+                },
+                [`${table}_done`]: true
             })
         .eq('id', user.data.user?.id);
 

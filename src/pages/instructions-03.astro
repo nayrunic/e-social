@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro"
+import MainNav from "@/components/MainNav.astro"
+---
+
+<Layout title="instructions-03">
+    <div class="h-full w-full flex flex-col">
+        <MainNav />
+        <header class="text-2xl sm:text-3xl font-bold text-center bg-sky-700 text-white p-4">Instrucciones - Parte 03</header>
+        <main class="bg-white flex flex-col items-center p-8 sm:px-[20%] flex-1">
+            <div class="container sm:max-w-[900px] h-full p-5"> 
+                <div class="flex flex-col gap-4">
+                    <p class="text-lg">
+                        Por favor califique los enunciados que encontrará al hacer clic en el botón "continuar". 
+                        A su vez, por favor tenga en cuenta la escala de 0 a 5 que aparece a continuación. 
+                    </p>
+                    <p>              
+                        Hasta qué punto son relevantes las siguientes frases para decidir si algo está bien o mal. 
+                    </p>
+                    <picture class="my-10">
+                        <img src="mfqa-tutorial.png" alt=mfqa-scale" class="" />
+                    </picture>
+            
+                    <p class="text-lg ">
+                        Lea cada ítem atentamente antes de responder. Intente ser lo más sincero/a posible.
+                    </p>
+
+                    <div class="w-full flex items-center justify-center">
+                        <a class="w-52 p-2 rounded-3xl cursor-pointer block mt-10 bg-sky-300 text-white text-center 
+                        font-semibold duration-500 hover:bg-sky-700" href="/section-03">Continuar</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="flex items-center justify-center p-4 bg-white border-t border-black">
+            <p class="text-md font-semibold font-mono">E-Social, 2024</p>
+        </footer>
+    </div>
+</Layout>
+

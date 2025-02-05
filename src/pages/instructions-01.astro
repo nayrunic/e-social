@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro"
+import MainNav from "@/components/MainNav.astro"
+---
+
+<Layout title="instructions-01">
+    <div class="h-full w-full flex flex-col">
+        <MainNav />
+        <header class="text-2xl sm:text-3xl font-bold text-center bg-sky-700 text-white p-4">Instrucciones - Parte 01</header>
+        <main class="bg-white flex flex-col items-center p-8 sm:px-[20%] flex-1">
+            <div class="container sm:max-w-[900px] h-full p-5"> 
+                <div class="flex flex-col gap-4">
+                    <p class="text-lg">
+                        <b>La Prueba de Leer la Mente</b> en los Ojos consiste en 17 fotografías, cada una dándote cuatro opciones.
+                    </p>
+                    <p class="text-lg">
+                        Para cada par de ojos, <b>elige qué palabra describe mejor</b> lo que la persona en la imagen está <b>pensando o sintiendo</b> 
+                    </p>
+                    <p class="text-lg">
+                        Puede que sientas que más de una palabra es aplicable, pero por favor elige solo una palabra, 
+                        la palabra que consideres que es la más adecuada. 
+                    </p>
+                    <p class="text-lg">
+                        Antes de hacer tu elección, asegúrate de que has leído las cuatro. 
+                        Intenta realizar la tarea de forma rápida y precisa.
+                    </p>
+
+                    <p class="text-lg">A continuación te encontrarás con la siguiente herramienta:</p>
+            
+                    <picture class="my-10 w-full flex justify-center">
+                        <img src="rmit-1-tutorial.png" alt=rmit-1" class="" />
+                    </picture>
+
+                    <p class="text-lg">Deberás dar clic en uno de los cuatro botones para escoger la respuesta que consideres más adecuada.</p>
+            
+                    <picture class="my-10 w-full flex justify-center">
+                        <img src="rmit-1-gif.gif" alt=rmit-1-gif" class="" />
+                    </picture>
+
+                    <p>Utiliza el botón siguiente para avanzar con las imágenes. Si deseas cambiar tus respuestas también puedes utilizar el
+                        boton "Anterior" para volver y cambiar la respuesta que desees.
+                    </p>
+
+                    <picture class="my-10 w-full flex justify-center">
+                        <img src="rmit-2-gif.gif" alt=rmit-2-gif" class="" />
+                    </picture>
+
+                    <p class="text-lg ">
+                        Lea cada ítem atentamente antes de responder. Intente ser lo más sincero/a posible.
+                    </p>
+
+                    <div class="w-full flex items-center justify-center">
+                        <a class="w-52 p-2 rounded-3xl cursor-pointer block mt-10 bg-sky-300 text-white text-center 
+                        font-semibold duration-500 hover:bg-sky-700" href="/section-01">Continuar</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="flex items-center justify-center p-4 bg-white border-t border-black">
+            <p class="text-md font-semibold font-mono">E-Social, 2024</p>
+        </footer>
+    </div>
+</Layout>
+

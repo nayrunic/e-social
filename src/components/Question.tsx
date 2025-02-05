@@ -34,14 +34,14 @@ export const QuestionComponent = ({ text, index: questionId, onAnswerChange, sav
                 {
                     values.map((value) => {
                         return (
-                            <div className="space-x-1" key={value}>
+                            <div className="space-x-1 flex items-center" key={value}>
                                 <input 
                                     type="radio"
                                     name={`${type}_${questionId}`}
                                     value={value.toString()}
                                     checked={selectedValue === value.toString()}
                                     onChange={handleChange}
-                                    className="mr-1" 
+                                    className="mr-1 md:size-4" 
                                 />
                                 <label>{value}</label>
                             </div>
