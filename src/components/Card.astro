@@ -1,7 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-//import like from '@/assets/misc/like.png'
-//import dislike from '@/assets/misc/dislike.png'
 
 interface Props {
     source: ImageMetadata;
@@ -70,12 +68,15 @@ const {source, id} = Astro.props;
   let pullDeltaX = 0
 
   async function fetchData () {
+
+    const feed_done = stimuliLeft.get().length > 0 ? false : true;
+
     await fetch('/api/stimuli', {
       method: "POST",
       body: JSON.stringify({
         stimuli_left: stimuliLeft.get(),
         answered_questions: answeredQuestions.get(),
-        feed_done: stimuliLeft.get().length < 1 ? true : false
+        feed_done
       })
     });
   }

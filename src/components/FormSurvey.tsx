@@ -69,7 +69,6 @@ export const FormSurvey = ({ questions, type }: Props) => {
             return;
         }
     
-        console.log(message)
         window.location.href = REDIRECTS[`${table}`];
       }
 

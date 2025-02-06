@@ -67,9 +67,7 @@ export const Eyes = ({ rmit }: Props) => {
         return;
     }
 
-    console.log(message);
-
-    window.location.href = "/section-02"
+    window.location.href = "/instructions-02"
 
 
   }
@@ -121,7 +119,7 @@ export const Eyes = ({ rmit }: Props) => {
             </div>
           </div>
           <div className="p-4 border border-slate-300 rounded-lg shadow-md max-w-3xl bg-white">
-            <img src={currentCard.imgSrc} alt="rmit" />
+            <img src={currentCard.imgSrc} alt="rmit" loading="eager" className="w-full"/>
             <ul className="grid grid-cols-2 text-center gap-2 mt-4">
               {currentCard.options.map((option) => (
                 <li
