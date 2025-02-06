@@ -59,6 +59,24 @@ import profile19 from "@/assets/misc/profile_pictures/19.jpg";
 import profile20 from "@/assets/misc/profile_pictures/20.jpg";
 import type { QuestionSizes } from "@/types/types";
 
+import rmit1 from "@/assets/rmit/1.png"
+import rmit2 from "@/assets/rmit/2.png"
+import rmit3 from "@/assets/rmit/3.png"
+import rmit4 from "@/assets/rmit/4.png"
+import rmit5 from "@/assets/rmit/5.png"
+import rmit6 from "@/assets/rmit/6.png"
+import rmit7 from "@/assets/rmit/7.png"
+import rmit8 from "@/assets/rmit/8.png"
+import rmit9 from "@/assets/rmit/9.png"
+import rmit10 from "@/assets/rmit/10.png"
+import rmit11 from "@/assets/rmit/11.png"
+import rmit12 from "@/assets/rmit/12.png"
+import rmit13 from "@/assets/rmit/13.png"
+import rmit14 from "@/assets/rmit/14.png"
+import rmit15 from "@/assets/rmit/15.png"
+import rmit16 from "@/assets/rmit/16.png"
+import rmit17 from "@/assets/rmit/17.png"
+
 export const IRI_QUESTIONS = [
   {
     id: 1,
@@ -213,74 +231,74 @@ export const MFQ_QUESTIONS_PART_2 = [
 export const RMIT_DATA = [
   {
     id: 1,
-    imgSrc: "src/assets/rmit/1.png",
+    imgSrc: rmit1.src,
     options: ["Alegre", "Compasivo/a", "Irritado/a", "Aburrido/a" ]
   },
   {
     id: 2,
-    imgSrc: "src/assets/rmit/2.png",
+    imgSrc: rmit2.src,
     options: ["Aterrorizado/a", "Preocupado/a", "Arrogante", "Molesto/a"]
   },
   {
     id: 3,
-    imgSrc: "src/assets/rmit/3.png",
+    imgSrc:rmit3.src,
     options: ["Chistoso/a", "Conmocionado/a", "Deseoso/a", "Convencido/a"]
   },  {
     id: 4,
-    imgSrc: "src/assets/rmit/4.png",
+    imgSrc:rmit4.src,
     options: ["Chistoso/a", "Insistente", "Divertido/a", "Relajado/a"]
   },
   {
     id: 5,
-    imgSrc: "src/assets/rmit/5.png",
+    imgSrc:rmit5.src,
     options: ["Irritado/a", "Sarcástico/a", "Preocupado/a", "Simpático/a"]
   },  {
     id: 6,
-    imgSrc: "src/assets/rmit/6.png",
+    imgSrc:rmit6.src,
     options: ["Aterrado/a", "Soñador/ra", "Impaciente", "Alamardo/a"]
   },  {
     id: 7,
-    imgSrc: "src/assets/rmit/7.png",
+    imgSrc:rmit7.src,
     options: ["Apenado/a", "Simpático/a", "Incómodo/a", "Desanimado/a"]
   },  {
     id: 8,
-    imgSrc: "src/assets/rmit/8.png",
+    imgSrc:rmit8.src,
     options: ["Desanimado/a", "Aliviado/a", "Tímido/a", "Excitado/a"]
   },  {
     id: 9,
-    imgSrc: "src/assets/rmit/9.png",
+    imgSrc:rmit9.src,
     options: ["Molesto/a", "Hostil", "Horrorizado/a", "Ensimismado/a"]
   },  {
     id: 10,
-    imgSrc: "src/assets/rmit/10.png",
+    imgSrc: rmit10.src,
     options: ["Cauteloso/a", "Insistente", "Aburrido/a", "Aterrado/a"]
   },  {
     id: 11,
-    imgSrc: "src/assets/rmit/11.png",
+    imgSrc: rmit11.src,
     options: ["Aterrorizado/a", "Divertido/a", "Arrepentido/a", "Adulador/ra"]
   },  {
     id: 12,
-    imgSrc: "src/assets/rmit/12.png",
+    imgSrc: rmit12.src,
     options: ["Indiferente", "Abochornado/a", "Escéptico/a", "Desanimado/a"]
   },  {
     id: 13,
-    imgSrc: "src/assets/rmit/13.png",
+    imgSrc: rmit13.src,
     options: ["Resuelto/a", "Expectante", "Amenazante", "Tímido/a"]
   },  {
     id: 14,
-    imgSrc: "src/assets/rmit/14.png",
+    imgSrc: rmit14.src,
     options: ["Irritado/a", "Desilusionado/a", "Deprimido/a", "Acusante"]
   },  {
     id: 15,
-    imgSrc: "src/assets/rmit/15.png",
+    imgSrc: rmit15.src,
     options: ["Contemplatvio/a", "Conmocionado/a", "Alentador/ra", "Divertido/a"]
   },  {
     id: 16,
-    imgSrc: "src/assets/rmit/16.png",
+    imgSrc: rmit16.src,
     options: ["Irritado/a", "Pensativo/a", "Alentador/ra", "Compresivo/a"]
   },  {
     id: 17,
-    imgSrc: "src/assets/rmit/17.png",
+    imgSrc: rmit17.src,
     options: ["Dubitativo/a", "Cariñoso/a", "Alegre", "Aterrado/a"]
   }
 ]
