@@ -26,21 +26,26 @@ import Dialog from '@/components/Dialog_2.astro';
 					<div class="bg-slate-200 rounded-3xl mb-5">
 						<div class="flex gap-2 justify-between items-center p-2">
 							<img class="w-6 h-6 rounded-full" src={userIcon.src}>
-							<input id="email-in" type="text" name="email" placeholder="Usuario">
+							<input required id="email-in" type="text" name="email" placeholder="Usuario">
 						</div>
 					</div>
 					<p class="landscape:mb-10 mb-20 font-bold text-sm text-gray-400">
 						Si ya tienes un usuario, <br/> puedes usarlo para iniciar sesion
 					</p>
 					<p class="text-xs text-red-400 hidden" data-wrong></p>
+
+					<div class="flex">
+						<input type="checkbox" id="terminos" name="terminos" required />
+						<label class="flex gap-2 px-5 text-xs max-w-72" for="terminos">
+							<p>Al entrar a la plataforma acepto que he leído y estoy de acuerdo con el 
+							<a  href="/terms" class="text-sky-800 italic underline hover:cursor-pointer">consentimiento informado</a></p>
+						</label>
+					</div>
+					
 					<button class="w-36 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white uppercase 
 						font-semibold mt-5 mb-5 duration-500 hover:bg-sky-700" type="submit" >
 						entrar
 					</button>
-					<label class="flex gap-2 px-5 text-xs max-w-72" for="terminos">
-						<p>Al entrar a la plataforma acepto que he leído y estoy de acuerdo con el 
-						<a  href="/terms" class="text-sky-800 italic underline hover:cursor-pointer">consentimiento informado</a></p>
-					</label>
 				</form>
 			</div>
 		</main>

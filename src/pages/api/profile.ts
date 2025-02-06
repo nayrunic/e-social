@@ -6,7 +6,11 @@ import { setStimuliLeft } from "@/lib/store";
 export const POST: APIRoute = async ({ request, redirect }) => { 
     
     const formData = await request.formData();
-    const formDataObject = Object.fromEntries(formData.entries());
+    const {name, age, country, genre, studies, social_hours, use_social, biological_sex, social_since} = Object.fromEntries(formData.entries());
+
+    if(!name || !age || !country || !genre || !studies || !social_hours || !use_social || !biological_sex || !social_since) {
+        return new Response(JSON.stringify({message: "Por favor completa todos los campos", status: 400}));
+    }
 
     const user = await supabase.auth.getUser();
 
@@ -15,25 +19,26 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         .update(
             { 
                 profile_completed: true,
-                name: formDataObject.name,
-                age: formDataObject.age,
-                country: formDataObject.country,
-                genre: formDataObject.genre,
-                studies: formDataObject.studies,
-                social_hours: formDataObject.social_hours,
-                use_social: formDataObject.use_social,
+                name: name,
+                age: age,
+                country: country,
+                genre: genre,
+                studies: studies,
+                social_hours: social_hours,
+                use_social: use_social,
                 stimuli_left: getTitles(),
-                biological_sex: formDataObject.biological_sex,
-                social_since: formDataObject.social_since
+                biological_sex: biological_sex,
+                social_since: social_since,
             })
-        .eq('id', user.data.user?.id);
+        .eq('id', user.data.user?.id)
+
 
     if(response.error){
-        return new Response(response.error.message, { status: 500 });
+        return new Response(JSON.stringify({message: "Server Error", status: 500}));
     }
 
     setStimuliLeft(getTitles());
 
-    return redirect('/instructions');
+    return new Response(JSON.stringify({message: "Profile Created", status: 200}));
 
 }
