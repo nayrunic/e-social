@@ -75,7 +75,7 @@ const {source, id} = Astro.props;
       body: JSON.stringify({
         stimuli_left: stimuliLeft.get(),
         answered_questions: answeredQuestions.get(),
-        feed_done: stimuliLeft.get().length > 38 ? true : false
+        feed_done: stimuliLeft.get().length < 1 ? true : false
       })
     });
   }
