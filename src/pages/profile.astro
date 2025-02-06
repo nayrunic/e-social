@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro"
 import { countries, studies } from "@/lib/data";
 
 import { supabase } from "../lib/supabase";
+import Dialog from "@/components/Dialog.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -32,6 +33,7 @@ if (error) {
 ---
 
 <Layout title="Completa tu perfil">
+    <Dialog title="Eror" message="Hubo un error en el servidor, por favor intenta nuevamente." />
     <div class="h-[100dvh] flex justify-center items-start p-8">
         <div class="flex flex-col justify-center items-center gap-16 pb-8">
             <h1 class="text-4xl font-bold text-center">Completa tu perfil</h1>
@@ -209,6 +211,8 @@ if (error) {
 </style>
 
 <script>
+import { setDialog } from "@/lib/store";
+
 
     const form1 = document.getElementById('step1');
     
@@ -228,6 +232,27 @@ if (error) {
     })
     buttonPrevious2?.addEventListener('click', () => {
         form1!.style.marginLeft = "-33.4%";
+    })
+
+
+    form1?.addEventListener("subtmit", async (e) => {
+        e.preventDefault();
+
+        const form = e?.currentTarget as HTMLFormElement;
+
+        const res = await fetch(form.action, {
+			method: form.method,
+			body: new FormData(form)
+		});
+
+        const json = await res.json();
+
+		if(json.status === 500){
+			setDialog(true);
+			return
+		}
+
+        window.location.href = res.url;
     })
 
 
