@@ -66,3 +66,5 @@ export const user = atom<User>(null);
 export const setUser = (current: User) => {
     user.set(current);
 }
+
+export const getUser = () => user.get()

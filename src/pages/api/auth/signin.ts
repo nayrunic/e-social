@@ -30,6 +30,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   });
 
   const loggedUser = (await supabase.from('users').select().eq('id', `${data!.user!.id}`)).data;
+  console.log(loggedUser![0].id);
   let isUserProfileComplete = false;
   let isFeedDone = false;
   let isRmitDone = false;

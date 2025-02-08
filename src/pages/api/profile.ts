@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
 import { getTitles } from "@/lib/data";
-import { setStimuliLeft } from "@/lib/store";
+import { getUser, setStimuliLeft } from "@/lib/store";
 
 export const POST: APIRoute = async ({ request, redirect }) => { 
     
@@ -12,7 +12,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         return new Response(JSON.stringify({message: "Por favor completa todos los campos", status: 400}));
     }
 
-    const user = await supabase.auth.getUser();
+    
+    const user = getUser();
+    console.log("user id: ", user?.id);
 
     const response = await supabase
         .from('users')
@@ -30,7 +32,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 biological_sex: biological_sex,
                 social_since: social_since,
             })
-        .eq('id', user.data.user?.id)
+        .eq('id', user?.id)
 
 
     if(response.error){
