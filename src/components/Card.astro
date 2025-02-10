@@ -42,10 +42,10 @@ const {source, id} = Astro.props;
   import { 
     addAnsweredQuestion, 
     selectedReaction,
-    selectReaction, setDialog, 
+    selectReaction, isDialogOpen, 
     addProgress, 
     removeStimulus, stimuliLeft, 
-    answeredQuestions} from '@/lib/store';
+    answeredQuestions} from '@/store/store';
 
   import { usernames, profile_images } from '@/lib/data';
   import { randomIntFromInterval } from '@/lib/utils';
@@ -135,7 +135,7 @@ const {source, id} = Astro.props;
 
         if (decisionMade) {
           if(selectedReaction.get() === "none") {
-            setDialog(true);
+            isDialogOpen.set(true);
             reset();
             resetPosition();
             return;
@@ -201,7 +201,7 @@ const {source, id} = Astro.props;
     }
 
     if(selectedReaction.get() === "none") {
-      setDialog(true);
+      isDialogOpen.set(true);
       return;
     }
 
