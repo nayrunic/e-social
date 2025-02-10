@@ -1,15 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import { user } from "@/store/store";
 
-const user2 = user.get();
 ---
 
 <Layout title="End">
     <div class="h-full flex justify-center items-center">
         <div class="border border-slate-300 shadow-lg text-lg bg-white p-10 rounded-lg">
             <h1>Felicidades has terminado el estudio!</h1>
-            <p>Gracias por partipar {user2 ? user2.name : "Jugador"}</p>
+            <p>Gracias por partipar Jugador</p>
         </div>
     </div>
 </Layout>
