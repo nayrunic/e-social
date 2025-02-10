@@ -18,7 +18,8 @@ export const POST: APIRoute = async ({ request, redirect,cookies }) => {
 
     console.log("Usuario: ",session.data.user);
 
-    const {data, error} = await supabase
+    try {
+        const {data, error} = await supabase
         .from('users')
         .update(
             { 
@@ -37,11 +38,18 @@ export const POST: APIRoute = async ({ request, redirect,cookies }) => {
         .eq('id', session.data.user?.id)
         .select()
 
-
-    if(error){
+        if(error){
+            return new Response(JSON.stringify({error: { message: "Server Error", status: 500}}));
+        }
+    
+        return new Response(JSON.stringify({data: { user: data[0], status: 200}}));
+    } catch (error) {
         return new Response(JSON.stringify({error: { message: "Server Error", status: 500}}));
     }
 
-    return new Response(JSON.stringify({data: { user: data[0], status: 200}}));
+
+
+
+
 
 }
