@@ -53,6 +53,8 @@ import HelpIcon from '@/assets/icons/help.svg'
 </nav>
 
 <script>
+import { isDialogOpen, setDialogData } from "@/store/store";
+
     const logoutButton = document.querySelector("#logout");
     const progressButton = document.querySelector("#progress-nav");
     const feedButton = document.querySelector("#feed-nav");
@@ -62,11 +64,19 @@ import HelpIcon from '@/assets/icons/help.svg'
     const setListeners = () => {
         if(!logoutButton) return;
         logoutButton.addEventListener("click", async () => {
-            const res = await fetch('/api/auth/signout', {
+            const res = await fetch('/api/auth/signout', 
+            {
                 method: "GET"
             });
 
-            window.location.href = res.url;
+            const {error} = await res.json();
+
+            if(error){
+                isDialogOpen.set(true)
+                setDialogData({title:"Error", message:"Hubo un error en el servidor."})
+            }
+
+            window.location.href = "/";
         });
 
         if(!progressButton || !feedButton) return;

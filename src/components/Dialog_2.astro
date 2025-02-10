@@ -23,14 +23,14 @@ const { title} = Astro.props;
     const dialog = document.querySelector("[data-is-open]");
     const button = document.querySelector("[back-button]");
     const button_data = document.querySelector("[data-button]");
-    const form = document.getElementById("signin-form") as HTMLFormElement;
+    const username = document.getElementById("username") as HTMLInputElement;
 
     const handleSignIn = async (e: Event) => {
         isDialogOpen.set(false);
 
 		const res = await fetch("/api/auth/signin", {
 			method: "POST",
-			body: new FormData(form)
+			body: JSON.stringify({username: username.value})
 		});
 
 		const {error, data} = await res.json();

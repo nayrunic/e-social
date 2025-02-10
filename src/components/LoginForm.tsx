@@ -22,7 +22,7 @@ const Step1 = ({updateFields, errorPRef}: Step1Props) => {
             <div className="bg-slate-200 rounded-3xl mb-5">
                 <div className="flex gap-2 items-center p-2">
                     <img className="w-6 h-6 rounded-full" src={userIcon.src} />
-                    <input className="outline-0 bg-none border-0 text-slate-700 max-w-54 placeholder:text-gray-400 placeholder:pb-4" required type="text" name="username" placeholder="Usuario" onChange={e => updateFields({username: e.target.value})}/>
+                    <input id="username" className="outline-0 bg-none border-0 text-slate-700 max-w-54 placeholder:text-gray-400 placeholder:pb-4" required type="text" name="username" placeholder="Usuario" onChange={e => updateFields({username: e.target.value})}/>
                 </div>
             </div>
             <p className="landscape:mb-10 mb-20 font-bold text-sm text-gray-400">
@@ -144,7 +144,7 @@ export const LoginForm = () => {
 	}
 
     return (
-        <form onSubmit={handleSignUp}>
+        <form id="signin-form" onSubmit={handleSignUp}>
             {
                 steps[currentPage]
             }

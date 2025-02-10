@@ -197,6 +197,14 @@ export const FormProfile = () => {
 			return
 		};
 
+        console.log(data.user)
+
+        if(!data.user){
+            setDialogData({title: "Error", message: "Lo sentimos, hubo un error en el servidor, por favor vuelve a intentarlo."})
+			isDialogOpen.set(true);
+			return
+        }
+
         window.location.href = "/instructions";
     }
 

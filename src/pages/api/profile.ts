@@ -19,6 +19,7 @@ export const POST: APIRoute = async ({ request, redirect,cookies }) => {
     console.log("Usuario: ",session.data.user);
 
     try {
+
         const {data, error} = await supabase
         .from('users')
         .update(
@@ -41,6 +42,9 @@ export const POST: APIRoute = async ({ request, redirect,cookies }) => {
         if(error){
             return new Response(JSON.stringify({error: { message: "Server Error", status: 500}}));
         }
+
+        console.log("Supabase data: ", data)
+        console.log("Supabase error: ", error)
     
         return new Response(JSON.stringify({data: { user: data[0], status: 200}}));
     } catch (error) {

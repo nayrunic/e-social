@@ -13,6 +13,7 @@ import Logo from '@/assets/icons/esocial.svg'
 </nav>
 
 <script>
+    import { isDialogOpen, setDialogData } from "@/store/store";
     const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 
     const handleLogOut = async () => {
@@ -22,8 +23,14 @@ import Logo from '@/assets/icons/esocial.svg'
             method: "GET"
         });
 
+        const {error} = await res.json();
 
-        window.location.href = res.url;
+        if(error){
+            isDialogOpen.set(true)
+            setDialogData({title:"Error", message:"Hubo un error en el servidor."})
+        }
+
+        window.location.href = "/";
     }
 
     logoutButton.addEventListener("click", handleLogOut);
