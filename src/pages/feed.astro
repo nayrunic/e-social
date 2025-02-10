@@ -14,7 +14,7 @@ import FeedNav from '@/components/FeedNav.astro';
 import PostLabel from '@/components/PostLabel.astro'
 
 import { shuffle } from '@/lib/utils';
-import { setUser, user, type User } from '@/store/store';
+import { type User } from '@/types/types';
 
 import { supabase } from "../lib/supabase";
 
@@ -47,16 +47,13 @@ let dbUser: User = (await supabase.from('users').select().eq('id', `${data!.user
 
 if(!dbUser) return;
 
-
-setUser(dbUser);
-
 const actualStimuli = dbUser.stimuli_left.map((arr1Item: any) => stimuli.filter(arr2Item => arr1Item.title === arr2Item.title)).flat();
 const shuffledStimuli  = shuffle(actualStimuli);
 
 ---
 <Layout title='E-Social'>
   <Dialog title="Error" message="Selecciona una reacción"/>
-  <div id="feed" class=' max-w-[1280px] lg:mx-auto mx-2 sm:pt-10 lg:pt-20 mb-4 h-full min-h-[660px] max-h-[1280px] sm:px-20 sm:py-2 p-2 gap-2 grid grid-cols-1 lg:grid-cols-[1fr_0.7fr] grid-rows-[0.1fr_1fr]' data-user={JSON.stringify(user.get())}>
+  <div id="feed" class=' max-w-[1280px] lg:mx-auto mx-2 sm:pt-10 lg:pt-20 mb-4 h-full min-h-[660px] max-h-[1280px] sm:px-20 sm:py-2 p-2 gap-2 grid grid-cols-1 lg:grid-cols-[1fr_0.7fr] grid-rows-[0.1fr_1fr]' data-user={JSON.stringify(dbUser)}>
     <div class="w-full space-y-2">
       <FeedNav />
       <main id="main" class="flex flex-col items-center w-full max-h-[600px] sm:max-h-[720px] lg:max-h-[900px]">   
@@ -115,7 +112,7 @@ const shuffledStimuli  = shuffle(actualStimuli);
 </style>
 
 <script>
-import { setAnsweredQuestions, setProgress, setStimuliLeft } from "@/lib/store";
+import { setAnsweredQuestions, setProgress, setStimuliLeft } from "@/store/store";
 
 
   function updateUserData (){
