@@ -34,15 +34,18 @@ export const Eyes = ({ rmit }: Props) => {
   };
 
   const handleNextCard = () => {
+
+    const currentAnswered = Object.keys(answers).some(key => key === `RMIT_${currentCardIndex + 1}`);
+
+    if(!currentAnswered){
+        isDialogOpen.set(true);
+        setDialogData({title:"Error", message:"Por favor responde la pregunta antes de avanzar."})
+        return;
+    }
+
     if (currentCardIndex < rmit.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
     }else {
-        const allAnswered = rmit.every(card => answers[`RMIT_${card.id}`]!== undefined && answers[`RMIT_${card.id}`]!== null);
-        if(!allAnswered){
-            isDialogOpen.set(true);
-            setDialogData({title:"Error", message:"Por favor completa el ejercicio antes de finalizar"})
-            return;
-        }
         if(startTime){
             setTimeElapsed(Date.now() - startTime);
             push();
