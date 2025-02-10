@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import netlify from '@astrojs/netlify';
 
 import react from "@astrojs/react";
@@ -8,6 +8,9 @@ import react from "@astrojs/react";
 export default defineConfig({
   output: 'server',
   site: "https://e-social.me",
-  integrations: [tailwind(), react()],
+  integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   adapter: netlify()
 });

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { type Answer, type Rmit } from "@/types/types";
 import { formatTime } from "@/lib/utils";
-import { setDialog } from "@/lib/store";
+import { isDialogOpen, setDialogData } from "@/store/store";
 
 type Props = {
   rmit: Rmit[];
@@ -39,7 +39,8 @@ export const Eyes = ({ rmit }: Props) => {
     }else {
         const allAnswered = rmit.every(card => answers[`RMIT_${card.id}`]!== undefined && answers[`RMIT_${card.id}`]!== null);
         if(!allAnswered){
-            alert("Por favor completa el ejercicio antes de finalizar")
+            isDialogOpen.set(true);
+            setDialogData({title:"Error", message:"Por favor completa el ejercicio antes de finalizar"})
             return;
         }
         if(startTime){
@@ -63,7 +64,8 @@ export const Eyes = ({ rmit }: Props) => {
     const {message, error} = json;
 
     if(error){
-        setDialog(true);
+        setDialogData({title:"Error", message:"Lo sentimos, hubo un error, por favor intenta otra vez."})
+        isDialogOpen.set(true);
         return;
     }
 
@@ -107,9 +109,6 @@ export const Eyes = ({ rmit }: Props) => {
               </button>
             </div>
             <div id="instructions-content" className="hidden p-4">
-              <p>
-                La Prueba de Leer la Mente en los Ojos consiste en 17 fotografías, cada una dándote cuatro opciones.
-              </p>
               <ul className="mt-4">
                 <li>Para cada par de ojos, <b>elige qué palabra describe mejor</b> lo que la persona en la imagen está <b>pensando o sintiendo</b>. 
                     Puede que sientas que más de una palabra es aplicable, pero por favor elige solo una palabra, 

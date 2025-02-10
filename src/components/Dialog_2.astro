@@ -17,33 +17,87 @@ const { title} = Astro.props;
 </div>
 
 <script>
-    import { isDialogOpen, setDialog } from "@/lib/store";
-    
+    import { isDialogOpen } from "@/store/store";
+
 	const errorP = document.querySelector("[data-wrong]") as HTMLParagraphElement;
     const dialog = document.querySelector("[data-is-open]");
     const button = document.querySelector("[back-button]");
     const button_data = document.querySelector("[data-button]");
     const form = document.getElementById("signin-form") as HTMLFormElement;
-    button?.addEventListener("click", () => {
-        setDialog(false);
-    })
-    button_data?.addEventListener("click", async () => {
-        setDialog(false);
-        const res = await fetch("/api/auth/signin", {
-			method: form.method,
+
+    const handleSignIn = async (e: Event) => {
+        isDialogOpen.set(false);
+
+		const res = await fetch("/api/auth/signin", {
+			method: "POST",
 			body: new FormData(form)
 		});
 
-        if(!res.ok){
+		const {error, data} = await res.json();
+
+        if(error){
 			if(errorP){
 				errorP.classList.remove("hidden");
-				errorP.innerHTML = (await res.json()).message;
+				errorP.innerHTML = error.message;
 			}
 			return
 		}
 
-		window.location.href = res.url;
+		let isUserProfileComplete = false;
+		let isFeedDone = false;
+		let isRmitDone = false;
+		let isIriDone = false;
+		let isMfqADone = false;
+		let isMfqBDone = false;
+
+        
+		isUserProfileComplete = data.user.profile_completed;
+		isFeedDone = data.user.feed_done;
+		isRmitDone = data.user.RMIT_done;
+		isIriDone = data.user.IRI_done;
+		isMfqADone = data.user.MFQ_1_done;
+		isMfqBDone = data.user.MFQ_2_done;
+
+		if(!isUserProfileComplete){
+			window.location.href = "/profile";
+			return;
+		}
+
+		if(!isFeedDone){
+			window.location.href = "/instructions";
+			return;
+		}
+
+		if(!isRmitDone){
+			window.location.href = "/instructions-01";
+			return;
+		}
+
+		if(!isIriDone){
+			window.location.href = "/instructions-02";
+			return;
+		}
+
+		if(!isMfqADone){
+			window.location.href = "/instructions-03";
+			return;
+		}
+
+		if(!isMfqBDone){
+			window.location.href = "/instructions-04";
+			return;
+		}
+
+		window.location.href = "/end";
+
+	}
+
+
+    button?.addEventListener("click", () => {
+        isDialogOpen.set(false);
     })
+    button_data?.addEventListener("click", handleSignIn);
+    
     isDialogOpen.subscribe(value => {
         if(value){
             dialog!.classList.remove("hidden");

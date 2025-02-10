@@ -1,22 +1,24 @@
 import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
 import { getTitles } from "@/lib/data";
-import { getUser, setStimuliLeft } from "@/lib/store";
 
 export const POST: APIRoute = async ({ request, redirect }) => { 
-    
-    const formData = await request.formData();
-    const {name, age, country, genre, studies, social_hours, use_social, biological_sex, social_since} = Object.fromEntries(formData.entries());
 
-    if(!name || !age || !country || !genre || !studies || !social_hours || !use_social || !biological_sex || !social_since) {
-        return new Response(JSON.stringify({message: "Por favor completa todos los campos", status: 400}));
+    const body = await request.json()
+
+    console.log("Body profile: ",body)
+    
+    const {name, age, country, genre, studies, social_hours, use_social, biological_sex, social_since} = body;
+
+    if(!name || !age || !country || !genre || !studies || !social_hours || !use_social || !biological_sex || !social_since ) {
+        return new Response(JSON.stringify({error: { message: "Por favor completa todos los campos", status: 400 }}));
     }
 
-    
-    const user = getUser();
-    console.log("user id: ", user?.id);
+    const session = await supabase.auth.getUser();
 
-    const response = await supabase
+    console.log("Usuario: ",session.data.user);
+
+    const {data, error} = await supabase
         .from('users')
         .update(
             { 
@@ -32,15 +34,14 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 biological_sex: biological_sex,
                 social_since: social_since,
             })
-        .eq('id', user?.id)
+        .eq('id', session.data.user?.id)
+        .select()
 
 
-    if(response.error){
-        return new Response(JSON.stringify({message: "Server Error", status: 500}));
+    if(error){
+        return new Response(JSON.stringify({error: { message: "Server Error", status: 500}}));
     }
 
-    setStimuliLeft(getTitles());
-
-    return new Response(JSON.stringify({message: "Profile Created", status: 200}));
+    return new Response(JSON.stringify({data: { user: data[0], status: 200}}));
 
 }

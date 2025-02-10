@@ -1,4 +1,4 @@
-import { setProgress, setStimuliLeft, setUser } from "@/lib/store";
+import { setProgress, setStimuliLeft, setUser } from "@/store/store";
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ cookies, redirect }) => {

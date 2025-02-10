@@ -3,7 +3,7 @@ import { useState, type FormEvent } from "react";
 import { paginate, isMobile } from "@/lib/utils";
 import { useMultiPageSurvey } from "./hooks/useMultiPageSurvey";
 import { SurveyPage } from "./PageSurvey";
-import { setDialog } from "@/lib/store";
+import { isDialogOpen, setDialogData } from "@/store/store";
 import { QUESTION_SIZES, REDIRECTS } from "@/lib/data";
 
 type Props = {
@@ -44,7 +44,8 @@ export const FormSurvey = ({ questions, type }: Props) => {
         const allAnswered = questions.every((question) => answers[`${type}_${question.id}`]!== undefined && answers[`${type}_${question.id}`]!== null);
 
         if (!allAnswered) {
-            setDialog(true);
+            setDialogData({title: "Error", message: "Por favor responde a todas las preguntas."})
+            isDialogOpen.set(true);
             return; 
         }  
 
@@ -65,7 +66,8 @@ export const FormSurvey = ({ questions, type }: Props) => {
         const {message, table, error} = json;
     
         if(error){
-            console.log(error)
+            setDialogData({title: "Error", message: "Lo sentimos, hubo un error en el servidor, por favor vuelve a intentarlo."})
+            isDialogOpen.set(true);
             return;
         }
     

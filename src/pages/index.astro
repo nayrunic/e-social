@@ -1,6 +1,6 @@
 ---
+import { LoginForm } from '@/components/LoginForm';
 import Layout from '../layouts/Layout.astro';
-import userIcon from '@/assets/icons/user.svg';
 import Dialog from '@/components/Dialog_2.astro';
 ---
 
@@ -19,34 +19,7 @@ import Dialog from '@/components/Dialog_2.astro';
 				</div>
 			</div>
 			<div class="relative w-full flex justify-center items-center bg-white text-center"> 
-				<form id="signin-form" action="/api/auth/register" method="post" 
-					class=" w-full flex flex-col items-center p-5 ease-in-out duration-700">
-					<h2 class="mb-10 font-bold text-4xl text-sky-800 landscape:pt-10">Iniciar Sesión</h2>
-					<p class="mb-2 font-bold text-xl text-sky-400">Crea tu usuario</p>
-					<div class="bg-slate-200 rounded-3xl mb-5">
-						<div class="flex gap-2 justify-between items-center p-2">
-							<img class="w-6 h-6 rounded-full" src={userIcon.src}>
-							<input required id="email-in" type="text" name="email" placeholder="Usuario">
-						</div>
-					</div>
-					<p class="landscape:mb-10 mb-20 font-bold text-sm text-gray-400">
-						Si ya tienes un usuario, <br/> puedes usarlo para iniciar sesion
-					</p>
-					<p class="text-xs text-red-400 hidden" data-wrong></p>
-
-					<div class="flex">
-						<input type="checkbox" id="terminos" name="terminos" required />
-						<label class="flex gap-2 px-5 text-xs max-w-72" for="terminos">
-							<p>Al entrar a la plataforma acepto que he leído y estoy de acuerdo con el 
-							<a  href="/terms" class="text-sky-800 italic underline hover:cursor-pointer">consentimiento informado</a></p>
-						</label>
-					</div>
-					
-					<button class="w-36 h-12 rounded-3xl cursor-pointer bg-sky-300 text-white uppercase 
-						font-semibold mt-5 mb-5 duration-500 hover:bg-sky-700" type="submit" >
-						entrar
-					</button>
-				</form>
+				<LoginForm client:load/>
 			</div>
 		</main>
 	</div>
@@ -58,24 +31,6 @@ import Dialog from '@/components/Dialog_2.astro';
 		background-image: url('home2.jpg');
 	}
 
-	input{
-		outline: none;
-		background: none;
-		border: none;
-		line-height: 1;
-		font-weight: 600;
-		font-size: 1.1rem;
-		color: #7e7e7e;
-		max-width: 220px;
-	}
-
-	input::placeholder{
-		color: #aaa;
-		font-weight: 400;
-		font-size: .85rem;
-		padding-bottom: 15px;
-	}
-
 	#left-top{
 		background-color: transparent;
 		backdrop-filter: blur(20px);
@@ -84,56 +39,6 @@ import Dialog from '@/components/Dialog_2.astro';
 
 </style>
 
-<script>
-
-	import { setDialog } from "@/lib/store";
-
-	const signinButton = document.getElementById("signin-button");
-	const signinForm = document.getElementById("signin-form");
-	const errorP = document.querySelector("[data-wrong]") as HTMLParagraphElement;
-
-	signinButton?.addEventListener("click", () => {
-		signinForm?.classList.remove('opacity-0');
-		signinForm?.classList.remove('-z-10');
-	});
-
-	signinForm?.addEventListener("submit", async (e) => {
-		e.preventDefault();
-
-		const form = e?.currentTarget as HTMLFormElement;
-
-		const res = await fetch(form.action, {
-			method: form.method,
-			body: new FormData(form)
-		});
-
-		const json = await res.json();
-
-		if(json.status === 500){
-			setDialog(true);
-			return
-		}
-
-		const resSignIn = await fetch("/api/auth/signin", {
-			method: form.method,
-			body: new FormData(form)
-		});
-
-        if(!resSignIn.ok){
-			if(errorP){
-				errorP.classList.remove("hidden");
-				errorP.innerHTML = (await resSignIn.json()).message;
-			}
-			return
-		}
-
-		window.location.href = resSignIn.url;
-
-	})
-
-
-
-</script>
 
 
 

@@ -33,10 +33,10 @@ if (error) {
 
 ---
 
-<Layout title="Parte tres - A"> 
+<Layout title="Parte 03"> 
     <MainNav />
+    <Dialog />
     <main class="flex items-center">
-        <Dialog title="Error" message="Por favor responde todas las preguntas antes de continuar."/>
         <FormSurvey questions={MFQ_QUESTIONS_PART_1} type={"MFQ_1"} client:only="react"/>
     </main>
 </Layout>

@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@layer components {
+    .go-left {
+        transform: translateX(-150%) !important;
+    }
+
+    .go-right {
+        transform: translateX(150%) !important;
+    }
+
+    .go-left,
+    .go-right {
+        transition: transform 300ms ease;
+    }
+
+    .reset {
+        transition: transform 300ms ease;
+        transform: translateX(0) !important;
+    }
+}
