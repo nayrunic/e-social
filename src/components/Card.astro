@@ -43,6 +43,7 @@ const {source, id} = Astro.props;
     addAnsweredQuestion, 
     selectedReaction,
     selectReaction, isDialogOpen, 
+    setDialogData,
     addProgress, 
     removeStimulus, stimuliLeft, 
     answeredQuestions} from '@/store/store';
@@ -135,6 +136,7 @@ const {source, id} = Astro.props;
 
         if (decisionMade) {
           if(selectedReaction.get() === "none") {
+            setDialogData({title: "Error", message: "Por favor selecciona una reacción antes de continuar."})
             isDialogOpen.set(true);
             reset();
             resetPosition();
@@ -201,6 +203,7 @@ const {source, id} = Astro.props;
     }
 
     if(selectedReaction.get() === "none") {
+      setDialogData({title: "Error", message: "Por favor selecciona una reacción antes de continuar."})
       isDialogOpen.set(true);
       return;
     }

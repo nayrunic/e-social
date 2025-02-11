@@ -50,7 +50,7 @@ const { title} = Astro.props;
 		let isMfqADone = false;
 		let isMfqBDone = false;
 
-        
+		localStorage.setItem("user-name", data.user.name);
 		isUserProfileComplete = data.user.profile_completed;
 		isFeedDone = data.user.feed_done;
 		isRmitDone = data.user.RMIT_done;

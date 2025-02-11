@@ -125,15 +125,15 @@ export const FormSurvey = ({ questions, type }: Props) => {
                     {
                         steps[currentPage]
                     }
-                    <div className="flex justify-center gap-4 pt-6">
+                    <div className="flex justify-center gap-4 pt-10">
                         <button onClick={handleBack} 
                                 type="button"
                                 disabled={isFirstStep}
-                                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed">
+                                className="px-4 py-2 bg-gray-200 rounded-3xl hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed">
                                     Anterior
                         </button>
                         <button type="submit"
-                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300">
+                                className="px-4 py-2 bg-sky-300 text-white rounded-3xl hover:bg-sky-700">
                                     {isLastStep ? "Finalizar" : "Siguiente"}
                         </button>
                     </div>

@@ -79,6 +79,8 @@ export const LoginForm = () => {
 		let isIriDone = false;
 		let isMfqADone = false;
 		let isMfqBDone = false;
+
+		localStorage.setItem("user-name", data.user.name);
         
 		isUserProfileComplete = data.user.profile_completed;
 		isFeedDone = data.user.feed_done;

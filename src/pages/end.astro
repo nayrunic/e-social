@@ -1,13 +1,52 @@
 ---
+import Dialog from "@/components/Dialog.astro"
 import Layout from "../layouts/Layout.astro"
 
 ---
 
-<Layout title="End">
-    <div class="h-full flex justify-center items-center">
-        <div class="border border-slate-300 shadow-lg text-lg bg-white p-10 rounded-lg">
-            <h1>Felicidades has terminado el estudio!</h1>
-            <p>Gracias por partipar Jugador</p>
+<Layout title="Final">
+    <Dialog />
+    <div class="h-full flex justify-center items-center bg-cover bg-home">
+        <div class="flex flex-col gap-4 border border-slate-300 shadow-lg text-lg bg-white p-10 rounded-lg items-center m-4 text-center">
+            <h1>¡Felicidades has terminado el estudio!</h1>
+            <p id="name">¡Gracias por partipar!</p>
+            <button id="logout" class="z-10 w-64 cursor-pointer px-8 py-2 bg-sky-300 text-white rounded-3xl hover:bg-sky-700">
+                Salir
+            </button>
         </div>
     </div>
 </Layout>
+
+<script>
+import { isDialogOpen, setDialogData } from "@/store/store";
+
+    const p = document.getElementById("name") as HTMLParagraphElement;
+    const logoutButton = document.getElementById("logout") as HTMLButtonElement;
+    p.innerHTML = `¡Gracias por partipar ${localStorage.getItem("user-name")}!`
+    
+    const handleLogOut = async (e: Event) => {
+        e.preventDefault();
+        if(!logoutButton) return;
+        const res = await fetch('/api/auth/signout', 
+        {
+            method: "GET"
+        });
+
+        const {error} = await res.json();
+
+        if(error){
+            isDialogOpen.set(true)
+            setDialogData({title:"Error", message:"Hubo un error en el servidor."})
+        }
+
+        window.location.href = "/";
+    }
+
+    logoutButton.addEventListener("click", handleLogOut)
+</script>
+
+<style>
+    .bg-home{
+		background-image: url('home2.jpg');
+	}
+</style>
