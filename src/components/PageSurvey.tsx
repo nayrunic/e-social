@@ -1,6 +1,8 @@
 import type { Answer, Question } from "@/types/types";
 import { QuestionComponent } from "./Question";
 
+import "@/styles/global.css";
+
 type Props = {
     page: Question[];
     onAnswerChange: (questionId: number, value: string) => void;

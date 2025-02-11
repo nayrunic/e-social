@@ -6,6 +6,8 @@ import { IRI_QUESTIONS} from "@/lib/data"
 import Dialog from "@/components/Dialog.astro"
 import { supabase } from "@/lib/supabase"
 
+import "@/styles/global.css";
+
 const { cookies, redirect } = Astro;
 
 const accessToken = cookies.get("sb-access-token");

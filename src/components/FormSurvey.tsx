@@ -6,6 +6,8 @@ import { SurveyPage } from "./PageSurvey";
 import { isDialogOpen, setDialogData } from "@/store/store";
 import { QUESTION_SIZES, REDIRECTS } from "@/lib/data";
 
+import "@/styles/global.css";
+
 type Props = {
     questions: Question[];
     type: string;

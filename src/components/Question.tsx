@@ -1,6 +1,8 @@
 import type { Answer } from "@/types/types";
 import { useEffect, useState, type ChangeEvent } from "react";
 
+import "@/styles/global.css";
+
 type Props = {
     text: string;
     index: number;
