@@ -35,10 +35,10 @@ if (error) {
 ---
 
 <Layout title="Parte 02"> 
+  <MainNav />
+  <main class="flex items-center">
     <Dialog />
-    <MainNav />
-    <main class="flex items-center">
-        <FormSurvey questions={IRI_QUESTIONS} type={"IRI"} client:only="react"/>
-    </main>
+    <FormSurvey questions={IRI_QUESTIONS} type={"IRI"} client:only="react"/>
+  </main>
 </Layout>
 

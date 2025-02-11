@@ -7,7 +7,7 @@ interface Props {
 const { title} = Astro.props;
 ---
 
-<div class="absolute m-auto left-0 rounded-3xl bg-[#ffffff4d]  z-10 h-screen w-screen justify-center items-center hidden" data-is-open="false">
+<div class="absolute m-auto left-0 rounded-3xl bg-[#ffffff4d]  z-10 h-full w-full justify-center items-center hidden" data-is-open="false">
     <div class="text-center absolute m-auto p-4 bg-white border rounded-3xl">
         <h1 class="text-xl p-1">{title}</h1>
         <p class="text-xs p-3">El usuario que ingresaste ya existe,<br/>si este es tu usuario y deseas continuar da clic en OK,<br/> de no ser así, da clic en Volver e intenta con <br/> un nombre de usuario diferente</p>
