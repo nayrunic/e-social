@@ -121,7 +121,7 @@ export const Eyes = ({ rmit }: Props) => {
             </div>
           </div>
           <div className="p-4 border border-slate-300 rounded-lg shadow-md max-w-3xl bg-white">
-            <img src={currentCard.imgSrc} alt="rmit" loading="eager" className="w-full"/>
+            <img src={currentCard.imgSrc} alt="rmit" loading="eager" className="w-full" onLoad={() => console.log("Image loaded")}/>
             <ul className="grid grid-cols-2 text-center gap-2 mt-4">
               {currentCard.options.map((option) => (
                 <li

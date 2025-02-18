@@ -79,49 +79,51 @@ export const FormSurvey = ({ questions, type }: Props) => {
     return (
         <div className="container mx-auto p-4 flex justify-center mt-5"> 
             <div className="bg-white rounded-lg shadow-md p-6 xl:w-[1100px]">
-                {
-                    type==="IRI" && (
-                        <div className="flex w-full justify-around mb-4 p-4">
-                            <div className="w-1/3 hidden lg:block"></div>
-                            <div className="flex justify-between flex-1 gap-4 text-center">
-                                <p className="pl-2">1 - No me describe <br/> muy bien</p>
-                                <p>5 -Me describe <br/> bien</p>
+                <div className="md:static sticky top-0 bg-white z-10">
+                    {
+                        type==="IRI" && (
+                            <div className="flex w-full justify-around mb-4 p-4">
+                                <div className="w-1/3 hidden lg:block"></div>
+                                <div className="flex justify-between flex-1 gap-4 text-center">
+                                    <p className="pl-2">1 - No me describe <br/> muy bien</p>
+                                    <p>5 -Me describe <br/> bien</p>
+                                </div>
                             </div>
-                        </div>
-                    )
-                }
+                        )
+                    }
 
-                {   
-                    type==="MFQ_1" && (
-                        <div className="flex justify-evenly w-full mb-4 p-4">
-                            <div className="w-1/3 hidden lg:block"></div>
-                            <div className="flex md:flex-row flex-col md:flex-1 items-center md:gap-6 gap-2 text-center text-xs">
-                                <p>0 - Para nada relevante</p>
-                                <p>1 - No muy relevante </p>
-                                <p>2 - Ligeramente relevante</p>
-                                <p>3 - Algo relevante</p>
-                                <p>4 - Muy relevante</p>
-                                <p>5 - Extremadamente relevante</p>
+                    {   
+                        type==="MFQ_1" && (
+                            <div className="flex justify-evenly w-full mb-4 p-4">
+                                <div className="w-1/3 hidden lg:block"></div>
+                                <div className="flex md:flex-row flex-col md:flex-1 items-center md:gap-6 gap-2 text-center text-xs">
+                                    <p>0 - Para nada relevante</p>
+                                    <p>1 - No muy relevante </p>
+                                    <p>2 - Ligeramente relevante</p>
+                                    <p>3 - Algo relevante</p>
+                                    <p>4 - Muy relevante</p>
+                                    <p>5 - Extremadamente relevante</p>
+                                </div>
                             </div>
-                        </div>
-                    )
-                }
+                        )
+                    }
 
-                {
-                    type==="MFQ_2" && (
-                        <div className="flex justify-evenly w-full mb-4 p-4">
-                            <div className="w-1/3 hidden lg:block"></div>
-                            <div className="flex md:flex-row flex-col md:flex-1 md:gap-6 gap-2 items-center text-center text-xs">
-                                <p>0 - <b className="hidden md:block"/> Muy en desacuerdo</p>
-                                <p>1 - <br className="hidden md:block"/> Moderadamente en desacuerdo</p>
-                                <p>2 - <br className="hidden md:block"/> Ligeramente en desacuerdo</p>
-                                <p>3 - <br className="hidden md:block"/> Ligeramente de acuerdo</p>
-                                <p>4 - <br className="hidden md:block"/> Moderadamente de acuerdo</p>
-                                <p>5 - <br className="hidden md:block"/> Muy de acuerdo</p>
+                    {
+                        type==="MFQ_2" && (
+                            <div className="flex justify-evenly w-full mb-4 p-4">
+                                <div className="w-1/3 hidden lg:block"></div>
+                                <div className="flex md:flex-row flex-col md:flex-1 md:gap-6 gap-2 items-center text-center text-xs">
+                                    <p>0 - <b className="hidden md:block"/> Muy en desacuerdo</p>
+                                    <p>1 - <br className="hidden md:block"/> Moderadamente en desacuerdo</p>
+                                    <p>2 - <br className="hidden md:block"/> Ligeramente en desacuerdo</p>
+                                    <p>3 - <br className="hidden md:block"/> Ligeramente de acuerdo</p>
+                                    <p>4 - <br className="hidden md:block"/> Moderadamente de acuerdo</p>
+                                    <p>5 - <br className="hidden md:block"/> Muy de acuerdo</p>
+                                </div>
                             </div>
-                        </div>
-                    )
-                }
+                        )
+                    }
+                </div>
 
                 <form onSubmit={handleSubmit}>
                     {

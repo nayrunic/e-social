@@ -308,9 +308,9 @@ type redirect = {
 }
 
 export const REDIRECTS: redirect = {
-  RMIT: "/section-02",
-  IRI: "/section-03",
-  MFQ_1: "/section-04",
+  RMIT: "/instructions-02",
+  IRI: "/instructions-03",
+  MFQ_1: "/instructions-04",
   MFQ_2: "/end",
 }
 
