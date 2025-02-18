@@ -139,7 +139,7 @@ export const Eyes = ({ rmit }: Props) => {
           </div>
           <div className="p-4 border border-slate-300 rounded-lg shadow-md max-w-3xl bg-white">
             {isImageLoading && (
-              <div className="w-full h-[200px] bg-slate-200 animate-pulse"></div>
+              <div className=" rounded-full w-full h-[200px] bg-slate-200 animate-pulse"></div>
             )}
             <img 
               src={currentCard.imgSrc} 
@@ -147,6 +147,7 @@ export const Eyes = ({ rmit }: Props) => {
               className={`w-full ${isImageLoading ? 'h-0' : 'h-auto'}`}
             />
             {!isImageLoading && (
+              <>
                 <ul className="grid grid-cols-2 text-center gap-2 mt-4">
                   {currentCard.options.map((option) => (
                     <li
@@ -160,7 +161,7 @@ export const Eyes = ({ rmit }: Props) => {
                     </li>
                   ))}
                 </ul>
-            )}
+
                 <div className="flex gap-4 justify-center w-full max-w-3xl mt-5">
                   <button
                     onClick={handlePreviousCard}
@@ -176,6 +177,8 @@ export const Eyes = ({ rmit }: Props) => {
                     {currentCardIndex < (rmit.length - 1) ? "Siguiente" : "Finalizar"}
                   </button>
                 </div>
+              </>
+            )}
           </div>
         </>
       )}
