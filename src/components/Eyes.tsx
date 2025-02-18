@@ -29,6 +29,15 @@ export const Eyes = ({ rmit }: Props) => {
 
   const currentCard = rmit[currentCardIndex];
 
+  // Add preloading logic
+  useEffect(() => {
+    if (currentCard) {
+      const img = new Image();
+      img.src = currentCard.imgSrc;
+      img.onload = handleImageLoad;
+    }
+  }, [currentCard]);
+
   const handleOptionClick = (option: string) => {
     if (currentCard) {
       // Check if currentCard exists
@@ -136,7 +145,6 @@ export const Eyes = ({ rmit }: Props) => {
               src={currentCard.imgSrc} 
               alt="rmit" 
               className={`w-full ${isImageLoading ? 'h-0' : 'h-auto'}`}
-              onLoad={handleImageLoad}
             />
             {!isImageLoading && (
                 <ul className="grid grid-cols-2 text-center gap-2 mt-4">
