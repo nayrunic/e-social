@@ -136,7 +136,7 @@ export const Eyes = ({ rmit }: Props) => {
               src={currentCard.imgSrc} 
               alt="rmit" 
               className={`w-full ${isImageLoading ? 'h-0' : 'h-auto'}`}
-              onLoad={() => handleImageLoad()}
+              onLoad={handleImageLoad}
             />
             {!isImageLoading && (
                 <ul className="grid grid-cols-2 text-center gap-2 mt-4">
