@@ -13,13 +13,19 @@ export const Eyes = ({ rmit }: Props) => {
   const [startTime, setStartTime] = useState<number>(0);
   const [timeElapsed, setTimeElapsed] = useState<number>(0);
   const isFirstRender = useRef(true); // Ref to track initial render
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false; // Set to false after the first render
       setStartTime(Date.now()); // Start timing when the component mounts (first render)
     }
-  },);
+  }, []);
+
+  const handleImageLoad = () => {
+    console.log("Image loaded");
+    setIsImageLoading(false);
+  };
 
   const currentCard = rmit[currentCardIndex];
 
@@ -45,6 +51,7 @@ export const Eyes = ({ rmit }: Props) => {
 
     if (currentCardIndex < rmit.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
+      setIsImageLoading(true);
     }else {
         if(startTime){
             setTimeElapsed(Date.now() - startTime);
@@ -79,6 +86,7 @@ export const Eyes = ({ rmit }: Props) => {
 
   const handlePreviousCard = () => {
     if (currentCardIndex > 0) {
+      setIsImageLoading(true);
       setCurrentCardIndex(currentCardIndex - 1);
     }
   };
@@ -121,36 +129,45 @@ export const Eyes = ({ rmit }: Props) => {
             </div>
           </div>
           <div className="p-4 border border-slate-300 rounded-lg shadow-md max-w-3xl bg-white">
-            <img src={currentCard.imgSrc} alt="rmit" loading="eager" className="w-full" onLoad={() => console.log("Image loaded")}/>
-            <ul className="grid grid-cols-2 text-center gap-2 mt-4">
-              {currentCard.options.map((option) => (
-                <li
-                  className={`break-words text-sm sm:text-base p-2 border shadow-md border-slate-300 rounded-lg hover:bg-slate-300 transition-colors w-full h-full cursor-pointer ${
-                    answers[`RMIT_${currentCard.id}`] === option ? "bg-slate-300" : "" // Highlight selected option
-                  }`}
-                  key={option}
-                  onClick={() => handleOptionClick(option)}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex gap-4 justify-center w-full max-w-3xl mt-5">
-              <button
-                onClick={handlePreviousCard}
-                disabled={currentCardIndex === 0}
-                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
-              >
-                Anterior
-              </button>
-              <button
-                onClick={handleNextCard}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300"
-              >
-                {currentCardIndex < (rmit.length - 1) ? "Siguiente" : "Finalizar"}
-              </button>
-            </div>
+            {isImageLoading && (
+              <div className="w-full h-[200px] bg-slate-200 animate-pulse"></div>
+            )}
+            <img 
+              src={currentCard.imgSrc} 
+              alt="rmit" 
+              className={`w-full ${isImageLoading ? 'h-0' : 'h-auto'}`}
+              onLoad={() => handleImageLoad()}
+            />
+            {!isImageLoading && (
+                <ul className="grid grid-cols-2 text-center gap-2 mt-4">
+                  {currentCard.options.map((option) => (
+                    <li
+                      className={`break-words text-sm sm:text-base p-2 border shadow-md border-slate-300 rounded-lg hover:bg-slate-300 transition-colors w-full h-full cursor-pointer ${
+                        answers[`RMIT_${currentCard.id}`] === option ? "bg-slate-300" : "" // Highlight selected option
+                      }`}
+                      key={option}
+                      onClick={() => handleOptionClick(option)}
+                    >
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+            )}
+                <div className="flex gap-4 justify-center w-full max-w-3xl mt-5">
+                  <button
+                    onClick={handlePreviousCard}
+                    disabled={currentCardIndex === 0}
+                    className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  >
+                    Anterior
+                  </button>
+                  <button
+                    onClick={handleNextCard}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300"
+                  >
+                    {currentCardIndex < (rmit.length - 1) ? "Siguiente" : "Finalizar"}
+                  </button>
+                </div>
           </div>
         </>
       )}
