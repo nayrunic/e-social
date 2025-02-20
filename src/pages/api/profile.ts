@@ -8,9 +8,9 @@ export const POST: APIRoute = async ({ request, redirect,cookies }) => {
 
     console.log("Body profile: ",body)
     
-    const {name, age, country, genre, studies, social_hours, use_social, biological_sex, social_since} = body;
+    const {name, age, country, genre, studies, social_hours, use_social, biological_sex, social_since, actual_email} = body;
 
-    if(!name || !age || !country || !genre || !studies || !social_hours || !use_social || !biological_sex || !social_since ) {
+    if(!name || !age || !country || !genre || !studies || !social_hours || !use_social || !biological_sex || !social_since) {
         return new Response(JSON.stringify({error: { message: "Por favor completa todos los campos", status: 400 }}));
     }
 
@@ -35,6 +35,7 @@ export const POST: APIRoute = async ({ request, redirect,cookies }) => {
                 stimuli_left: getTitles(),
                 biological_sex: biological_sex,
                 social_since: social_since,
+                actual_email: actual_email ? actual_email : null
             })
         .eq('id', session.data.user?.id)
         .select()

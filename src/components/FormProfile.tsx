@@ -25,9 +25,16 @@ type Step3Props = {
     updateFields: (fields: Partial<FormData>) => void
 }
 
+type Step4Props = {
+    actual_email: string
+    updateFields: (fields: Partial<FormData>) => void
+}
+
 const Step1 = ({name, age, genre, biological_sex, updateFields}: Step1Props) => {
     return (
         <div id="step1" className="flex flex-col gap-2 slide">
+            
+            <h1 className="text-xl font-bold mb-4 text-center pt-2">Información personal</h1>
             <div>
                 <label className="text-sm font-medium">
                     Nombre
@@ -77,6 +84,7 @@ const Step1 = ({name, age, genre, biological_sex, updateFields}: Step1Props) => 
 const Step2 = ({country, studies: studyLevel, updateFields}: Step2Props) => {
     return (
         <div id="step2" className="flex flex-col gap-8 py-4 slide">
+            <h1 className="text-xl font-bold mb-4 text-center pt-2">Información personal</h1>
             <div>
                 <label className="text-sm font-medium">
                     Nacionalidad
@@ -109,6 +117,7 @@ const Step2 = ({country, studies: studyLevel, updateFields}: Step2Props) => {
 const Step3 = ({use_social: useSocial, social_since: socialSince, social_hours:socialHours, updateFields}: Step3Props) => {
     return (
         <div id="step3" className="flex flex-col gap-7 slide">
+            <h1 className="text-xl font-bold mb-4 text-center pt-2">Redes sociales</h1>
             <div>
                 <label className="text-sm font-medium">
                     ¿Ha usado alguna vez alguna red social?
@@ -139,6 +148,23 @@ const Step3 = ({use_social: useSocial, social_since: socialSince, social_hours:s
     )
 }
 
+const Step4 = ({actual_email: actualEmail, updateFields}: Step4Props) => {
+    return (
+        <div id="step4" className="flex flex-col gap-7 slide">
+            <h1 className="text-xl font-bold mb-4 text-center pt-2">Sorteo</h1>      
+            <div>
+                <h1 className="text-sm pb-1 font-bold">(Opcional)</h1>
+                <p className="text-sm font-medium pb-5">
+                    Si deseas participar en el sorteo por una tarjeta de regalo de 50USD en Amazon, deja tu correo electrónico.
+                </p>
+                <div className="bg-slate-200 rounded-xl p-2">
+                    <input  type="text" name="actual-email" placeholder="Escribe tu correo..." value={actualEmail} onChange={e => updateFields({actual_email: e.target.value})}/>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 type FormData = {
     name: string
     age: string
@@ -149,6 +175,7 @@ type FormData = {
     use_social: string
     biological_sex: string
     social_since: string
+    actual_email: string
 }
 
 const INITIAL_DATA: FormData = {
@@ -161,7 +188,7 @@ const INITIAL_DATA: FormData = {
     use_social: "",
     biological_sex: "",
     social_since: "",
-
+    actual_email: ""
 }
 
 export const FormProfile = () => {
@@ -173,7 +200,7 @@ export const FormProfile = () => {
         })
     }
 
-    const { steps, currentPage, handleNext, handleBack, isLastStep, isFirstStep } = useMultiPageSurvey([Step1({...formData, updateFields}), Step2({...formData, updateFields}), Step3({...formData, updateFields})]);
+    const { steps, currentPage, handleNext, handleBack, isLastStep, isFirstStep } = useMultiPageSurvey([Step1({...formData, updateFields}), Step2({...formData, updateFields}), Step3({...formData, updateFields}), Step4({...formData, updateFields})]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
