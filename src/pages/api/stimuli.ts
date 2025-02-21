@@ -1,9 +1,15 @@
 import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
 
-export const POST: APIRoute = async ({ request, redirect }) => { 
+export const POST: APIRoute = async ({ request, redirect, cookies }) => { 
 
-    const { data, error } = await supabase.auth.getSession();
+    const accessToken = cookies.get("sb-access-token");
+    const refreshToken = cookies.get("sb-refresh-token");
+
+    const {data, error} = await supabase.auth.setSession({
+        refresh_token: refreshToken!.value,
+        access_token: accessToken!.value,
+    });
     
     const { stimuli_left, answered_questions, feed_done } = await request.json();
 
@@ -15,7 +21,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 study_answers: answered_questions,
                 feed_done
             })
-        .eq('id', data!.session!.user.id);
+        .eq('id', data.user!.id);
 
     if(response.error){
         return new Response(JSON.stringify({message: response.error.message}), { status: 500 });

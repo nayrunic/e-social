@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
 import { getTitles } from "@/lib/data";
 
-export const POST: APIRoute = async ({ request, redirect,cookies }) => { 
+export const POST: APIRoute = async ({ request, redirect, cookies }) => { 
 
     const body = await request.json()
 
@@ -14,7 +14,13 @@ export const POST: APIRoute = async ({ request, redirect,cookies }) => {
         return new Response(JSON.stringify({error: { message: "Por favor completa todos los campos", status: 400 }}));
     }
 
-    const session = await supabase.auth.getUser(cookies.get("sb-access-token")?.value);
+    const accessToken = cookies.get("sb-access-token");
+    const refreshToken = cookies.get("sb-refresh-token");
+
+    const session = await supabase.auth.setSession({
+        refresh_token: refreshToken!.value,
+        access_token: accessToken!.value,
+    });
 
     console.log("Usuario: ",session.data.user);
 

@@ -46,6 +46,7 @@ const INTIAL_DATA = {
 
 export const LoginForm = () => {
     const [formData, setFormData] = useState(INTIAL_DATA);
+    const [isLoading, setIsLoading] = useState(false);
 
     const updateFields = (fields: Partial<FormData>) => {
         setFormData(prevData => {
@@ -57,103 +58,113 @@ export const LoginForm = () => {
     const { steps, currentPage } = useMultiPageSurvey([Step1({updateFields, errorPRef})]);
 
     const handleSignIn = async (e: FormEvent) => {
+        try {
+            setIsLoading(true);
+            const res = await fetch("/api/auth/signin", {
+                method: "POST",
+                body: JSON.stringify(formData)
+            });
 
-		const res = await fetch("/api/auth/signin", {
-			method: "POST",
-			body: JSON.stringify(formData)
-		});
+            const {error, data} = await res.json();
 
-		const {error, data} = await res.json();
+            if(error){
+                if(errorPRef){
+                    errorPRef.current.classList.remove("hidden");
+                    errorPRef.current.innerHTML = error.message;
+                }
+                return;
+            }
 
-        if(error){
-			if(errorPRef){
-				errorPRef.current.classList.remove("hidden");
-				errorPRef.current.innerHTML = error.message;
-			}
-			return
-		}
+            let isUserProfileComplete = false;
+            let isFeedDone = false;
+            let isRmitDone = false;
+            let isIriDone = false;
+            let isMfqADone = false;
+            let isMfqBDone = false;
 
-		let isUserProfileComplete = false;
-		let isFeedDone = false;
-		let isRmitDone = false;
-		let isIriDone = false;
-		let isMfqADone = false;
-		let isMfqBDone = false;
+            localStorage.setItem("user-name", data.user.name);
+            
+            isUserProfileComplete = data.user.profile_completed;
+            isFeedDone = data.user.feed_done;
+            isRmitDone = data.user.RMIT_done;
+            isIriDone = data.user.IRI_done;
+            isMfqADone = data.user.MFQ_1_done;
+            isMfqBDone = data.user.MFQ_2_done;
 
-		localStorage.setItem("user-name", data.user.name);
-        
-		isUserProfileComplete = data.user.profile_completed;
-		isFeedDone = data.user.feed_done;
-		isRmitDone = data.user.RMIT_done;
-		isIriDone = data.user.IRI_done;
-		isMfqADone = data.user.MFQ_1_done;
-		isMfqBDone = data.user.MFQ_2_done;
+            if(!isUserProfileComplete){
+                window.location.href = "/profile";
+                return;
+            }
 
-		if(!isUserProfileComplete){
-			window.location.href = "/profile";
-			return;
-		}
+            if(!isFeedDone){
+                window.location.href = "/instructions";
+                return;
+            }
 
-		if(!isFeedDone){
-			window.location.href = "/instructions";
-			return;
-		}
+            if(!isRmitDone){
+                window.location.href = "/instructions-01";
+                return;
+            }
 
-		if(!isRmitDone){
-			window.location.href = "/instructions-01";
-			return;
-		}
+            if(!isIriDone){
+                window.location.href = "/instructions-02";
+                return;
+            }
 
-		if(!isIriDone){
-			window.location.href = "/instructions-02";
-			return;
-		}
+            if(!isMfqADone){
+                window.location.href = "/instructions-03";
+                return;
+            }
 
-		if(!isMfqADone){
-			window.location.href = "/instructions-03";
-			return;
-		}
+            if(!isMfqBDone){
+                window.location.href = "/instructions-04";
+                return;
+            }
 
-		if(!isMfqBDone){
-			window.location.href = "/instructions-04";
-			return;
-		}
+            window.location.href = "/end";
 
-		window.location.href = "/end";
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
-	}
+    const handleSignUp = async (e: FormEvent) => {
+        e.preventDefault();
+        try {
+            setIsLoading(true);
+            const res = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
 
-	const handleSignUp = async (e: FormEvent) => {
-		e.preventDefault();
+            const { error } = await res.json();
 
-		const res = await fetch("/api/auth/register", {
-			method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-			body: JSON.stringify(formData)
-		});
+            if(error){
+                isDialogOpen.set(true);
+                return;
+            }
 
-		const { error } = await res.json();
-
-		if(error){
-			isDialogOpen.set(true);
-			return
-		}
-
-		await handleSignIn(e);
-	}
+            await handleSignIn(e);
+        } catch (error) {
+            setIsLoading(false);
+            console.log(error);
+        }
+    }
 
     return (
         <form id="signin-form" onSubmit={handleSignUp}>
-            {
-                steps[currentPage]
-            }
+            {steps[currentPage]}
             <div className="flex justify-center gap-4 pt-6">
-                <button type="submit"
-                        className="cursor-pointer px-8 py-2 bg-sky-300 text-white rounded-3xl hover:bg-sky-700">
-                            Entrar
+                <button 
+                    type="submit"
+                    disabled={isLoading}
+                    className="cursor-pointer px-8 py-2 bg-sky-300 text-white rounded-3xl hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {isLoading ? "Cargando..." : "Entrar"}
                 </button>
             </div>
         </form>
