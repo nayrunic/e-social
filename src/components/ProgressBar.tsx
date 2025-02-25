@@ -2,6 +2,8 @@ import { STEPS } from "@/lib/data"
 import { currentStep } from "@/store/store"
 import { useStore } from "@nanostores/react";
 
+import "@/styles/global.css";
+
 export const ProgressBar = () => {
   const _currentStep = useStore(currentStep);
 
