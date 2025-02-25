@@ -2,11 +2,13 @@
 import { FormSurvey } from "@/components/FormSurvey"
 import Layout from "../layouts/Layout.astro"
 import MainNav from "@/components/MainNav.astro"
-import { IRI_QUESTIONS} from "@/lib/data"
+import { IRI_QUESTIONS, STEPS} from "@/lib/data"
 import Dialog from "@/components/Dialog.astro"
 import { supabase } from "@/lib/supabase"
 
 import "@/styles/global.css";
+import { ProgressBar } from "@/components/ProgressBar"
+import { currentStep } from "@/store/store"
 
 const { cookies, redirect } = Astro;
 
@@ -38,8 +40,9 @@ if (error) {
 
 <Layout title="Parte 02"> 
   <MainNav />
-  <main class="flex items-center">
+  <main class="flex flex-col items-center">
     <Dialog />
+    <ProgressBar client:only="react"  />
     <FormSurvey questions={IRI_QUESTIONS} type={"IRI"} client:only="react"/>
   </main>
 </Layout>

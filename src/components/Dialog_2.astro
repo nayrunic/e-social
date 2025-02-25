@@ -11,13 +11,13 @@ const { title} = Astro.props;
     <div class="text-center absolute m-auto p-4 bg-white border rounded-3xl">
         <h1 class="text-xl p-1">{title}</h1>
         <p class="text-xs p-3">El usuario que ingresaste ya existe,<br/>si este es tu usuario y deseas continuar da clic en OK,<br/> de no ser así, da clic en Volver e intenta con <br/> un nombre de usuario diferente</p>
-        <button class="px-5 rounded-3xl bg-sky-300 text-white" data-button>OK</button>
-        <button class="px-5 rounded-3xl bg-sky-300 text-white" back-button>Volver</button>
+        <button class="cursor-pointer px-5 rounded-3xl bg-sky-300 text-white" data-button>OK</button>
+        <button class="cursor-pointer px-5 rounded-3xl bg-sky-300 text-white" back-button>Volver</button>
     </div>
 </div>
 
 <script>
-    import { isDialogOpen } from "@/store/store";
+    import { isDialogOpen, setCurrentStep } from "@/store/store";
 
 	const errorP = document.querySelector("[data-wrong]") as HTMLParagraphElement;
     const dialog = document.querySelector("[data-is-open]");
@@ -69,21 +69,25 @@ const { title} = Astro.props;
 		}
 
 		if(!isRmitDone){
+			setCurrentStep(1);
 			window.location.href = "/instructions-01";
 			return;
 		}
 
 		if(!isIriDone){
+			setCurrentStep(2);
 			window.location.href = "/instructions-02";
 			return;
 		}
 
 		if(!isMfqADone){
+			setCurrentStep(3);
 			window.location.href = "/instructions-03";
 			return;
 		}
 
 		if(!isMfqBDone){
+			setCurrentStep(4);
 			window.location.href = "/instructions-04";
 			return;
 		}

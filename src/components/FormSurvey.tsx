@@ -3,7 +3,7 @@ import { useState, type FormEvent } from "react";
 import { paginate, isMobile } from "@/lib/utils";
 import { useMultiPageSurvey } from "./hooks/useMultiPageSurvey";
 import { SurveyPage } from "./PageSurvey";
-import { isDialogOpen, setDialogData } from "@/store/store";
+import { currentStep, isDialogOpen, setCurrentStep, setDialogData } from "@/store/store";
 import { QUESTION_SIZES, REDIRECTS } from "@/lib/data";
 
 import "@/styles/global.css";
@@ -72,7 +72,8 @@ export const FormSurvey = ({ questions, type }: Props) => {
             isDialogOpen.set(true);
             return;
         }
-    
+        
+        setCurrentStep(currentStep.get() + 1);
         window.location.href = REDIRECTS[`${table}`];
       }
 
@@ -133,11 +134,11 @@ export const FormSurvey = ({ questions, type }: Props) => {
                         <button onClick={handleBack} 
                                 type="button"
                                 disabled={isFirstStep}
-                                className="px-4 py-2 bg-gray-200 rounded-3xl hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed">
+                                className="cursor-pointer px-4 py-2 bg-gray-200 rounded-3xl hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed">
                                     Anterior
                         </button>
                         <button type="submit"
-                                className="px-4 py-2 bg-sky-300 text-white rounded-3xl hover:bg-sky-700">
+                                className="cursor-pointer px-4 py-2 bg-sky-300 text-white rounded-3xl hover:bg-sky-700">
                                     {isLastStep ? "Finalizar" : "Siguiente"}
                         </button>
                     </div>

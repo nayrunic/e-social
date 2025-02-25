@@ -1,3 +1,11 @@
+declare global {
+  interface Window {
+    navigation: {
+      navigate: (url: string) => Promise<void>;
+    }
+  }
+}
+
 import type { QuestionFeed, Stimulus } from "@/store/store";
 
 export type Question = {

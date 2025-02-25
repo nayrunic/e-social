@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { type Answer, type Rmit } from "@/types/types";
 import { formatTime } from "@/lib/utils";
-import { isDialogOpen, setDialogData } from "@/store/store";
+import { isDialogOpen, setDialogData, setCurrentStep, currentStep } from "@/store/store";
 
 type Props = {
   rmit: Rmit[];
@@ -88,8 +88,9 @@ export const Eyes = ({ rmit }: Props) => {
         return;
     }
 
-    window.location.href = "/instructions-02"
+    setCurrentStep(currentStep.get() + 1);
 
+    window.location.href = "/instructions-02";
 
   }
 
@@ -166,13 +167,13 @@ export const Eyes = ({ rmit }: Props) => {
                   <button
                     onClick={handlePreviousCard}
                     disabled={currentCardIndex === 0}
-                    className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="cursor-pointer px-4 py-2 bg-gray-200 rounded-3xl hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
                   >
                     Anterior
                   </button>
                   <button
                     onClick={handleNextCard}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300"
+                    className="cursor-pointer px-4 py-2 bg-sky-300 text-white rounded-3xl hover:bg-sky-700"
                   >
                     {currentCardIndex < (rmit.length - 1) ? "Siguiente" : "Finalizar"}
                   </button>

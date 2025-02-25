@@ -3,8 +3,10 @@ import { Eyes } from "@/components/Eyes";
 import Layout from "../layouts/Layout.astro"
 import MainNav from "@/components/MainNav.astro"
 import { supabase } from "@/lib/supabase"
-import { RMIT_DATA } from "@/lib/data";
+import { RMIT_DATA, STEPS } from "@/lib/data";
 import Dialog from "@/components/Dialog.astro";
+import { ProgressBar } from "@/components/ProgressBar";
+import { currentStep } from "@/store/store";
 
 const { cookies, redirect } = Astro;
 
@@ -39,6 +41,7 @@ if (error) {
   <div class="h-full flex flex-col">
     <MainNav />
     <main class="flex flex-col justify-center items-center py-10 flex-1 border-t border-slate-300">
+      <ProgressBar client:only="react" />
       <Eyes rmit={RMIT_DATA} client:load/>
     </main>
     <footer class="flex items-center justify-center p-4 bg-white border-t border-slate-300">

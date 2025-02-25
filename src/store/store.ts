@@ -1,4 +1,5 @@
-import { atom,  } from 'nanostores';
+import { atom } from 'nanostores';
+import { persistentAtom } from '@nanostores/persistent';
 
 export type Stimulus = {
     title: string;
@@ -51,3 +52,14 @@ export const removeStimulus = (title: string) => {
 export const setStimuliLeft = (stimuli: Stimulus[]) => {
     stimuliLeft.set(stimuli);
 }
+
+export const currentStep = persistentAtom<number>('currentStep', 1, {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  });
+
+export const setCurrentStep = (value: number) => {
+    currentStep.set(value);
+}
+
+

@@ -77,6 +77,13 @@ import rmit15 from "@/assets/rmit/15.png"
 import rmit16 from "@/assets/rmit/16.png"
 import rmit17 from "@/assets/rmit/17.png"
 
+export const STEPS = [
+  "Sección 1",
+  "Sección 2",
+  "Sección 3",
+  "Sección 4"
+]
+
 export const IRI_QUESTIONS = [
   {
     id: 1,
@@ -291,7 +298,7 @@ export const RMIT_DATA = [
   },  {
     id: 15,
     imgSrc: rmit15.src,
-    options: ["Contemplatvio/a", "Conmocionado/a", "Alentador/ra", "Divertido/a"]
+    options: ["Contemplativo/a", "Conmocionado/a", "Alentador/ra", "Divertido/a"]
   },  {
     id: 16,
     imgSrc: rmit16.src,

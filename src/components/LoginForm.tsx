@@ -1,7 +1,7 @@
 import userIcon from '@/assets/icons/user.svg';
 import { useMultiPageSurvey } from './hooks/useMultiPageSurvey';
 import { useState, useRef, type FormEvent, type MutableRefObject} from 'react';
-import { isDialogOpen } from '@/store/store';
+import { isDialogOpen, setCurrentStep } from '@/store/store';
 
 type FormData = {
     username: string
@@ -102,21 +102,25 @@ export const LoginForm = () => {
             }
 
             if(!isRmitDone){
+                setCurrentStep(1);
                 window.location.href = "/instructions-01";
                 return;
             }
 
             if(!isIriDone){
+                setCurrentStep(2);
                 window.location.href = "/instructions-02";
                 return;
             }
 
             if(!isMfqADone){
+                setCurrentStep(3);
                 window.location.href = "/instructions-03";
                 return;
             }
 
             if(!isMfqBDone){
+                setCurrentStep(4);
                 window.location.href = "/instructions-04";
                 return;
             }

@@ -7,6 +7,7 @@ import Dialog from "@/components/Dialog.astro"
 import { supabase } from "@/lib/supabase"
 
 import "@/styles/global.css";
+import { ProgressBar } from "@/components/ProgressBar"
 
 const { cookies, redirect } = Astro;
 
@@ -35,10 +36,11 @@ if (error) {
 
 ---
 
-<Layout title="Parte 04"> 
+<Layout title="Parte 04">
     <MainNav />
-    <main class="flex items-center">
+    <main class="flex flex-col items-center">
       <Dialog />
+      <ProgressBar client:only="react"  />
       <FormSurvey questions={MFQ_QUESTIONS_PART_2} type={"MFQ_2"} client:only="react"/>
     </main>
 </Layout>
