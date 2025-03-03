@@ -2,6 +2,8 @@ import { useMultiPageSurvey } from './hooks/useMultiPageSurvey';
 import { useState, useRef, type FormEvent, type MutableRefObject} from 'react';
 import { isDialogOpen, setCurrentStep } from '@/store/store';
 
+import "@/styles/global.css";
+
 type FormData = {
     username: string
     terms: boolean
