@@ -232,6 +232,7 @@ export const FormProfile = () => {
 			return
         }
 
+        localStorage.setItem("user-name", data.user.name);
         window.location.href = "/instructions";
     }
 

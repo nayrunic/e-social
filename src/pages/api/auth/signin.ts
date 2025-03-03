@@ -8,6 +8,8 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
 
   const {username} = body;
 
+  console.log(username);
+
   if (!username) {
     return new Response(JSON.stringify({ message: "Debe enviar un usuario", status: 400}));
   }

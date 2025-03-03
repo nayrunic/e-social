@@ -40,3 +40,16 @@ export const formatTime = (milliseconds: number): string => {
 
   return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
 };
+
+export function generateUserId(): string {
+  // Get current timestamp (gives us first 13 digits)
+  const timestamp = Date.now().toString();
+  
+  // Generate 4 random digits
+  const randomDigits = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+  
+  // Combine timestamp and random digits
+  const userId = `${timestamp}${randomDigits}`;
+  
+  return userId;
+}

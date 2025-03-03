@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { supabase } from "@/lib/supabase";
+import { generateUserId } from "@/lib/utils";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
   const body = await request.json()
@@ -10,8 +11,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response(JSON.stringify({message:"Usuario obligatorio", status: 400}));
   }
 
-  const { error, data } = await supabase.auth.signUp({
-    email: `${username}@e-social.me`,
+  const userId = generateUserId();
+
+  const { error } = await supabase.auth.signUp({
+    email: `${userId}@e-social.me`,
     password: 'password',
   });
 
@@ -19,6 +22,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response(JSON.stringify({error: {message: error.message, status: 500}}));
   }
 
-  return new Response(JSON.stringify({message: "Usuario creado exitosamente", status: 201}));
+  return new Response(JSON.stringify({message: "Usuario creado exitosamente", userId, status: 201}));
   
 };

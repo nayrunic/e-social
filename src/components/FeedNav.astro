@@ -1,7 +1,6 @@
 ---
 import ESocialIcon from '@/assets/icons/esocial.svg'
 import ProgressIcon from '@/assets/icons/progress.svg'
-import LogoutIcon from '@/assets/icons/logout.svg'
 import HelpIcon from '@/assets/icons/help.svg'
 ---
 
@@ -32,7 +31,7 @@ import HelpIcon from '@/assets/icons/help.svg'
             </p>
         </li>
         <li id="help">
-            <a class="flex flex-col justify-center items-center cursor-pointer" href="/instructions">
+            <a class="flex flex-col justify-center items-center cursor-pointer" href="/instructions" data-astro-reload>
                 <picture>
                     <img class="h-8 w-8" src={HelpIcon.src} alt="log-out" />
                 </picture>
@@ -41,43 +40,17 @@ import HelpIcon from '@/assets/icons/help.svg'
                 </p>
             </a>
         </li>
-        <li id="logout" class="flex flex-col justify-center items-center cursor-pointer">
-            <picture>
-                <img class="h-8 w-8" src={LogoutIcon.src} alt="log-out" />
-            </picture>
-            <p class="text-[10px] sm:text-xs text-gray-400 font-[Poppins]">
-                Cerrar sesión
-            </p>
-        </li>
     </ul>
 </nav>
 
 <script>
-import { isDialogOpen, setDialogData } from "@/store/store";
 
-    const logoutButton = document.querySelector("#logout");
     const progressButton = document.querySelector("#progress-nav");
     const feedButton = document.querySelector("#feed-nav");
     const main = document.querySelector("#main");
     const progress = document.querySelector("#progress");
 
     const setListeners = () => {
-        if(!logoutButton) return;
-        logoutButton.addEventListener("click", async () => {
-            const res = await fetch('/api/auth/signout', 
-            {
-                method: "GET"
-            });
-
-            const {error} = await res.json();
-
-            if(error){
-                isDialogOpen.set(true)
-                setDialogData({title:"Error", message:"Hubo un error en el servidor."})
-            }
-
-            window.location.href = "/";
-        });
 
         if(!progressButton || !feedButton) return;
         progressButton.addEventListener("click", ()=>{

@@ -1,42 +1,189 @@
 ---
+import Layout from '@/layouts/Layout.astro';
 import { LoginForm } from '@/components/LoginForm';
-import Layout from '../layouts/Layout.astro';
-import Dialog from '@/components/Dialog_2.astro';
+import Dialog  from '@/components/Dialog.astro'
+
+const researchers = [
+	{
+		name: "John Alexander Blandón",
+		role: "Psicólogo candidato a magister en la Universidad de los Andes. Investigador.",
+		areas: ["Neurociencia social", "ciberpsicología", "psicometría"],
+		image: "/researcher-1.webp",
+	},
+	{
+		name: "PhD. Sandra Jimena Báez",
+		role: "Profesora asociada del Departamento de Psicología de la Universidad de los Andes. Investigadora.",
+		areas: ["Neurociencia social", "neuropsicología", "neuropsiquiatría"],
+		image: "/researcher-2.webp"
+	}
+];
 ---
 
-<Layout title='E-Social'>
-	<Dialog title="Error"/>
-	<div class="min-h-screen bg-cover bg-home flex justify-center sm:p-10">
-		<main class="grid grid-cols-1 lg:grid-cols-2 lg:w-auto w-[420px] max-h-[720px] md:max-h-[900px] m-8 shadow-xl rounded-md overflow-hidden"> 
-			<div class="hidden lg:block ">
-				<div id="left-top" class="h-full flex flex-col justify-center items-center gap-8 px-10">
-					<img src="/esocial-white.svg" alt="logo" class="w-16 h-16 md:w-64 md:h-64 animate-breathe"/>
-					<h2 class="text-center text-white text-4xl font-['Poppins']">Bienvenido a</h2>
-					<div class="text-white font-extrabold text-4xl px-8 py-4 border border-white rounded-xl">
-						<h1 > E-Social </h1>
+<Layout title="E-Social: Investigación científica">
+	<Dialog />
+	<div class="bg-white w-full">
+		<nav class="bg-sky-600 flex justify-center py-4 text-white sticky top-0 z-40">
+			<div class="max-w-7xl w-full flex justify-between items-center">
+				<!-- Logo -->
+				<div class="flex items-center gap-2 px-4">
+					<img src="/esocial-white.svg" alt="E-Social Logo" class="w-10 h-10">
+					<span class="font-bold text-lg sm:text-xl">E-Social</span>
+				</div>
+				
+				<!-- Desktop Navigation -->
+				<div class="hidden lg:flex items-center gap-6">
+					<a href="#" onclick="window.scrollTo({top: 0})" class="hover:text-gray-900">Inicio</a>
+					<a href="#researchers" class="hover:text-gray-900">Investigadores</a>
+					<a href="/terms" class="hover:text-gray-900">Consentimiento informado</a>
+				</div>
+
+				<!-- Mobile Navigation Button -->
+				<button 
+					id="menuButton"
+					class="lg:hidden p-1.5 sm:p-2 text-white hover:text-gray-900 focus:outline-none"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-12 sm:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+
+				<!-- Mobile Navigation Menu -->
+				<div id="mobileMenu" class="hidden fixed inset-0 bg-white z-50 lg:hidden">
+					<div class="p-4">
+						<button 
+							id="closeButton"
+							class="absolute top-4 right-4 p-1.5 sm:p-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+						</button>
+						<div class="flex flex-col gap-4 mt-12 text-center">
+							<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-gray-600 hover:text-gray-900 text-lg py-2">Inicio</a>
+							<a href="#researchers" class="text-gray-600 hover:text-gray-900 text-lg py-2">Investigadores</a>
+							<a href="/terms" class="text-gray-600 hover:text-gray-900 text-lg py-2">Consentimiento informado</a>
+						</div>
 					</div>
-					<h2 class="text-center text-white text-xl md:text-4xl font-['Poppins'] "> una red social innovadora</h2> 
 				</div>
 			</div>
-			<div class="relative w-full flex justify-center items-center bg-white text-center"> 
-				<LoginForm client:load/>
-			</div>
-		</main>
-	</div>
+		</nav>
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<!-- Main Section -->
+			<div class="min-h-[calc(100vh-5rem)] lg:min-h-[calc(85vh-5rem)] flex justify-center">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-24 items-center justify-center mx-2 sm:mx-0">
+					<!-- Text Content Section -->
+					<div class="space-y-4 sm:space-y-6 lg:space-y-8 order-2 lg:order-1 flex flex-col items-center lg:items-start">
+						<div class="space-y-2 text-center lg:text-left">
+							<h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold text-sky-600">
+								E-Social:
+							</h1>
+							<h2 class="text-2xl sm:text-4xl lg:text-5xl font-bold text-sky-600"> Investigación científica </h2>
+						</div>
+						
+						<p class="text-gray-600 max-w-lg text-sm sm:text-base text-center lg:text-left">
+							¡Sé parte de una investigación innovadora! Participa en nuestra red social interactiva, responde a las preguntas y contribuye al avance científico. En solo 15 minutos puedes hacer la diferencia y participar por recompensas.
+						</p>
+
+						<LoginForm client:only="react"/>
 	
+						
+					</div>
+	
+					<!-- Illustration Section -->
+					<div class="relative order-1 lg:order-2 mt-12 lg:mt-0">
+						<div class="bg-sky-100 rounded-full p-3 sm:p-6 lg:p-8 relative z-10">
+							<div class="bg-white rounded-3xl shadow-xl p-3 sm:p-6 lg:p-8 place-items-center">
+								<img 
+									src="/illustration.svg" 
+									alt="Online Sale Illustration" 
+									class="w-full h-auto"
+								/>
+								<a class="text-gray-600 text-xs" href="https://storyset.com/business">Business illustrations by Storyset</a>
+							</div>
+						</div>
+						
+						<!-- Decorative elements -->
+						<div class="absolute top-0 right-0 w-12 sm:w-20 lg:w-24 h-12 sm:h-20 lg:h-24 bg-sky-500 rounded-full opacity-20 -translate-y-1/2"></div>
+						<div class="absolute bottom-0 left-0 w-8 sm:w-14 lg:w-16 h-8 sm:h-14 lg:h-16 bg-sky-500 rounded-full opacity-20 translate-y-1/2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bg-gray-100 w-full flex justify-center  ">
+			<section class="max-w-7xl pb-12 sm:pb-16 lg:pb-20 pt-12">
+				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold text-sky-600 text-center mb-12">
+						Investigacion avalada por la <br/> Universidad de los Andes
+					</h1>
+					<div class="flex flex-col lg:flex-row justify-center items-center gap-4">
+						<img src="/uniandes-1.webp" alt="Universidad de los Andes Logo" class="w-1/2 h-auto">
+						<img src="/uniandes-2.webp" alt="Universidad de los Andes Logo" class="w-1/2 h-auto">
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="flex justify-center w-full">
+			<!-- About Us Section -->
+			<section id="researchers" class="bg-gray-50 py-12 sm:py-16 lg:py-20">
+				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div class="text-center mb-12">
+						<h2 class="text-3xl sm:text-4xl font-bold text-sky-600 mb-4">
+							Investigadores
+						</h2>
+					</div>
+	
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-8">
+						{researchers.map((researcher) => (
+							<div class="bg-white rounded-2xl shadow-lg p-6 sm:p-8 h-full">
+								<div class="flex flex-col sm:flex-row gap-6 items-start h-full">
+									<div class="w-40 h-40 rounded-full overflow-hidden mx-auto sm:mx-0">
+										<img 
+											src={researcher.image}
+											alt={`Foto de ${researcher.name}`}
+											class="w-full h-full object-cover"
+										/>
+									</div>
+									<div class="flex-1 text-center sm:text-left flex flex-col">
+										<h3 class="text-xl font-bold text-gray-900 mb-2">{researcher.name}</h3>
+										<p class="text-gray-600 mb-4">{researcher.role}</p>
+										
+										<div class="mb-4">
+											<h4 class="font-semibold text-gray-900 mb-2">Áreas:</h4>
+											<p class="text-gray-600">{researcher.areas.join(", ")}.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
 </Layout>
 
+<script>
+	// Mobile menu functionality
+	const menuButton = document.getElementById('menuButton');
+	const closeButton = document.getElementById('closeButton');
+	const mobileMenu = document.getElementById('mobileMenu');
+
+	menuButton?.addEventListener('click', () => {
+		mobileMenu?.classList.remove('hidden');
+		document.body.style.overflow = 'hidden';
+	});
+
+	closeButton?.addEventListener('click', () => {
+		mobileMenu?.classList.add('hidden');
+		document.body.style.overflow = '';
+	});
+</script>
+
 <style>
-	.bg-home{
-		background-image: url('home2.jpg');
+	/* Optional: Add smooth transition for mobile menu */
+	#mobileMenu {
+		transition: opacity 0.2s ease-in-out;
 	}
-
-	#left-top{
-		background-color: transparent;
-		backdrop-filter: blur(20px);
-		background-image: linear-gradient(140deg, rgba(0, 195, 255, 0.368), rgba(255, 255, 255, 0.253));
-	}
-
 </style>
 
 
