@@ -32,7 +32,7 @@ const researchers = [
 				
 				<!-- Desktop Navigation -->
 				<div class="hidden lg:flex items-center gap-6">
-					<a href="#" onclick="window.scrollTo({top: 0})" class="hover:text-gray-900">Inicio</a>
+					<a href="#inicio" onclick="window.scrollTo({top: 0})" class="hover:text-gray-900">Inicio</a>
 					<a href="#researchers" class="hover:text-gray-900">Investigadores</a>
 					<a href="/terms" class="hover:text-gray-900">Consentimiento informado</a>
 				</div>
@@ -48,7 +48,7 @@ const researchers = [
 				</button>
 
 				<!-- Mobile Navigation Menu -->
-				<div id="mobileMenu" class="hidden fixed inset-0 bg-white z-50 lg:hidden">
+				<div id="mobileMenu" class="hidden fixed inset-0 bg-white z-50 lg:hidden opacity-0 transition-opacity duration-200">
 					<div class="p-4">
 						<button 
 							id="closeButton"
@@ -59,15 +59,15 @@ const researchers = [
 							</svg>
 						</button>
 						<div class="flex flex-col gap-4 mt-12 text-center">
-							<a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-gray-600 hover:text-gray-900 text-lg py-2">Inicio</a>
-							<a href="#researchers" class="text-gray-600 hover:text-gray-900 text-lg py-2">Investigadores</a>
-							<a href="/terms" class="text-gray-600 hover:text-gray-900 text-lg py-2">Consentimiento informado</a>
+							<a href="#inicio" onclick="fadeOutMenu()" class="text-gray-600 hover:text-gray-900 text-lg py-2">Inicio</a>
+							<a href="#researchers" onclick="fadeOutMenu()" class="text-gray-600 hover:text-gray-900 text-lg py-2">Investigadores</a>
+							<a href="/terms" onclick="fadeOutMenu()" class="text-gray-600 hover:text-gray-900 text-lg py-2">Consentimiento informado</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</nav>
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div id="inicio" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<!-- Main Section -->
 			<div class="min-h-[calc(100vh-5rem)] lg:min-h-[calc(85vh-5rem)] flex justify-center">
 				<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-24 items-center justify-center mx-2 sm:mx-0">
@@ -163,19 +163,36 @@ const researchers = [
 </Layout>
 
 <script>
-	// Mobile menu functionality
+	declare global {
+		interface Window {
+			fadeOutMenu: () => void;
+		}
+	}
+
 	const menuButton = document.getElementById('menuButton');
 	const closeButton = document.getElementById('closeButton');
 	const mobileMenu = document.getElementById('mobileMenu');
 
+	// Define fadeOutMenu first
+	window.fadeOutMenu = function() {
+		if (mobileMenu) {
+			mobileMenu.classList.remove('opacity-100');
+			document.body.style.overflow = '';
+			setTimeout(() => {
+				mobileMenu.classList.add('hidden');
+			}, 200);
+		}
+	}
+
+	// Then use it
+	closeButton?.addEventListener('click', window.fadeOutMenu);
+
 	menuButton?.addEventListener('click', () => {
 		mobileMenu?.classList.remove('hidden');
 		document.body.style.overflow = 'hidden';
-	});
-
-	closeButton?.addEventListener('click', () => {
-		mobileMenu?.classList.add('hidden');
-		document.body.style.overflow = '';
+		setTimeout(() => {
+			mobileMenu?.classList.add('opacity-100');
+		}, 10);
 	});
 </script>
 
