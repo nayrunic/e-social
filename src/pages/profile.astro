@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro"
 import Dialog from "@/components/Dialog.astro";
 import { FormProfile } from "@/components/FormProfile";
-
+import Footer from "@/components/footer.astro";
 import { supabase } from "../lib/supabase";
 
 const { cookies, redirect } = Astro;
@@ -43,6 +43,6 @@ if (error) {
                 </div>
             </div>
         </div>
-        
     </div>
+    <Footer />
 </Layout>

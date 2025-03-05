@@ -78,7 +78,7 @@ export const FormSurvey = ({ questions, type }: Props) => {
       }
 
     return (
-        <div className="container mx-auto p-4 flex justify-center mt-5"> 
+        <div className="container mx-auto p-4 flex justify-center mt-5 pb-8"> 
             <div className="bg-white rounded-lg shadow-md p-6 xl:w-[1100px]">
                 <div className="md:static sticky top-0 bg-white z-10">
                     {

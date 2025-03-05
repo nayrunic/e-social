@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import { Image } from 'astro:assets'
 import Logo from '@/assets/icons/esocial.svg'
+import Footer from "@/components/footer.astro";
 ---
 
 <Layout title="Consentimiento informado">
@@ -88,9 +89,7 @@ import Logo from '@/assets/icons/esocial.svg'
                 <i>etica.faciso@uniandes.edu.co</i>
             </p>
         </main>
-        <footer class="flex items-center justify-center p-4 bg-white border-t border-black">
-            <p class="text-md font-semibold font-mono">E-Social, 2024</p>
-        </footer>
+        <Footer />
     </div>
 </Layout>
 

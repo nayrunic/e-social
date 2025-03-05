@@ -7,7 +7,7 @@ import { RMIT_DATA, STEPS } from "@/lib/data";
 import Dialog from "@/components/Dialog.astro";
 import { ProgressBar } from "@/components/ProgressBar";
 import { currentStep } from "@/store/store";
-
+import Footer from "@/components/footer.astro";
 const { cookies, redirect } = Astro;
 
 const accessToken = cookies.get("sb-access-token");
@@ -44,9 +44,7 @@ if (error) {
       <ProgressBar client:only="react" />
       <Eyes rmit={RMIT_DATA} client:load/>
     </main>
-    <footer class="flex items-center justify-center p-4 bg-white border-t border-slate-300">
-      <p class="text-md font-semibold font-mono">E-Social, 2024</p>
-    </footer>
+    <Footer />
   </div>
 </Layout>
 
