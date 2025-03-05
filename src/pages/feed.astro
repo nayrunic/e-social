@@ -18,6 +18,8 @@ import { type User } from '@/types/types';
 
 import { supabase } from "../lib/supabase";
 
+import "@/styles/global.css";
+
 const { cookies, redirect } = Astro;
 
 const accessToken = cookies.get("sb-access-token");

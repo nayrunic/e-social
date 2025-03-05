@@ -9,6 +9,7 @@ const researchers = [
 		role: "Psicólogo candidato a magister en la Universidad de los Andes. Investigador.",
 		areas: ["Neurociencia social", "ciberpsicología", "psicometría"],
 		image: "/researcher-1.webp",
+		contact: "ja.blandon@uniandes.edu.co"
 	},
 	{
 		name: "PhD. Sandra Jimena Báez",
@@ -151,6 +152,18 @@ const researchers = [
 											<h4 class="font-semibold text-gray-900 mb-2">Áreas:</h4>
 											<p class="text-gray-600">{researcher.areas.join(", ")}.</p>
 										</div>
+
+										{researcher.contact && (
+											<div class="mt-auto">
+												<h4 class="font-semibold text-gray-900 mb-2">Contacto:</h4>
+												<a 
+												href={`mailto:${researcher.contact}`} 
+												class="text-sky-600 hover:text-sky-700"
+												>
+												{researcher.contact}
+												</a>
+											</div>
+										)}
 									</div>
 								</div>
 							</div>

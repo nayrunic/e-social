@@ -9,29 +9,4 @@ import Logo from '@/assets/icons/esocial.svg'
         <Image src={Logo} alt="logo" class="h-16 w-16 rounded-full bg-white"/>
         <h1 class="text-sm md:text-xl font-semibold">E-Social</h1>
     </div>
-    <button id="logout" class="text-xl font-semibold hover:scale-125 transition-transform">Cerrar Sesión</button>
 </nav>
-
-<script>
-    import { isDialogOpen, setDialogData } from "@/store/store";
-    const logoutButton = document.getElementById("logout") as HTMLButtonElement;
-
-    const handleLogOut = async () => {
-        if(!logoutButton) return;
-        const res = await fetch('/api/auth/signout', 
-        {
-            method: "GET"
-        });
-
-        const {error} = await res.json();
-
-        if(error){
-            isDialogOpen.set(true)
-            setDialogData({title:"Error", message:"Hubo un error en el servidor."})
-        }
-
-        window.location.href = "/";
-    }
-
-    logoutButton.addEventListener("click", handleLogOut);
-</script>
