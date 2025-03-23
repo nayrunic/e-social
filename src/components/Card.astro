@@ -151,9 +151,9 @@ const {source, id} = Astro.props;
 
           addAnsweredQuestion({id: parent.dataset.id, reaction: selectedReaction.get(), like: goRight ? true : false});
           selectReaction("none");
-          addProgress();
           removeStimulus(parent.dataset.id);
           await fetchData();
+          addProgress();
           isAnimating = false
           username_text!.textContent = usernames[randomIntFromInterval(0, usernames.length)];
           profile_image!.src = profile_images[randomIntFromInterval(0, profile_images.length)];
@@ -196,9 +196,15 @@ const {source, id} = Astro.props;
 
     const children = card_container!.children;
 
-    const currentCard: any = children[children.length-1];
+    let currentCard: any = children[children.length-1];
+    console.log(currentCard.tagName, children.length)
+    if(currentCard.tagName !== "SWIPE-CARD"){
+      currentCard = children[children.length-2];
+    }
 
-    if(children.length < 2){
+    if(children.length < 3){
+      likeButton.disabled = true;
+      dislikeButton.disabled = true;
       return;
     }
 
@@ -210,9 +216,13 @@ const {source, id} = Astro.props;
 
     addAnsweredQuestion({id: currentCard.dataset.id, reaction: selectedReaction.get(), like});
     selectReaction("none");
-    addProgress();
     removeStimulus(currentCard.dataset.id);
+    likeButton.disabled = true;
+    dislikeButton.disabled = true;
     await fetchData();
+    addProgress();
+    likeButton.disabled = false;
+    dislikeButton.disabled = false;
     currentCard.remove();
     
     username_text!.textContent = usernames[randomIntFromInterval(0, usernames.length)];
