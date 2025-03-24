@@ -36,9 +36,8 @@ const Step1 = ({name, age, genre, biological_sex, updateFields}: Step1Props) => 
             
             <h1 className="text-xl font-bold mb-4 text-center pt-2">Información personal</h1>
             <div>
-                <h1 className="text-sm pb-1 font-bold">(Opcional)</h1>
                 <label className="text-sm font-medium">
-                    Nombre
+                    <b>(Opcional) </b>Nombre
                 </label>
                 <div className="bg-slate-200 rounded-xl p-2">
                     <input  type="text" name="name" placeholder="Escribe tu nombre..."  value={name} onChange={e => updateFields({name: e.target.value})}/>
